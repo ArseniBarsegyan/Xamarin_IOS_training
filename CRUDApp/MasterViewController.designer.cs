@@ -13,8 +13,16 @@ namespace CRUDApp
     [Register ("MasterViewController")]
     partial class MasterViewController
     {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIBarButtonItem NewNoteButton { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
+            if (NewNoteButton != null) {
+                NewNoteButton.Dispose ();
+                NewNoteButton = null;
+            }
         }
     }
 }

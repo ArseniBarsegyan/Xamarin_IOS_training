@@ -28,11 +28,11 @@ namespace CRUDApp
             // Perform any additional setup after loading the view, typically from a nib.
             NavigationItem.LeftBarButtonItem = EditButtonItem;
 
-            var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, AddNewItem)
-            {
-                AccessibilityLabel = "addButton"
-            };
-            NavigationItem.RightBarButtonItem = addButton;
+            //var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, AddNewItem)
+            //{
+            //    AccessibilityLabel = "addButton"
+            //};
+            //NavigationItem.RightBarButtonItem = addButton;
 
             NoteRepository = new Repository<Note>();
             TableView.Source = dataSource = new DataSource(this, NoteRepository.GetAll());
@@ -49,17 +49,17 @@ namespace CRUDApp
             // Release any cached data, images, etc that aren't in use.
         }
 
-        private void AddNewItem(object sender, EventArgs args)
-        {
-            var note = new Note();
-            NoteRepository.Save(note);
-            dataSource.Notes.Add(note);
+        //private void AddNewItem(object sender, EventArgs args)
+        //{
+        //    var note = new Note();
+        //    NoteRepository.Save(note);
+        //    dataSource.Notes.Add(note);
 
-            using (var indexPath = NSIndexPath.FromRowSection(0, 0))
-            {
-                TableView.InsertRows(new[] { indexPath }, UITableViewRowAnimation.Automatic);
-            }
-        }
+        //    using (var indexPath = NSIndexPath.FromRowSection(0, 0))
+        //    {
+        //        TableView.InsertRows(new[] { indexPath }, UITableViewRowAnimation.Automatic);
+        //    }
+        //}
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
