@@ -11,6 +11,10 @@ namespace CRUDApp
 
         private UITextView _noteDescriptionTextView;
 
+        public NoteEditViewController()
+        {
+        }
+
         public NoteEditViewController (IntPtr handle) : base (handle)
         {
         }
@@ -19,7 +23,7 @@ namespace CRUDApp
         {
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Done, AddNewItem)
             {
-                AccessibilityLabel = "addButton"
+                AccessibilityLabel = "confirmButton"
             };
             Title = "New note";
             NavigationItem.RightBarButtonItem = addButton;

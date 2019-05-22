@@ -12,7 +12,7 @@ namespace CRUDApp
     public partial class MasterViewController : UITableViewController
     {
         public Repository<Note> NoteRepository { get; private set; }
-        private DataSource dataSource;
+        private DataSource _dataSource;
         private UIRefreshControl _refreshControl;
 
         protected MasterViewController(IntPtr handle) : base(handle)
@@ -35,6 +35,20 @@ namespace CRUDApp
                 await Refresh();
             };
             TableView.RefreshControl = _refreshControl;
+
+            var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, NavigateToEditNoteController)
+            {
+                AccessibilityLabel = "addNewNoteButton"
+            };
+            NavigationItem.RightBarButtonItem = addButton;
+        }
+
+        private void NavigateToEditNoteController(object sender, EventArgs e)
+        {
+            var noteEditViewController = new NoteEditViewController();
+            noteEditViewController.SetDataSource(_dataSource);
+            noteEditViewController.SetRepository(NoteRepository);
+            NavigationController.PushViewController(noteEditViewController, true);
         }
 
         private async Task Refresh()
@@ -48,7 +62,7 @@ namespace CRUDApp
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
-            TableView.Source = dataSource = new DataSource(this, NoteRepository.GetAll());
+            TableView.Source = _dataSource = new DataSource(this, NoteRepository.GetAll());
         }
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
@@ -57,7 +71,7 @@ namespace CRUDApp
             {
                 var controller = (NoteDetailViewController)((UINavigationController)segue.DestinationViewController).TopViewController;
                 var indexPath = TableView.IndexPathForSelectedRow;
-                var item = dataSource.Notes[indexPath.Row];
+                var item = _dataSource.Notes[indexPath.Row];
 
                 controller.SetDetailItem(item);
                 controller.SetRepository(NoteRepository);
@@ -69,7 +83,7 @@ namespace CRUDApp
                 if (segue.DestinationViewController is NoteEditViewController controller)
                 {
                     controller.SetRepository(NoteRepository);
-                    controller.SetDataSource(dataSource);
+                    controller.SetDataSource(_dataSource);
                     controller.NavigationItem.LeftItemsSupplementBackButton = true;
                 }                
             }
