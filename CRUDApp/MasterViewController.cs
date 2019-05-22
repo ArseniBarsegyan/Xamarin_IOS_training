@@ -5,6 +5,7 @@ using UIKit;
 using Foundation;
 using CRUDApp.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CRUDApp
 {
@@ -12,10 +13,10 @@ namespace CRUDApp
     {
         public Repository<Note> NoteRepository { get; private set; }
         private DataSource dataSource;
+        private UIRefreshControl _refreshControl;
 
         protected MasterViewController(IntPtr handle) : base(handle)
         {
-            // Note: this .ctor should not contain any initialization logic.
         }
 
         public override void ViewDidLoad()
@@ -25,41 +26,30 @@ namespace CRUDApp
             Title = NSBundle.MainBundle.GetLocalizedString("Master", "Master");
             SplitViewController.PreferredDisplayMode = UISplitViewControllerDisplayMode.AllVisible;
 
-            // Perform any additional setup after loading the view, typically from a nib.
             NavigationItem.LeftBarButtonItem = EditButtonItem;
-
-            //var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, AddNewItem)
-            //{
-            //    AccessibilityLabel = "addButton"
-            //};
-            //NavigationItem.RightBarButtonItem = addButton;
-
             NoteRepository = new Repository<Note>();
-            TableView.Source = dataSource = new DataSource(this, NoteRepository.GetAll());
+
+            _refreshControl = new UIRefreshControl();
+            _refreshControl.ValueChanged += async(sender, args) =>
+            {
+                await Refresh();
+            };
+            TableView.RefreshControl = _refreshControl;
+        }
+
+        private async Task Refresh()
+        {
+            _refreshControl.BeginRefreshing();
+            await Task.Delay(200);
+            _refreshControl.EndRefreshing();
+            TableView.ReloadData();
         }
 
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+            TableView.Source = dataSource = new DataSource(this, NoteRepository.GetAll());
         }
-
-        public override void DidReceiveMemoryWarning()
-        {
-            base.DidReceiveMemoryWarning();
-            // Release any cached data, images, etc that aren't in use.
-        }
-
-        //private void AddNewItem(object sender, EventArgs args)
-        //{
-        //    var note = new Note();
-        //    NoteRepository.Save(note);
-        //    dataSource.Notes.Add(note);
-
-        //    using (var indexPath = NSIndexPath.FromRowSection(0, 0))
-        //    {
-        //        TableView.InsertRows(new[] { indexPath }, UITableViewRowAnimation.Automatic);
-        //    }
-        //}
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
@@ -74,70 +64,78 @@ namespace CRUDApp
                 controller.NavigationItem.LeftBarButtonItem = SplitViewController.DisplayModeButtonItem;
                 controller.NavigationItem.LeftItemsSupplementBackButton = true;
             }
+            else if (segue.Identifier == "noteEditSeague")
+            {
+                if (segue.DestinationViewController is NoteEditViewController controller)
+                {
+                    controller.SetRepository(NoteRepository);
+                    controller.SetDataSource(dataSource);
+                    controller.NavigationItem.LeftItemsSupplementBackButton = true;
+                }                
+            }
+            
+        }        
+    }
+
+    public class DataSource : UITableViewSource
+    {
+        private static readonly NSString CellIdentifier = new NSString("Cell");
+        private readonly List<Note> _notes = new List<Note>();
+        private readonly MasterViewController _controller;
+
+        public DataSource(MasterViewController controller, List<Note> notes)
+        {
+            _controller = controller;
+            _notes = notes;
         }
 
-        private class DataSource : UITableViewSource
+        public IList<Note> Notes => _notes;
+
+        // Customize the number of sections in the table view.
+        public override nint NumberOfSections(UITableView tableView)
         {
-            private static readonly NSString CellIdentifier = new NSString("Cell");
-            private readonly List<Note> _notes = new List<Note>();
-            private readonly MasterViewController _controller;
+            return 1;
+        }
 
-            public DataSource(MasterViewController controller, List<Note> notes)
+        public override nint RowsInSection(UITableView tableview, nint section)
+        {
+            return _notes.Count;
+        }
+
+        // Customize the appearance of table view cells.
+        public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+        {
+            var cell = tableView.DequeueReusableCell(CellIdentifier, indexPath);
+            var note = _notes[indexPath.Row];
+            if (note.Description == null)
             {
-                _controller = controller;
-                _notes = notes;
+                cell.TextLabel.Text = "New note";
             }
-
-            public IList<Note> Notes => _notes;
-
-            // Customize the number of sections in the table view.
-            public override nint NumberOfSections(UITableView tableView)
+            else
             {
-                return 1;
+                cell.TextLabel.Text = note.Description;
             }
+            return cell;
+        }
 
-            public override nint RowsInSection(UITableView tableview, nint section)
+        public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)
+        {
+            // Return false if you do not want the specified item to be editable.
+            return true;
+        }
+
+        public override void CommitEditingStyle(UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)
+        {
+            if (editingStyle == UITableViewCellEditingStyle.Delete)
             {
-                return _notes.Count;
+                var noteToDelete = _notes.ElementAt(indexPath.Row);
+                _notes.RemoveAt(indexPath.Row);
+                _controller.NoteRepository.Delete(noteToDelete);
+                _controller.TableView.DeleteRows(new[] { indexPath }, UITableViewRowAnimation.Fade);
             }
-
-            // Customize the appearance of table view cells.
-            public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+            else if (editingStyle == UITableViewCellEditingStyle.Insert)
             {
-                var cell = tableView.DequeueReusableCell(CellIdentifier, indexPath);
-                var note = _notes[indexPath.Row];
-                if (note.Description == null)
-                {
-                    cell.TextLabel.Text = "New note";
-                }
-                else
-                {
-                    cell.TextLabel.Text = note.Description;
-                }
-                return cell;
-            }
-
-            public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)
-            {
-                // Return false if you do not want the specified item to be editable.
-                return true;
-            }
-
-            public override void CommitEditingStyle(UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)
-            {
-                if (editingStyle == UITableViewCellEditingStyle.Delete)
-                {
-                    // Delete the row from the data source.
-                    var noteToDelete = _notes.ElementAt(indexPath.Row);
-                    _notes.RemoveAt(indexPath.Row);
-                    _controller.NoteRepository.Delete(noteToDelete);
-                    // _controller.NoteRepository.Delete(indexPath.Row);
-                    _controller.TableView.DeleteRows(new[] { indexPath }, UITableViewRowAnimation.Fade);
-                }
-                else if (editingStyle == UITableViewCellEditingStyle.Insert)
-                {
-                    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-                }
+                // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
             }
         }
     }
