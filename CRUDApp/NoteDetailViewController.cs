@@ -1,20 +1,21 @@
 ﻿using System;
-using CRUDApp.Data;
+using CRUDApp.Data.Entities;
+using CRUDApp.Data.Repositories;
 using Foundation;
 using UIKit;
 
 namespace CRUDApp
 {
     public partial class NoteDetailViewController : UIViewController
-    {
-        public Note NoteEditModel { get; set; }
-        private Repository<Note> _repository;
+    {        
+        private NoteRepository _repository;
+        private Note NoteEditModel;
 
         public NoteDetailViewController(IntPtr handle) : base(handle)
         {
-        }
+        }        
 
-        public void SetRepository(Repository<Note> repository)
+        public void SetRepository(NoteRepository repository)
         {
             _repository = repository;
         }
@@ -54,7 +55,6 @@ namespace CRUDApp
         public override void DidReceiveMemoryWarning()
         {
             base.DidReceiveMemoryWarning();
-            // Release any cached data, images, etc that aren't in use.
         }
     }
 }

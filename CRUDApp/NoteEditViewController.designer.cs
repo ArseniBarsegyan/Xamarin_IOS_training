@@ -12,7 +12,7 @@ using UIKit;
 namespace CRUDApp
 {
     [Register ("NoteEditViewController")]
-    partial class NoteEditViewController
+    partial class NoteGalleryViewController
     {
         void ReleaseDesignerOutlets ()
         {

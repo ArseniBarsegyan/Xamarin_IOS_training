@@ -3,15 +3,17 @@ using System.Collections.Generic;
 
 using UIKit;
 using Foundation;
-using CRUDApp.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using CRUDApp.Data.Repositories;
+using System.IO;
+using CRUDApp.Data.Entities;
 
 namespace CRUDApp
 {
     public partial class MasterViewController : UITableViewController
     {
-        public Repository<Note> NoteRepository { get; private set; }
+        public NoteRepository NoteRepository { get; private set; }
         private DataSource _dataSource;
         private UIRefreshControl _refreshControl;
 
@@ -27,7 +29,7 @@ namespace CRUDApp
             SplitViewController.PreferredDisplayMode = UISplitViewControllerDisplayMode.AllVisible;
 
             NavigationItem.LeftBarButtonItem = EditButtonItem;
-            NoteRepository = new Repository<Note>();
+            NoteRepository = new NoteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "rm.db3"));
 
             _refreshControl = new UIRefreshControl();
             _refreshControl.ValueChanged += async(sender, args) =>
@@ -62,7 +64,7 @@ namespace CRUDApp
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
-            TableView.Source = _dataSource = new DataSource(this, NoteRepository.GetAll());
+            TableView.Source = _dataSource = new DataSource(this, NoteRepository.GetAll().ToList());
         }
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
@@ -144,7 +146,7 @@ namespace CRUDApp
             {
                 var noteToDelete = _notes.ElementAt(indexPath.Row);
                 _notes.RemoveAt(indexPath.Row);
-                _controller.NoteRepository.Delete(noteToDelete);
+                _controller.NoteRepository.DeleteNote(noteToDelete);
                 _controller.TableView.DeleteRows(new[] { indexPath }, UITableViewRowAnimation.Fade);
             }
             else if (editingStyle == UITableViewCellEditingStyle.Insert)

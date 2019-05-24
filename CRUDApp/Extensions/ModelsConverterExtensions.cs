@@ -1,4 +1,4 @@
-﻿using CRUDApp.Data;
+﻿using CRUDApp.Data.Entities;
 using CRUDApp.ViewModels;
 
 namespace CRUDApp.Extensions

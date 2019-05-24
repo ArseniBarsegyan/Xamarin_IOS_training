@@ -1,21 +1,24 @@
 using System;
-using CRUDApp.Data;
+using CRUDApp.Data.Entities;
+using CRUDApp.Data.Repositories;
 using UIKit;
 
 namespace CRUDApp
 {
     public partial class NoteEditViewController : UIViewController
     {
-        private Repository<Note> _repository;
+        private NoteRepository _repository;
         private DataSource _dataSource;
 
         private UITextView _noteDescriptionTextView;
+        private UILabel _noteDescriptionHintLabel;
+        private UIButton _toGalleryButton;
 
         public NoteEditViewController()
         {
         }
 
-        public NoteEditViewController (IntPtr handle) : base (handle)
+        public NoteEditViewController(IntPtr handle) : base (handle)
         {
         }
 
@@ -25,30 +28,74 @@ namespace CRUDApp
             {
                 AccessibilityLabel = "confirmButton"
             };
+            View.BackgroundColor = UIColor.White;
             Title = "New note";
             NavigationItem.RightBarButtonItem = addButton;
-            _noteDescriptionTextView = new UITextView();
-            // _noteDescriptionTextView.Frame = new CGRect(10, 10, 20, 10);
-            _noteDescriptionTextView.Text = "New note";
 
+            #region LabelForEditor
+            _noteDescriptionHintLabel = new UILabel()
+            {
+                Text = "Note:",
+                TextAlignment = UITextAlignment.Center,
+                TextColor = UIColor.DarkGray
+            };
+            _noteDescriptionHintLabel.Font = UIFont.SystemFontOfSize(16);
+            _noteDescriptionHintLabel.TranslatesAutoresizingMaskIntoConstraints = false;
+            View.AddSubview(_noteDescriptionHintLabel);
+            _noteDescriptionHintLabel.LeadingAnchor.ConstraintEqualTo(View.LeadingAnchor).Active = true;
+            _noteDescriptionHintLabel.TopAnchor.ConstraintEqualTo(View.TopAnchor, 80f).Active = true;
+            _noteDescriptionHintLabel.WidthAnchor.ConstraintEqualTo(100f).Active = true;
+            _noteDescriptionHintLabel.HeightAnchor.ConstraintEqualTo(20f).Active = true;
+            #endregion
+
+            #region EditorForDescription
+            _noteDescriptionTextView = new UITextView();
+            _noteDescriptionTextView.Text = "New note";
+            _noteDescriptionTextView.Font = UIFont.SystemFontOfSize(16);
             _noteDescriptionTextView.TranslatesAutoresizingMaskIntoConstraints = false;
             View.AddSubview(_noteDescriptionTextView);
-            
-            _noteDescriptionTextView.LeadingAnchor.ConstraintEqualTo(View.LeadingAnchor, 5f).Active = true;
-            _noteDescriptionTextView.TopAnchor.ConstraintEqualTo(View.TopAnchor, 50f).Active = true;
+            _noteDescriptionTextView.LeadingAnchor.ConstraintEqualTo(_noteDescriptionHintLabel.LeadingAnchor).Active = true;
+            _noteDescriptionTextView.TopAnchor.ConstraintEqualTo(_noteDescriptionHintLabel.BottomAnchor, 5f).Active = true;
             _noteDescriptionTextView.WidthAnchor.ConstraintEqualTo(View.WidthAnchor).Active = true;
             _noteDescriptionTextView.HeightAnchor.ConstraintEqualTo(300).Active = true;
-        }        
+            #endregion
+
+            #region ToGalleryLink
+            _toGalleryButton = new UIButton();
+            _toGalleryButton.SetTitle("View gallery", UIControlState.Normal);            
+            View.AddSubview(_toGalleryButton);
+            _toGalleryButton.TopAnchor.ConstraintEqualTo(_noteDescriptionTextView.BottomAnchor, 10f).Active = true;
+            _toGalleryButton.CenterYAnchor.ConstraintEqualTo(View.CenterYAnchor).Active = true;
+            #endregion
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            _toGalleryButton.TouchUpInside += ToGalleryButton_TouchUpInside;
+        }
+
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+            _toGalleryButton.TouchUpInside -= ToGalleryButton_TouchUpInside;
+        }
+
+        private void ToGalleryButton_TouchUpInside(object sender, EventArgs e)
+        {
+            var galleryController = new NoteGalleryViewController(new GalleryCollectionViewLayout());
+        }
 
         private void AddNewItem(object sender, EventArgs args)
         {
-            var note = new Note { Description = _noteDescriptionTextView.Text, CreateDate = DateTime.Now };            
+            var noteCreationDate = DateTime.Now;
+            var note = new Note { Description = _noteDescriptionTextView.Text, CreationDate = noteCreationDate, EditDate = noteCreationDate };
             _repository.Save(note);
             _dataSource.Notes.Add(note);
             NavigationController.PopViewController(true);
         }
 
-        public void SetRepository(Repository<Note> repository)
+        public void SetRepository(NoteRepository repository)
         {
             _repository = repository;
         }
