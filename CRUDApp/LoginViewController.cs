@@ -45,19 +45,19 @@ namespace CRUDApp
                 TextAlignment = UITextAlignment.Left
             };
             _loginTextField.Layer.BorderWidth = 1.0f;
+            _loginTextField.Layer.BorderColor = UIColor.LightGray.CGColor;
+            _loginTextField.Layer.CornerRadius = 10.0f;
             _loginTextField.BorderStyle = UITextBorderStyle.RoundedRect;
             _loginTextField.ShouldChangeCharacters = (textField, range, replacementString) =>
             {
                 var newLength = textField.Text.Length + replacementString.Length - range.Length;
                 return newLength <= 40;
             };
-            var paddingView = new UIView(new RectangleF(15,15,15,15));
-            _loginTextField.LeftView = paddingView;
-            _loginTextField.LeftViewMode = UITextFieldViewMode.Always;
             View.AddSubview(_loginTextField);
             _loginTextField.TranslatesAutoresizingMaskIntoConstraints = false;
             _loginTextField.TopAnchor.ConstraintEqualTo(_loginLabel.BottomAnchor, 5f).Active = true;
-            _loginTextField.WidthAnchor.ConstraintEqualTo(View.WidthAnchor, 50f).Active = true;
+            _loginTextField.LeadingAnchor.ConstraintEqualTo(View.LeadingAnchor, 25f).Active = true;
+            _loginTextField.RightAnchor.ConstraintEqualTo(View.RightAnchor, -25f).Active = true;
         }
 
         public override void ViewWillAppear(bool animated)
