@@ -5,7 +5,7 @@ using CRUDApp.Data.Entities;
 using Foundation;
 using UIKit;
 
-namespace CRUDApp
+namespace CRUDApp.Controllers
 {
     public partial class NoteGalleryViewController : UICollectionViewController
     {

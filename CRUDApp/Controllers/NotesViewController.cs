@@ -1,42 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using UIKit;
-using Foundation;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CRUDApp.Data.Repositories;
-using System.IO;
 using CRUDApp.Data.Entities;
+using CRUDApp.Data.Repositories;
+using Foundation;
+using UIKit;
 
-namespace CRUDApp
+namespace CRUDApp.Controllers
 {
-    public partial class MasterViewController : UITableViewController
+    public class NotesViewController : UITableViewController
     {
         public NoteRepository NoteRepository { get; private set; }
         private DataSource _dataSource;
         private UIRefreshControl _refreshControl;
 
-        protected MasterViewController(IntPtr handle) : base(handle)
-        {
-        }
-
         public override void ViewDidLoad()
         {
+            NavigationController.SetNavigationBarHidden(false, false);
+            Title = NSBundle.MainBundle.GetLocalizedString("Master", "Master");
             base.ViewDidLoad();
 
             Title = NSBundle.MainBundle.GetLocalizedString("Master", "Master");
-            SplitViewController.PreferredDisplayMode = UISplitViewControllerDisplayMode.AllVisible;
 
             NavigationItem.LeftBarButtonItem = EditButtonItem;
             NoteRepository = new NoteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "rm.db3"));
 
             _refreshControl = new UIRefreshControl();
-            _refreshControl.ValueChanged += async(sender, args) =>
+            _refreshControl.ValueChanged += async (sender, args) =>
             {
                 await Refresh();
             };
             TableView.RefreshControl = _refreshControl;
+            TableView.RegisterClassForCellReuse(typeof(NoteCell), "Cell");
+            TableView.Source = new DataSource(this, NoteRepository.GetAll().ToList());
 
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, NavigateToEditNoteController)
             {
@@ -66,40 +64,22 @@ namespace CRUDApp
             base.ViewWillAppear(animated);
             TableView.Source = _dataSource = new DataSource(this, NoteRepository.GetAll().ToList());
         }
+    }
 
-        public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
+    public class NoteCell : UITableViewCell
+    {
+        public NoteCell(IntPtr handle) : base(handle)
         {
-            if (segue.Identifier == "showDetail")
-            {
-                var controller = (NoteDetailViewController)((UINavigationController)segue.DestinationViewController).TopViewController;
-                var indexPath = TableView.IndexPathForSelectedRow;
-                var item = _dataSource.Notes[indexPath.Row];
-
-                controller.SetDetailItem(item);
-                controller.SetRepository(NoteRepository);
-                controller.NavigationItem.LeftBarButtonItem = SplitViewController.DisplayModeButtonItem;
-                controller.NavigationItem.LeftItemsSupplementBackButton = true;
-            }
-            else if (segue.Identifier == "noteEditSeague")
-            {
-                if (segue.DestinationViewController is NoteEditViewController controller)
-                {
-                    controller.SetRepository(NoteRepository);
-                    controller.SetDataSource(_dataSource);
-                    controller.NavigationItem.LeftItemsSupplementBackButton = true;
-                }                
-            }
-            
-        }        
+        }
     }
 
     public class DataSource : UITableViewSource
     {
         private static readonly NSString CellIdentifier = new NSString("Cell");
-        private readonly List<Note> _notes = new List<Note>();
-        private readonly MasterViewController _controller;
+        private readonly List<Note> _notes;
+        private readonly NotesViewController _controller;
 
-        public DataSource(MasterViewController controller, List<Note> notes)
+        public DataSource(NotesViewController controller, List<Note> notes)
         {
             _controller = controller;
             _notes = notes;
@@ -123,14 +103,7 @@ namespace CRUDApp
         {
             var cell = tableView.DequeueReusableCell(CellIdentifier, indexPath);
             var note = _notes[indexPath.Row];
-            if (note.Description == null)
-            {
-                cell.TextLabel.Text = "New note";
-            }
-            else
-            {
-                cell.TextLabel.Text = note.Description;
-            }
+            cell.TextLabel.Text = note.Description ?? "New note";
             return cell;
         }
 

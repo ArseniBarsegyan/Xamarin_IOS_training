@@ -3,7 +3,7 @@ using CRUDApp.Data.Entities;
 using CRUDApp.Data.Repositories;
 using UIKit;
 
-namespace CRUDApp
+namespace CRUDApp.Controllers
 {
     public partial class NoteEditViewController : UIViewController
     {
@@ -33,14 +33,15 @@ namespace CRUDApp
             NavigationItem.RightBarButtonItem = addButton;
 
             #region LabelForEditor
-            _noteDescriptionHintLabel = new UILabel()
+
+            _noteDescriptionHintLabel = new UILabel
             {
                 Text = "Note:",
                 TextAlignment = UITextAlignment.Center,
-                TextColor = UIColor.DarkGray
+                TextColor = UIColor.DarkGray,
+                Font = UIFont.SystemFontOfSize(16),
+                TranslatesAutoresizingMaskIntoConstraints = false
             };
-            _noteDescriptionHintLabel.Font = UIFont.SystemFontOfSize(16);
-            _noteDescriptionHintLabel.TranslatesAutoresizingMaskIntoConstraints = false;
             View.AddSubview(_noteDescriptionHintLabel);
             _noteDescriptionHintLabel.LeadingAnchor.ConstraintEqualTo(View.LeadingAnchor).Active = true;
             _noteDescriptionHintLabel.TopAnchor.ConstraintEqualTo(View.TopAnchor, 80f).Active = true;
@@ -49,10 +50,13 @@ namespace CRUDApp
             #endregion
 
             #region EditorForDescription
-            _noteDescriptionTextView = new UITextView();
-            _noteDescriptionTextView.Text = "New note";
-            _noteDescriptionTextView.Font = UIFont.SystemFontOfSize(16);
-            _noteDescriptionTextView.TranslatesAutoresizingMaskIntoConstraints = false;
+
+            _noteDescriptionTextView = new UITextView
+            {
+                Text = "New note",
+                Font = UIFont.SystemFontOfSize(16),
+                TranslatesAutoresizingMaskIntoConstraints = false
+            };
             View.AddSubview(_noteDescriptionTextView);
             _noteDescriptionTextView.LeadingAnchor.ConstraintEqualTo(_noteDescriptionHintLabel.LeadingAnchor).Active = true;
             _noteDescriptionTextView.TopAnchor.ConstraintEqualTo(_noteDescriptionHintLabel.BottomAnchor, 5f).Active = true;

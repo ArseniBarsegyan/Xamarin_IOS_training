@@ -1,10 +1,16 @@
 ﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using CRUDApp.Data.Repositories;
+using CRUDApp.Helpers;
 using UIKit;
 
-namespace CRUDApp
+namespace CRUDApp.Controllers
 {
     public class LoginViewController : UIViewController
     {
+        private AuthenticationManager _authenticationManager;
+
         private bool _isRegisterMode;
         private UILabel _titleLabel;
 
@@ -23,7 +29,10 @@ namespace CRUDApp
 
         public override void ViewDidLoad()
         {
+            NavigationController.SetNavigationBarHidden(true, false);
             base.ViewDidLoad();
+            _authenticationManager = new AuthenticationManager(
+                    new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "rm.db3")));
             View.BackgroundColor = UIColor.White;
             _titleLabel = new UILabel
             {
@@ -98,7 +107,7 @@ namespace CRUDApp
             _passwordTextField.ShouldChangeCharacters = (textField, range, replacementString) =>
             {
                 var newLength = textField.Text.Length + replacementString.Length - range.Length;
-                return newLength <= 40;
+                return newLength <= 25;
             };
             View.AddSubview(_passwordTextField);
             _passwordTextField.TranslatesAutoresizingMaskIntoConstraints = false;
@@ -135,7 +144,7 @@ namespace CRUDApp
             _confirmPasswordTextField.ShouldChangeCharacters = (textField, range, replacementString) =>
             {
                 var newLength = textField.Text.Length + replacementString.Length - range.Length;
-                return newLength <= 40;
+                return newLength <= 25;
             };
             View.AddSubview(_confirmPasswordTextField);
             _confirmPasswordTextField.TranslatesAutoresizingMaskIntoConstraints = false;
@@ -165,13 +174,77 @@ namespace CRUDApp
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+            _loginButton.TouchUpInside += LoginButtonOnTouchUpInside;
             _registerButton.TouchUpInside += RegisterButtonOnTouchUpInside;
         }
 
         public override void ViewWillDisappear(bool animated)
         {
             base.ViewWillDisappear(animated);
+            _loginButton.TouchUpInside -= LoginButtonOnTouchUpInside;
             _registerButton.TouchUpInside -= RegisterButtonOnTouchUpInside;
+        }
+
+        private async void LoginButtonOnTouchUpInside(object sender, EventArgs e)
+        {
+            var userName = _loginTextField.Text;
+            var password = _passwordTextField.Text;
+
+            //TODO: password regex
+            if (string.IsNullOrWhiteSpace(userName)|| string.IsNullOrWhiteSpace(password))
+            {
+                var okAlertController = UIAlertController.Create("Validation error", "Please enter name and password",
+                    UIAlertControllerStyle.Alert);
+                okAlertController.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                PresentViewController(okAlertController, true, null);
+                return;
+            }
+
+            if (_isRegisterMode)
+            {
+                var confirmPassword = _confirmPasswordTextField.Text;
+                if (password != confirmPassword)
+                {
+                    var okAlertController = UIAlertController.Create("Passwords error", "Passwords doesn't match",
+                        UIAlertControllerStyle.Alert);
+                    okAlertController.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    PresentViewController(okAlertController, true, null);
+                    return;
+                }
+                var authResult = await _authenticationManager.Register(userName, password);
+                if (authResult)
+                {
+                    await AuthenticateUser(userName, password);
+                }
+                else
+                {
+                    var okAlertController = UIAlertController.Create("Error", "User already exists",
+                        UIAlertControllerStyle.Alert);
+                    okAlertController.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    PresentViewController(okAlertController, true, null);
+                }
+            }
+            else
+            {
+                await AuthenticateUser(userName, password);
+            }
+        }
+
+        private async Task AuthenticateUser(string username, string password)
+        {
+            bool result = await _authenticationManager.Authenticate(username, password);
+            if (result)
+            {
+                Settings.AppUser = username;
+                NavigationController.SetViewControllers(new UIViewController[] { new NotesViewController() }, true);
+            }
+            else
+            {
+                var okAlertController = UIAlertController.Create("Error", "No such user or password incorrect",
+                    UIAlertControllerStyle.Alert);
+                okAlertController.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                PresentViewController(okAlertController, true, null);
+            }
         }
 
         private void RegisterButtonOnTouchUpInside(object sender, EventArgs e)

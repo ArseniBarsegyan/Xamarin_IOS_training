@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using CRUDApp.Controllers;
+using Foundation;
 using UIKit;
 
 namespace CRUDApp
@@ -21,7 +22,10 @@ namespace CRUDApp
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
-            Window.RootViewController = new LoginViewController();
+            var mainController = new SplitViewController();
+            mainController.ShowDetailViewController(new UINavigationController(new LoginViewController()), this);
+            Window.RootViewController = mainController;
+
             Window.MakeKeyAndVisible();
             return true;
         }
