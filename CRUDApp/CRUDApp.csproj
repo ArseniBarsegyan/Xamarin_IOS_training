@@ -78,6 +78,10 @@
     <Compile Include="Data\Repositories\UserRepository.cs" />
     <Compile Include="Helpers\AuthenticationManager.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="LoginView.cs" />
+    <Compile Include="LoginView.designer.cs">
+      <DependentUpon>LoginView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\LoginViewController.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
@@ -89,6 +93,7 @@
     <Compile Include="Helpers\ConstantsHelper.cs" />
     <Compile Include="ViewModels\NoteViewModel.cs" />
     <Compile Include="Extensions\ModelsConverterExtensions.cs" />
+    <InterfaceDefinition Include="LoginView.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\NoteDetailViewController.cs" />
