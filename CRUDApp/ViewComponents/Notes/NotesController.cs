@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CRUDApp.Controllers;
 using CRUDApp.Data.Repositories;
+using CRUDApp.ViewComponents.NoteEdit;
 using Foundation;
 using UIKit;
 
@@ -38,7 +39,7 @@ namespace CRUDApp.ViewComponents.Notes
 
             TableView.RefreshControl = _refreshControl;
             TableView.RegisterClassForCellReuse(typeof(NoteCell), "Cell");
-            TableView.Source = new DataSource(this, NoteRepository.GetAll().ToList());
+            //TableView.Source = new DataSource(this, NoteRepository.GetAll().ToList());
 
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, NavigateToEditNoteController)
             {
@@ -52,6 +53,7 @@ namespace CRUDApp.ViewComponents.Notes
             _refreshControl.BeginRefreshing();
             await Task.Delay(200);
             _refreshControl.EndRefreshing();
+            TableView.Source = new DataSource(this, NoteRepository.GetAll().ToList());
             TableView.ReloadData();
         }
 
@@ -61,6 +63,12 @@ namespace CRUDApp.ViewComponents.Notes
             noteEditViewController.SetDataSource(_dataSource);
             noteEditViewController.SetRepository(NoteRepository);
             NavigationController.PushViewController(noteEditViewController, true);
+        }
+
+        public override async void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            await Refresh();
         }
     }
 }

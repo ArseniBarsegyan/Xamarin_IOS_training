@@ -87,7 +87,6 @@
     <Compile Include="AppDelegate.cs" />
     <None Include="Info.plist" />
     <Compile Include="Controllers\NoteGalleryViewController.cs" />
-    <Compile Include="Controllers\NoteEditViewController.cs" />
     <Compile Include="ViewComponents\Notes\DataSource.cs" />
     <Compile Include="ViewComponents\Notes\NoteCell.cs" />
     <Compile Include="ViewComponents\Notes\NotesController.cs" />
@@ -106,6 +105,7 @@
     <InterfaceDefinition Include="ViewComponents\Login\LoginView.xib" />
     <InterfaceDefinition Include="Test\ViewController1.storyboard" />
     <InterfaceDefinition Include="ViewComponents\Notes\NotesController.storyboard" />
+    <Compile Include="ViewComponents\NoteEdit\NoteEditViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\NoteDetailViewController.cs" />
@@ -180,7 +180,7 @@
     <Content Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Notes\" />
+    <Folder Include="ViewComponents\NoteEdit\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
