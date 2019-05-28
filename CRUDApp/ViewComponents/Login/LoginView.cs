@@ -1,12 +1,20 @@
 using System;
+using CoreGraphics;
 using UIKit;
 
-namespace CRUDApp
+namespace CRUDApp.ViewComponents.Login
 {
     public partial class LoginView : UIView
     {
         public LoginView (IntPtr handle) : base (handle)
         {
+        }
+
+        public override void Draw(CGRect rect)
+        {
+            base.Draw(rect);
+            confirmPasswordLabel.Hidden = true;
+            confirmPasswordTextField.Hidden = true;
         }
 
         public bool IsRegisterMode { get; private set; }

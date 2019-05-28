@@ -3,11 +3,12 @@ using System.IO;
 using System.Threading.Tasks;
 using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
+using CRUDApp.ViewComponents.Notes;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
 
-namespace CRUDApp.Controllers
+namespace CRUDApp.ViewComponents.Login
 {
     public class LoginViewController : UIViewController
     {
@@ -90,7 +91,10 @@ namespace CRUDApp.Controllers
             if (result)
             {
                 Settings.AppUser = username;
-                NavigationController.SetViewControllers(new UIViewController[] { new NotesViewController() }, true);
+                // NavigationController.SetViewControllers(new UIViewController[] { new NotesViewController() }, true);
+                UIStoryboard helloWorldStoryboard = UIStoryboard.FromName(nameof(NotesController), null);
+                var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();
+                NavigationController.PushViewController(initialViewController, true);
             }
             else
             {

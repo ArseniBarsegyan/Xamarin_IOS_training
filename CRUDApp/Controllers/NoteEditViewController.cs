@@ -1,6 +1,8 @@
 using System;
+using Cirrious.FluentLayouts.Touch;
 using CRUDApp.Data.Entities;
 using CRUDApp.Data.Repositories;
+using CRUDApp.ViewComponents.Notes;
 using UIKit;
 
 namespace CRUDApp.Controllers
@@ -43,10 +45,16 @@ namespace CRUDApp.Controllers
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
             View.AddSubview(_noteDescriptionHintLabel);
-            _noteDescriptionHintLabel.LeadingAnchor.ConstraintEqualTo(View.LeadingAnchor).Active = true;
+            _noteDescriptionHintLabel.ToLeftOf(View, 25f);
             _noteDescriptionHintLabel.TopAnchor.ConstraintEqualTo(View.TopAnchor, 80f).Active = true;
-            _noteDescriptionHintLabel.WidthAnchor.ConstraintEqualTo(100f).Active = true;
-            _noteDescriptionHintLabel.HeightAnchor.ConstraintEqualTo(20f).Active = true;
+            _noteDescriptionHintLabel.Width().EqualTo(100f);
+            _noteDescriptionHintLabel.Height().EqualTo(20f);
+
+
+            //_noteDescriptionHintLabel.LeadingAnchor.ConstraintEqualTo(View.LeadingAnchor).Active = true;
+            //_noteDescriptionHintLabel.TopAnchor.ConstraintEqualTo(View.TopAnchor, 80f).Active = true;
+            //_noteDescriptionHintLabel.WidthAnchor.ConstraintEqualTo(100f).Active = true;
+            //_noteDescriptionHintLabel.HeightAnchor.ConstraintEqualTo(20f).Active = true;
             #endregion
 
             #region EditorForDescription
@@ -57,19 +65,27 @@ namespace CRUDApp.Controllers
                 Font = UIFont.SystemFontOfSize(16),
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
-            View.AddSubview(_noteDescriptionTextView);
-            _noteDescriptionTextView.LeadingAnchor.ConstraintEqualTo(_noteDescriptionHintLabel.LeadingAnchor).Active = true;
-            _noteDescriptionTextView.TopAnchor.ConstraintEqualTo(_noteDescriptionHintLabel.BottomAnchor, 5f).Active = true;
-            _noteDescriptionTextView.WidthAnchor.ConstraintEqualTo(View.WidthAnchor).Active = true;
-            _noteDescriptionTextView.HeightAnchor.ConstraintEqualTo(300).Active = true;
+            //View.AddSubview(_noteDescriptionTextView);
+            //_noteDescriptionTextView.WithSameLeft(_noteDescriptionHintLabel);
+            //_noteDescriptionTextView.AtBottomOf(_noteDescriptionHintLabel, 10f);
+            //_noteDescriptionTextView.WithSameWidth(View);
+            //_noteDescriptionTextView.Height().EqualTo(300);
+
+            //_noteDescriptionTextView.LeadingAnchor.ConstraintEqualTo(_noteDescriptionHintLabel.LeadingAnchor).Active = true;
+            //_noteDescriptionTextView.TopAnchor.ConstraintEqualTo(_noteDescriptionHintLabel.BottomAnchor, 5f).Active = true;
+            //_noteDescriptionTextView.WidthAnchor.ConstraintEqualTo(View.WidthAnchor).Active = true;
+            //_noteDescriptionTextView.HeightAnchor.ConstraintEqualTo(300).Active = true;
             #endregion
 
             #region ToGalleryLink
             _toGalleryButton = new UIButton();
-            _toGalleryButton.SetTitle("View gallery", UIControlState.Normal);            
-            View.AddSubview(_toGalleryButton);
-            _toGalleryButton.TopAnchor.ConstraintEqualTo(_noteDescriptionTextView.BottomAnchor, 10f).Active = true;
-            _toGalleryButton.CenterYAnchor.ConstraintEqualTo(View.CenterYAnchor).Active = true;
+            //_toGalleryButton.SetTitle("View gallery", UIControlState.Normal);            
+            //View.AddSubview(_toGalleryButton);
+            //_toGalleryButton.AtBottomOf(_noteDescriptionTextView, 10f);
+            //_toGalleryButton.WithSameCenterY(View);
+
+            //_toGalleryButton.TopAnchor.ConstraintEqualTo(_noteDescriptionTextView.BottomAnchor, 10f).Active = true;
+            //_toGalleryButton.CenterYAnchor.ConstraintEqualTo(View.CenterYAnchor).Active = true;
             #endregion
         }
 

@@ -8,7 +8,7 @@ using Foundation;
 using System;
 using System.CodeDom.Compiler;
 
-namespace CRUDApp
+namespace CRUDApp.ViewComponents.Login
 {
     [Register ("LoginView")]
     partial class LoginView
