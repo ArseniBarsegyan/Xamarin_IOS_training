@@ -1,7 +1,7 @@
 using System;
+using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
 using Foundation;
-using ObjCRuntime;
 using UIKit;
 
 namespace CRUDApp.ViewComponents.Login
@@ -12,42 +12,91 @@ namespace CRUDApp.ViewComponents.Login
         {
         }
 
+        public LoginView()
+        {
+            InitView();
+        }
+
+        private void InitView()
+        {
+            var arr = NSBundle.MainBundle.LoadNib(nameof(LoginView), this, null);
+            var rootView = ObjCRuntime.Runtime.GetNSObject(arr.ValueAt(0)) as LoginView;
+
+            TitleLabel = rootView.titleLabel;
+            LoginButton = rootView.loginButton;
+            LoginTextField = rootView.loginTextField;
+            PasswordTextField = rootView.passwordTextField;
+            ConfirmPasswordLabel = rootView.confirmPasswordLabel;
+            ConfirmPasswordTextField = rootView.confirmPasswordTextField;
+            RegisterButton = rootView.registerButton;
+
+            SubscribeOnEvents();
+
+            AddSubview(rootView);
+            this.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
+            this.AddConstraints(
+                rootView.WithSameTop(this),
+                rootView.WithSameBottom(this),
+                rootView.WithSameLeft(this),
+                rootView.WithSameRight(this));
+        }
+
         public override void Draw(CGRect rect)
         {
             base.Draw(rect);
-            confirmPasswordLabel.Hidden = true;
-            confirmPasswordTextField.Hidden = true;
+
+            if (ConfirmPasswordLabel != null)
+            {
+                ConfirmPasswordLabel.Hidden = true;
+            }
+            if (ConfirmPasswordTextField != null)
+            {
+                ConfirmPasswordTextField.Hidden = true;
+            }
+        }
+
+        private void SubscribeOnEvents()
+        {
+            RegisterButton.TouchUpInside += RegisterButton_OnTouchUpInside;
+        }
+
+        private void UnsubscribeOnEvents()
+        {
+            RegisterButton.TouchUpInside -= RegisterButton_OnTouchUpInside;
         }
 
         public bool IsRegisterMode { get; private set; }
-        internal UIButton LoginButton => loginButton;
-        internal UITextField LoginTextField => loginTextField;
-        internal UITextField PasswordTextField => passwordTextField;
-        internal UITextField ConfirmPasswordTextField => confirmPasswordTextField;
+        public UILabel TitleLabel { get; private set; }
+        public UIButton LoginButton { get; private set; }
+        public UITextField LoginTextField { get; private set; }
+        public UITextField PasswordTextField { get; private set; }
+        public UITextField ConfirmPasswordTextField { get; private set; }
+        public UILabel ConfirmPasswordLabel { get; private set; }
+        public UIButton RegisterButton { get; private set; }
 
-        partial void RegisterButton_OnTouchUpInside(UIButton sender)
+        private void RegisterButton_OnTouchUpInside(object sender, EventArgs args)
         {
             IsRegisterMode = !IsRegisterMode;
 
             if (IsRegisterMode)
             {
-                titleLabel.Text = "Register";
+                TitleLabel.Text = "Register";
 
-                confirmPasswordLabel.Hidden = false;
-                confirmPasswordTextField.Hidden = false;
+                ConfirmPasswordLabel.Hidden = false;
+                ConfirmPasswordTextField.Hidden = false;
 
                 LoginButton.SetTitle("Register", UIControlState.Normal);
-                registerButton.SetTitle("Already have account? Login", UIControlState.Normal);
+                RegisterButton.SetTitle("Already have account? Login", UIControlState.Normal);
             }
             else
             {
-                titleLabel.Text = "Login";
+                TitleLabel.Text = "Login";
 
-                confirmPasswordLabel.Hidden = true;
-                confirmPasswordTextField.Hidden = true;
+                ConfirmPasswordLabel.Hidden = true;
+                ConfirmPasswordTextField.Hidden = true;
 
                 LoginButton.SetTitle("Login", UIControlState.Normal);
-                registerButton.SetTitle("No account? Register", UIControlState.Normal);
+                RegisterButton.SetTitle("No account? Register", UIControlState.Normal);
             }
         }
     }

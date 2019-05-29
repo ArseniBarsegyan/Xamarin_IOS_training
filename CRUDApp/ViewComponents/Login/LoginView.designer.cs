@@ -53,10 +53,6 @@ namespace CRUDApp.ViewComponents.Login
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel userNameLabel { get; set; }
 
-        [Action ("RegisterButton_OnTouchUpInside:")]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        partial void RegisterButton_OnTouchUpInside (UIKit.UIButton sender);
-
         void ReleaseDesignerOutlets ()
         {
             if (confirmPasswordLabel != null) {

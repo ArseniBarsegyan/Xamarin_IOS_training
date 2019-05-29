@@ -1,11 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Cirrious.FluentLayouts.Touch;
 using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Notes;
-using Foundation;
-using ObjCRuntime;
 using UIKit;
 
 namespace CRUDApp.ViewComponents.Login
@@ -20,9 +19,18 @@ namespace CRUDApp.ViewComponents.Login
             NavigationController.SetNavigationBarHidden(true, false);
             base.ViewDidLoad();
 
-            var view = Runtime.GetNSObject(NSBundle.MainBundle.LoadNib(nameof(LoginView), this, null).ValueAt(0));
-            _loginView = view as LoginView;
+            //var view = Runtime.GetNSObject(NSBundle.MainBundle.LoadNib(nameof(LoginView), this, null).ValueAt(0));
+            //_loginView = view as LoginView;
+            //View.AddSubview(_loginView);
+
+            _loginView = new LoginView();
             View.AddSubview(_loginView);
+
+            View.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
+            View.AddConstraints(_loginView.WithSameRight(View),
+                _loginView.WithSameLeft(View),
+                _loginView.WithSameTop(View),
+                _loginView.WithSameBottom(View));
             
             _authenticationManager = new AuthenticationManager(
                     new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "rm.db3")));

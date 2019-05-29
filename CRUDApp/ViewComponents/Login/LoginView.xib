@@ -56,9 +56,7 @@
                     <state key="normal" title="Register">
                         <color key="titleColor" colorSpace="calibratedRGB" red="0.0392156862745098" green="0.37647058823529411" blue="1" alpha="1"/>
                     </state>
-                    <connections>
-                        <action selector="RegisterButton_OnTouchUpInside:" destination="1" id="900" eventType="touchUpInside"/>
-                    </connections>
+                    <connections/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="817" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES" textAlignment="center">
                     <rect key="frame" x="126" y="503" width="154" height="21"/>
