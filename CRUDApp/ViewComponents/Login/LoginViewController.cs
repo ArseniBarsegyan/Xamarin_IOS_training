@@ -19,10 +19,6 @@ namespace CRUDApp.ViewComponents.Login
             NavigationController.SetNavigationBarHidden(true, false);
             base.ViewDidLoad();
 
-            //var view = Runtime.GetNSObject(NSBundle.MainBundle.LoadNib(nameof(LoginView), this, null).ValueAt(0));
-            //_loginView = view as LoginView;
-            //View.AddSubview(_loginView);
-
             _loginView = new LoginView();
             View.AddSubview(_loginView);
 
@@ -99,7 +95,7 @@ namespace CRUDApp.ViewComponents.Login
             if (result)
             {
                 Settings.AppUser = username;
-                // NavigationController.SetViewControllers(new UIViewController[] { new NotesViewController() }, true);
+                //NavigationController.SetViewControllers(new UIViewController[] { new UISideMenuController() }, true);
                 UIStoryboard helloWorldStoryboard = UIStoryboard.FromName(nameof(NotesController), null);
                 var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();
                 NavigationController.PushViewController(initialViewController, true);
