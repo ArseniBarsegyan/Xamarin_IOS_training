@@ -94,7 +94,7 @@ namespace CRUDApp.ViewComponents.Login
             bool result = await _authenticationManager.Authenticate(username, password);
             if (result)
             {
-                Settings.AppUser = username;
+                Helpers.Settings.AppUser = username;
                 //NavigationController.SetViewControllers(new UIViewController[] { new UISideMenuController() }, true);
                 UIStoryboard helloWorldStoryboard = UIStoryboard.FromName(nameof(NotesController), null);
                 var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();

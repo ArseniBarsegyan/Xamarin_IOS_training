@@ -108,6 +108,12 @@
     <Compile Include="ViewComponents\NoteEdit\NoteEditViewController.cs" />
     <Compile Include="ViewComponents\Notes\SideMenuViewController.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
+    <InterfaceDefinition Include="ViewComponents\Settings\SettingsView.xib" />
+    <Compile Include="ViewComponents\Settings\SettingsViewController.cs" />
+    <Compile Include="ViewComponents\Settings\SettingsView.cs" />
+    <Compile Include="ViewComponents\Settings\SettingsView.designer.cs">
+      <DependentUpon>SettingsView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\NoteDetailViewController.cs" />
@@ -186,9 +192,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewComponents\NoteEdit\" />
+    <Folder Include="ViewComponents\Settings\" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\stars.png" />
     <BundleResource Include="Resources\achievements_icon%401x.png" />
     <BundleResource Include="Resources\achievements_icon%402x.png" />
     <BundleResource Include="Resources\achievements_icon%403x.png" />

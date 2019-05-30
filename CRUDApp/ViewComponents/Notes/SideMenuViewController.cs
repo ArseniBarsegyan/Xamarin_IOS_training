@@ -5,6 +5,7 @@ using CRUDApp.Controllers;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Login;
 using CRUDApp.ViewComponents.Notes;
+using CRUDApp.ViewComponents.Settings;
 using UIKit;
 using Xamarin.SideMenu;
 
@@ -50,6 +51,9 @@ namespace CRUDApp
                 case MenuViewIndex.NotesView:
                     NavigateToNotesSection();
                     break;
+                case MenuViewIndex.SettingsView:
+                    NavigateToSettingsSection();
+                    break;
                 case MenuViewIndex.Logout:
                     Logout();
                     break;
@@ -65,6 +69,17 @@ namespace CRUDApp
             var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();
 
             mainController.ShowDetailViewController(new UINavigationController(initialViewController), this);
+            window.RootViewController = mainController;
+        }
+
+        private void NavigateToSettingsSection()
+        {
+            var window = UIApplication.SharedApplication.KeyWindow;
+            var mainController = new SplitViewController();
+
+            var settingsViewController = new SettingsViewController();
+
+            mainController.ShowDetailViewController(new UINavigationController(settingsViewController), this);
             window.RootViewController = mainController;
         }
 
