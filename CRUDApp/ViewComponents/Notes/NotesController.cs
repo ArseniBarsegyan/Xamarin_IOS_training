@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CRUDApp.Data.Repositories;
+using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.NoteEdit;
 using Foundation;
 using UIKit;
@@ -39,7 +39,6 @@ namespace CRUDApp.ViewComponents.Notes
                 false);
             SetupSideMenu();
 
-
             NoteRepository = new NoteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "rm.db3"));
             _dataSource = new DataSource(this, NoteRepository.GetAll().ToList());
 
@@ -61,19 +60,12 @@ namespace CRUDApp.ViewComponents.Notes
             NavigationItem.RightBarButtonItem = addButton;
         }
 
-        void SetupSideMenu()
+        private void SetupSideMenu()
         {
-            var items = new List<string>
-            {
-                "Notes",
-                "To-Do",
-                "Achievements",
-                "Settings",
-                "Logout"
-            };
+            var sideMenuItems = MenuHelper.GetMenu();
             _sideMenuManager.FadeStatusBar = false;
             _sideMenuManager.LeftNavigationController = new UISideMenuNavigationController
-                (_sideMenuManager, new SideMenuViewController(items), true);
+                (_sideMenuManager, new SideMenuViewController(sideMenuItems), true);
             _sideMenuManager.BlurEffectStyle = null;
             _sideMenuManager.AnimationFadeStrength = 0;
             _sideMenuManager.ShadowOpacity = 1f;

@@ -107,6 +107,7 @@
     <InterfaceDefinition Include="ViewComponents\Notes\NotesController.storyboard" />
     <Compile Include="ViewComponents\NoteEdit\NoteEditViewController.cs" />
     <Compile Include="ViewComponents\Notes\SideMenuViewController.cs" />
+    <Compile Include="Helpers\MenuHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\NoteDetailViewController.cs" />
@@ -188,6 +189,21 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\stars.png" />
+    <BundleResource Include="Resources\achievements_icon%401x.png" />
+    <BundleResource Include="Resources\achievements_icon%402x.png" />
+    <BundleResource Include="Resources\achievements_icon%403x.png" />
+    <BundleResource Include="Resources\logout%401x.png" />
+    <BundleResource Include="Resources\logout%402x.png" />
+    <BundleResource Include="Resources\logout%403x.png" />
+    <BundleResource Include="Resources\notes_list%401x.png" />
+    <BundleResource Include="Resources\notes_list%402x.png" />
+    <BundleResource Include="Resources\notes_list%403x.png" />
+    <BundleResource Include="Resources\settings%401x.png" />
+    <BundleResource Include="Resources\settings%402x.png" />
+    <BundleResource Include="Resources\settings%403x.png" />
+    <BundleResource Include="Resources\todo_list%401x.png" />
+    <BundleResource Include="Resources\todo_list%402x.png" />
+    <BundleResource Include="Resources\todo_list%403x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

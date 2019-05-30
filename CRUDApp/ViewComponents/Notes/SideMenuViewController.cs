@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CRUDApp.Controllers;
+using CRUDApp.Helpers;
+using CRUDApp.ViewComponents.Login;
+using CRUDApp.ViewComponents.Notes;
 using UIKit;
 using Xamarin.SideMenu;
 
@@ -8,9 +12,9 @@ namespace CRUDApp
 {
     public class SideMenuViewController : UITableViewController
     {
-        private readonly List<string> _items;
+        private readonly List<MasterPageItem> _items;
 
-        public SideMenuViewController(List<string> items)
+        public SideMenuViewController(List<MasterPageItem> items)
         {
             _items = items;
         }
@@ -31,13 +35,46 @@ namespace CRUDApp
         {
             var cell = tableView.DequeueReusableCell(nameof(SideMenuViewCell));
             cell.BackgroundColor = UIColor.White;
-            cell.TextLabel.Text = _items.ElementAt(indexPath.Row);
+            cell.ImageView.Image = UIImage.FromBundle(_items.ElementAt(indexPath.Row).IconSource);
+            cell.TextLabel.Text = _items.ElementAt(indexPath.Row).Title;
             return cell;
         }
 
         public override void RowSelected(UITableView tableView, Foundation.NSIndexPath indexPath)
         {
-            //tableView.DeselectRow(indexPath, true);
+            tableView.DeselectRow(indexPath, true);
+            var index = indexPath.Row;
+            var item = _items.ElementAt(indexPath.Row);
+            switch (item.Index)
+            {
+                case MenuViewIndex.NotesView:
+                    NavigateToNotesSection();
+                    break;
+                case MenuViewIndex.Logout:
+                    Logout();
+                    break;
+            }
+        }
+
+        private void NavigateToNotesSection()
+        {
+            var window = UIApplication.SharedApplication.KeyWindow;
+            var mainController = new SplitViewController();
+
+            UIStoryboard helloWorldStoryboard = UIStoryboard.FromName(nameof(NotesController), null);
+            var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();
+
+            mainController.ShowDetailViewController(new UINavigationController(initialViewController), this);
+            window.RootViewController = mainController;
+        }
+
+        private void Logout()
+        {
+            var window = UIApplication.SharedApplication.KeyWindow;
+            var mainController = new SplitViewController();
+            mainController.ShowDetailViewController(new UINavigationController(new LoginViewController()), this);
+            window.RootViewController = mainController;
+            Settings.AppUser = string.Empty;
         }
     }
 
