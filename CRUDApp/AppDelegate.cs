@@ -1,5 +1,6 @@
 ﻿using CRUDApp.Controllers;
 using CRUDApp.ViewComponents.Login;
+using CRUDApp.ViewComponents.Pin;
 using Foundation;
 using UIKit;
 
@@ -24,7 +25,13 @@ namespace CRUDApp
             // If not required for your application you can safely delete this method
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
             var mainController = new SplitViewController();
-            mainController.ShowDetailViewController(new UINavigationController(new LoginViewController()), this);
+
+            NSUserDefaults preferences = NSUserDefaults.StandardUserDefaults;
+            var usePin = preferences.BoolForKey("UsePinKey");
+
+            UIViewController rootViewController = usePin ? new PinViewController() 
+                : (UIViewController)new LoginViewController();
+            mainController.ShowDetailViewController(new UINavigationController(rootViewController), this);
             Window.RootViewController = mainController;
 
             Window.MakeKeyAndVisible();

@@ -5,6 +5,7 @@ using Cirrious.FluentLayouts.Touch;
 using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Notes;
+using Foundation;
 using UIKit;
 
 namespace CRUDApp.ViewComponents.Login
@@ -16,8 +17,8 @@ namespace CRUDApp.ViewComponents.Login
 
         public override void ViewDidLoad()
         {
-            NavigationController.SetNavigationBarHidden(true, false);
             base.ViewDidLoad();
+            NavigationController.SetNavigationBarHidden(true, false);
 
             _loginView = new LoginView();
             View.AddSubview(_loginView);
@@ -94,7 +95,7 @@ namespace CRUDApp.ViewComponents.Login
             bool result = await _authenticationManager.Authenticate(username, password);
             if (result)
             {
-                Helpers.Settings.AppUser = username;
+                NSUserDefaults.StandardUserDefaults.SetString(username, "UserName");
                 //NavigationController.SetViewControllers(new UIViewController[] { new UISideMenuController() }, true);
                 UIStoryboard helloWorldStoryboard = UIStoryboard.FromName(nameof(NotesController), null);
                 var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();

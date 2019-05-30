@@ -114,6 +114,12 @@
     <Compile Include="ViewComponents\Settings\SettingsView.designer.cs">
       <DependentUpon>SettingsView.cs</DependentUpon>
     </Compile>
+    <InterfaceDefinition Include="ViewComponents\Pin\PinView.xib" />
+    <Compile Include="ViewComponents\Pin\PinView.cs" />
+    <Compile Include="ViewComponents\Pin\PinView.designer.cs">
+      <DependentUpon>PinView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Pin\PinViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\NoteDetailViewController.cs" />
@@ -193,6 +199,7 @@
   <ItemGroup>
     <Folder Include="ViewComponents\NoteEdit\" />
     <Folder Include="ViewComponents\Settings\" />
+    <Folder Include="ViewComponents\Pin\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\achievements_icon%401x.png" />
@@ -210,6 +217,7 @@
     <BundleResource Include="Resources\todo_list%401x.png" />
     <BundleResource Include="Resources\todo_list%402x.png" />
     <BundleResource Include="Resources\todo_list%403x.png" />
+    <BundleResource Include="Resources\login_background.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

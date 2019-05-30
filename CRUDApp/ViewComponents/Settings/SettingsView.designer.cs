@@ -14,8 +14,25 @@ namespace CRUDApp
     [Register ("SettingsView")]
     partial class SettingsView
     {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton saveButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UISwitch usePinSwitchCell { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
+            if (saveButton != null) {
+                saveButton.Dispose ();
+                saveButton = null;
+            }
+
+            if (usePinSwitchCell != null) {
+                usePinSwitchCell.Dispose ();
+                usePinSwitchCell = null;
+            }
         }
     }
 }

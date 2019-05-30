@@ -12,21 +12,32 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <subviews>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="192" translatesAutoresizingMaskIntoConstraints="NO">
-                    <rect key="frame" x="318" y="150" width="51" height="31"/>
+                    <rect key="frame" x="315" y="150" width="51" height="31"/>
                 </switch>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use pin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="193" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
-                    <rect key="frame" x="54" y="155" width="118" height="21"/>
+                    <rect key="frame" x="50" y="150" width="118" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="409" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                    <rect key="frame" x="182" y="675" width="52" height="30"/>
+                    <state key="normal" title="Save"/>
+                </button>
             </subviews>
             <constraints>
-                <constraint id="194" firstItem="193" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="54"/>
-                <constraint id="195" firstItem="193" firstAttribute="top" secondItem="1" secondAttribute="top" constant="155"/>
-                <constraint id="196" firstAttribute="trailing" secondItem="192" secondAttribute="trailing" constant="47"/>
+                <constraint id="194" firstItem="193" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="50"/>
+                <constraint id="195" firstItem="193" firstAttribute="top" secondItem="1" secondAttribute="top" constant="150"/>
+                <constraint id="196" firstAttribute="trailing" secondItem="192" secondAttribute="trailing" constant="50"/>
                 <constraint id="197" firstItem="192" firstAttribute="top" secondItem="1" secondAttribute="top" constant="150"/>
+                <constraint id="410" firstItem="409" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="180"/>
+                <constraint id="411" firstAttribute="trailing" secondItem="409" secondAttribute="trailing" constant="180"/>
+                <constraint id="412" firstAttribute="bottom" secondItem="409" secondAttribute="bottom" constant="30"/>
             </constraints>
+            <connections>
+                <outlet property="usePinSwitchCell" destination="192" id="name-outlet-192"/>
+                <outlet property="saveButton" destination="409" id="name-outlet-409"/>
+            </connections>
         </view>
     </objects>
 </document>
