@@ -1,154 +1,266 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner">
-            <connections/>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1" customClass="PinView">
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="201" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="201">
                     <rect key="frame" x="103" y="218" width="60" height="60"/>
-                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.93345207253886" alpha="0"/>
+                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="0"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="2275"/>
+                        <constraint firstAttribute="height" constant="60" id="2277"/>
+                    </constraints>
                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     <state key="normal" title="1"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <real key="value" value="30"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                    <constraints>
-                        <constraint id="2275" firstAttribute="width" constant="60"/>
-                        <constraint id="2277" firstAttribute="height" constant="60"/>
-                    </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2098" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2098">
                     <rect key="frame" x="177" y="218" width="60" height="60"/>
-                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.93345207253886" alpha="0"/>
+                    <color key="backgroundColor" red="0.91679215431213379" green="0.91679215431213379" blue="0.91679215431213379" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="2281"/>
+                        <constraint firstAttribute="height" constant="60" id="2284"/>
+                    </constraints>
                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     <state key="normal" title="2"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <real key="value" value="30"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                    <constraints>
-                        <constraint id="2281" firstAttribute="width" constant="60"/>
-                        <constraint id="2284" firstAttribute="height" constant="60"/>
-                    </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2102" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2102">
                     <rect key="frame" x="254" y="218" width="60" height="60"/>
-                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.93345207253886" alpha="0"/>
+                    <color key="backgroundColor" red="0.91679215431213379" green="0.91679215431213379" blue="0.91679215431213379" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="2287"/>
+                        <constraint firstAttribute="height" constant="60" id="2288"/>
+                    </constraints>
                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     <state key="normal" title="3"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <real key="value" value="30"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                    <constraints>
-                        <constraint id="2287" firstAttribute="width" constant="60"/>
-                        <constraint id="2288" firstAttribute="height" constant="60"/>
-                    </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2684" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2684">
                     <rect key="frame" x="103" y="298" width="60" height="60"/>
-                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.93345207253886" alpha="0"/>
+                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0" alpha="0"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="2685"/>
+                        <constraint firstAttribute="height" constant="60" id="2686"/>
+                    </constraints>
                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     <state key="normal" title="4"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <real key="value" value="30"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                    <constraints>
-                        <constraint id="2685" firstAttribute="width" constant="60"/>
-                        <constraint id="2686" firstAttribute="height" constant="60"/>
-                    </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2689" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2689">
                     <rect key="frame" x="177" y="298" width="60" height="60"/>
-                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.93345207253886" alpha="0"/>
+                    <color key="backgroundColor" red="0.91679215431213379" green="0.91679215431213379" blue="0.91679215431213379" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="2690"/>
+                        <constraint firstAttribute="height" constant="60" id="2691"/>
+                    </constraints>
                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <size key="titleShadowOffset" width="0" height="0"/>
                     <state key="normal" title="5"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <real key="value" value="30"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                    <constraints>
-                        <constraint id="2690" firstAttribute="width" constant="60"/>
-                        <constraint id="2691" firstAttribute="height" constant="60"/>
-                    </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2698" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2698">
                     <rect key="frame" x="254" y="298" width="60" height="60"/>
-                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.93345207253886" alpha="0"/>
+                    <color key="backgroundColor" red="0.91679215431213379" green="0.91679215431213379" blue="0.91679215431213379" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="2699"/>
+                        <constraint firstAttribute="height" constant="60" id="2700"/>
+                    </constraints>
                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     <state key="normal" title="6"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <real key="value" value="30"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                    <constraints>
-                        <constraint id="2699" firstAttribute="width" constant="60"/>
-                        <constraint id="2700" firstAttribute="height" constant="60"/>
-                    </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3156" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3156">
                     <rect key="frame" x="103" y="366" width="60" height="60"/>
-                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.93345207253886" alpha="0"/>
+                    <color key="backgroundColor" red="0.91679215431213379" green="0.91679215431213379" blue="0.91679215431213379" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="3157"/>
+                        <constraint firstAttribute="height" constant="60" id="3158"/>
+                    </constraints>
                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     <state key="normal" title="7"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <real key="value" value="30"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                    <constraints>
-                        <constraint id="3157" firstAttribute="width" constant="60"/>
-                        <constraint id="3158" firstAttribute="height" constant="60"/>
-                    </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3161" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3161">
                     <rect key="frame" x="177" y="366" width="60" height="60"/>
-                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.93345207253886" alpha="0"/>
+                    <color key="backgroundColor" red="0.91679215431213379" green="0.91679215431213379" blue="0.91679215431213379" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="3162"/>
+                        <constraint firstAttribute="height" constant="60" id="3163"/>
+                    </constraints>
                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     <state key="normal" title="8"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <real key="value" value="30"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                    <constraints>
-                        <constraint id="3162" firstAttribute="width" constant="60"/>
-                        <constraint id="3163" firstAttribute="height" constant="60"/>
-                    </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3166" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3166">
                     <rect key="frame" x="254" y="366" width="60" height="60"/>
-                    <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.93345207253886" alpha="0"/>
+                    <color key="backgroundColor" red="0.91679215431213379" green="0.91679215431213379" blue="0.91679215431213379" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="3167"/>
+                        <constraint firstAttribute="height" constant="60" id="3168"/>
+                    </constraints>
                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     <state key="normal" title="9"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <real key="value" value="30"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4259">
+                    <rect key="frame" x="177" y="446" width="60" height="60"/>
+                    <color key="backgroundColor" red="0.91679215431213379" green="0.91679215431213379" blue="0.91679215431213379" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint id="3167" firstAttribute="width" constant="60"/>
-                        <constraint id="3168" firstAttribute="height" constant="60"/>
+                        <constraint firstAttribute="width" constant="60" id="4260"/>
+                        <constraint firstAttribute="height" constant="60" id="4261"/>
                     </constraints>
+                    <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <state key="normal" title="0"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <real key="value" value="30"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4316" tag="0.0">
+                    <rect key="frame" x="254" y="446" width="60" height="60"/>
+                    <color key="backgroundColor" red="0.91679215431213379" green="0.91679215431213379" blue="0.91679215431213379" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="4317"/>
+                        <constraint firstAttribute="height" constant="60" id="4318"/>
+                    </constraints>
+                    <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <state key="normal" title="X"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <real key="value" value="30"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5726" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                    <rect key="frame" x="154" y="46" width="23" height="23"/>
+                    <color key="tintColor" colorSpace="calibratedRGB" red="0.0392156862745098" green="0.37647058823529411" blue="1" alpha="1"/>
+                    <constraints>
+                        <constraint id="5847" firstAttribute="height" constant="16"/>
+                        <constraint id="5908" firstAttribute="width" constant="16"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5919" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                    <rect key="frame" x="185" y="49" width="19" height="16"/>
+                    <color key="tintColor" colorSpace="calibratedRGB" red="0.0392156862745098" green="0.37647058823529411" blue="1" alpha="1"/>
+                    <constraints>
+                        <constraint id="5920" firstAttribute="height" constant="16"/>
+                        <constraint id="5921" firstAttribute="width" constant="16"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5936" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                    <rect key="frame" x="201" y="47" width="20" height="20"/>
+                    <color key="tintColor" colorSpace="calibratedRGB" red="0.0392156862745098" green="0.37647058823529411" blue="1" alpha="1"/>
+                    <constraints>
+                        <constraint id="5937" firstAttribute="height" constant="16"/>
+                        <constraint id="5938" firstAttribute="width" constant="16"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5957" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                    <rect key="frame" x="229" y="49" width="17" height="16"/>
+                    <color key="tintColor" colorSpace="calibratedRGB" red="0.0392156862745098" green="0.37647058823529411" blue="1" alpha="1"/>
+                    <constraints>
+                        <constraint id="5958" firstAttribute="height" constant="16"/>
+                        <constraint id="5959" firstAttribute="width" constant="16"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </button>
             </subviews>
+            <constraints>
+                <constraint firstItem="201" firstAttribute="top" secondItem="1" secondAttribute="top" constant="220" id="2100"/>
+                <constraint firstItem="2098" firstAttribute="top" secondItem="1" secondAttribute="top" constant="220" id="2101"/>
+                <constraint firstItem="2102" firstAttribute="leading" secondItem="2098" secondAttribute="trailing" constant="15" id="2103"/>
+                <constraint firstItem="2102" firstAttribute="top" secondItem="1" secondAttribute="top" constant="220" id="2104"/>
+                <constraint firstAttribute="centerX" secondItem="2098" secondAttribute="centerX" id="2498"/>
+                <constraint firstItem="2098" firstAttribute="leading" secondItem="201" secondAttribute="trailing" constant="15" id="2507"/>
+                <constraint firstItem="2684" firstAttribute="top" secondItem="201" secondAttribute="bottom" constant="15" id="2778"/>
+                <constraint firstItem="2689" firstAttribute="top" secondItem="2098" secondAttribute="bottom" constant="15" id="2779"/>
+                <constraint firstItem="2698" firstAttribute="top" secondItem="2102" secondAttribute="bottom" constant="15" id="2780"/>
+                <constraint firstItem="2689" firstAttribute="leading" secondItem="2684" secondAttribute="trailing" constant="15" id="2781"/>
+                <constraint firstItem="2698" firstAttribute="leading" secondItem="2689" secondAttribute="trailing" constant="15" id="2782"/>
+                <constraint firstItem="2689" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="2783"/>
+                <constraint firstItem="3156" firstAttribute="top" secondItem="2684" secondAttribute="bottom" constant="15" id="3596"/>
+                <constraint firstItem="3161" firstAttribute="top" secondItem="2689" secondAttribute="bottom" constant="15" id="3597"/>
+                <constraint firstItem="3166" firstAttribute="top" secondItem="2698" secondAttribute="bottom" constant="15" id="3598"/>
+                <constraint firstItem="3166" firstAttribute="leading" secondItem="3161" secondAttribute="trailing" constant="15" id="3599"/>
+                <constraint firstItem="3161" firstAttribute="leading" secondItem="3156" secondAttribute="trailing" constant="15" id="3600"/>
+                <constraint firstItem="3161" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="3601"/>
+                <constraint id="4262" firstItem="4259" firstAttribute="top" secondItem="3161" secondAttribute="bottom" constant="15"/>
+                <constraint id="4263" firstItem="4259" firstAttribute="centerX" secondItem="1" secondAttribute="centerX"/>
+                <constraint id="4323" firstItem="4316" firstAttribute="leading" secondItem="4259" secondAttribute="trailing" constant="15"/>
+                <constraint id="4324" firstItem="4316" firstAttribute="top" secondItem="3166" secondAttribute="bottom" constant="15"/>
+                <constraint id="5783" firstItem="5726" firstAttribute="top" secondItem="1" secondAttribute="top" constant="50"/>
+                <constraint id="5848" firstItem="5726" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" constant="-40"/>
+                <constraint id="5928" firstItem="5919" firstAttribute="centerX" secondItem="5726" secondAttribute="centerX" constant="24"/>
+                <constraint id="5929" firstItem="5919" firstAttribute="centerY" secondItem="5726" secondAttribute="centerY"/>
+                <constraint id="5941" firstItem="5936" firstAttribute="centerY" secondItem="5919" secondAttribute="centerY"/>
+                <constraint id="5942" firstItem="5936" firstAttribute="centerX" secondItem="5919" secondAttribute="centerX" constant="24"/>
+                <constraint id="5960" firstItem="5957" firstAttribute="centerY" secondItem="5936" secondAttribute="centerY"/>
+                <constraint id="5961" firstItem="5957" firstAttribute="centerX" secondItem="5936" secondAttribute="centerX" constant="24"/>
+            </constraints>
             <connections>
                 <outlet property="button1" destination="201" id="name-outlet-201"/>
                 <outlet property="button2" destination="2098" id="name-outlet-2098"/>
@@ -156,30 +268,17 @@
                 <outlet property="button4" destination="2684" id="name-outlet-2684"/>
                 <outlet property="button5" destination="2689" id="name-outlet-2689"/>
                 <outlet property="button6" destination="2698" id="name-outlet-2698"/>
-                <outlet property="button9" destination="3166" id="name-outlet-3166"/>
-                <outlet property="button8" destination="3161" id="name-outlet-3161"/>
                 <outlet property="button7" destination="3156" id="name-outlet-3156"/>
+                <outlet property="button8" destination="3161" id="name-outlet-3161"/>
+                <outlet property="button9" destination="3166" id="name-outlet-3166"/>
+                <outlet property="button0" destination="4259" id="name-outlet-4259"/>
+                <outlet property="buttonX" destination="4316" id="name-outlet-4316"/>
+                <outlet property="pin1" destination="5726" id="name-outlet-5726"/>
+                <outlet property="pin2" destination="5919" id="name-outlet-5919"/>
+                <outlet property="pin3" destination="5936" id="name-outlet-5936"/>
+                <outlet property="pin4" destination="5957" id="name-outlet-5957"/>
             </connections>
-            <constraints>
-                <constraint id="2100" firstItem="201" firstAttribute="top" secondItem="1" secondAttribute="top" constant="220"/>
-                <constraint id="2101" firstItem="2098" firstAttribute="top" secondItem="1" secondAttribute="top" constant="220"/>
-                <constraint id="2103" firstItem="2102" firstAttribute="leading" secondItem="2098" secondAttribute="trailing" constant="15"/>
-                <constraint id="2104" firstItem="2102" firstAttribute="top" secondItem="1" secondAttribute="top" constant="220"/>
-                <constraint id="2498" firstAttribute="centerX" secondItem="2098" secondAttribute="centerX"/>
-                <constraint id="2507" firstItem="2098" firstAttribute="leading" secondItem="201" secondAttribute="trailing" constant="15"/>
-                <constraint id="2778" firstItem="2684" firstAttribute="top" secondItem="201" secondAttribute="bottom" constant="15"/>
-                <constraint id="2779" firstItem="2689" firstAttribute="top" secondItem="2098" secondAttribute="bottom" constant="15"/>
-                <constraint id="2780" firstItem="2698" firstAttribute="top" secondItem="2102" secondAttribute="bottom" constant="15"/>
-                <constraint id="2781" firstItem="2689" firstAttribute="leading" secondItem="2684" secondAttribute="trailing" constant="15"/>
-                <constraint id="2782" firstItem="2698" firstAttribute="leading" secondItem="2689" secondAttribute="trailing" constant="15"/>
-                <constraint id="2783" firstItem="2689" firstAttribute="centerX" secondItem="1" secondAttribute="centerX"/>
-                <constraint id="3596" firstItem="3156" firstAttribute="top" secondItem="2684" secondAttribute="bottom" constant="15"/>
-                <constraint id="3597" firstItem="3161" firstAttribute="top" secondItem="2689" secondAttribute="bottom" constant="15"/>
-                <constraint id="3598" firstItem="3166" firstAttribute="top" secondItem="2698" secondAttribute="bottom" constant="15"/>
-                <constraint id="3599" firstItem="3166" firstAttribute="leading" secondItem="3161" secondAttribute="trailing" constant="15"/>
-                <constraint id="3600" firstItem="3161" firstAttribute="leading" secondItem="3156" secondAttribute="trailing" constant="15"/>
-                <constraint id="3601" firstItem="3161" firstAttribute="centerX" secondItem="1" secondAttribute="centerX"/>
-            </constraints>
+            <point key="canvasLocation" x="0.6666667" y="4"/>
         </view>
     </objects>
 </document>

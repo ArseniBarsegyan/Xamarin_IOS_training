@@ -7,13 +7,16 @@
 using Foundation;
 using System;
 using System.CodeDom.Compiler;
-using UIKit;
 
-namespace CRUDApp
+namespace CRUDApp.ViewComponents.Pin
 {
     [Register ("PinView")]
     partial class PinView
     {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton button0 { get; set; }
+
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton button1 { get; set; }
@@ -50,8 +53,33 @@ namespace CRUDApp
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton button9 { get; set; }
 
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton buttonX { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton pin1 { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton pin2 { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton pin3 { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton pin4 { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
+            if (button0 != null) {
+                button0.Dispose ();
+                button0 = null;
+            }
+
             if (button1 != null) {
                 button1.Dispose ();
                 button1 = null;
@@ -95,6 +123,31 @@ namespace CRUDApp
             if (button9 != null) {
                 button9.Dispose ();
                 button9 = null;
+            }
+
+            if (buttonX != null) {
+                buttonX.Dispose ();
+                buttonX = null;
+            }
+
+            if (pin1 != null) {
+                pin1.Dispose ();
+                pin1 = null;
+            }
+
+            if (pin2 != null) {
+                pin2.Dispose ();
+                pin2 = null;
+            }
+
+            if (pin3 != null) {
+                pin3.Dispose ();
+                pin3 = null;
+            }
+
+            if (pin4 != null) {
+                pin4.Dispose ();
+                pin4 = null;
             }
         }
     }

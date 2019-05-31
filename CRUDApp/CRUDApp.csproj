@@ -96,14 +96,9 @@
     <Compile Include="ViewComponents\Notes\NotesViewController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
-    <Compile Include="Test\ViewController1.cs" />
-    <Compile Include="Test\ViewController1.designer.cs">
-      <DependentUpon>ViewController1.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\NoteViewModel.cs" />
     <Compile Include="Extensions\ModelsConverterExtensions.cs" />
     <InterfaceDefinition Include="ViewComponents\Login\LoginView.xib" />
-    <InterfaceDefinition Include="Test\ViewController1.storyboard" />
     <InterfaceDefinition Include="ViewComponents\Notes\NotesController.storyboard" />
     <Compile Include="ViewComponents\NoteEdit\NoteEditViewController.cs" />
     <Compile Include="ViewComponents\Notes\SideMenuViewController.cs" />
@@ -195,11 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Entitlements.plist" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewComponents\NoteEdit\" />
-    <Folder Include="ViewComponents\Settings\" />
-    <Folder Include="ViewComponents\Pin\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\achievements_icon%401x.png" />
