@@ -21,8 +21,8 @@ namespace CRUDApp
             var arr = NSBundle.MainBundle.LoadNib(nameof(SettingsView), this, null);
             var rootView = ObjCRuntime.Runtime.GetNSObject(arr.ValueAt(0)) as SettingsView;
 
-            UsePinSwitchCell = rootView.usePinSwitchCell;
-            SaveButton = rootView.saveButton;
+            UsePinSwitchCell = rootView?.usePinSwitchCell;
+            SaveButton = rootView?.saveButton;
             SaveButton.Hidden = true;
             SaveButton.TouchUpInside += SaveButton_TouchUpInside;
 
