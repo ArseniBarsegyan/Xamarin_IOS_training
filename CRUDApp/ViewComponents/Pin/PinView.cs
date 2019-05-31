@@ -138,9 +138,9 @@ namespace CRUDApp.ViewComponents.Pin
         {
             if (sender is UIButton button)
             {
-                button.BackgroundColor = UIColor.White;
-                Animate(0.5, () => { button.Layer.BackgroundColor = UIColor.White.CGColor; });
-                Animate(0.5, () => { button.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+                //button.BackgroundColor = UIColor.White;
+                Animate(0.3, () => { button.Layer.BackgroundColor = UIColor.White.CGColor; });
+                Animate(0.3, () => { button.Layer.BackgroundColor = UIColor.Clear.CGColor; });
             }
         }
     }

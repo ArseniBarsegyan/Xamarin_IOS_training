@@ -1,6 +1,7 @@
 ﻿using System;
 using Cirrious.FluentLayouts.Touch;
 using CRUDApp.Helpers;
+using CRUDApp.ViewComponents.Notes;
 using Foundation;
 using UIKit;
 using Xamarin.SideMenu;

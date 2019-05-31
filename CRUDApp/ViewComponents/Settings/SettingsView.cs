@@ -1,9 +1,9 @@
+using System;
 using Cirrious.FluentLayouts.Touch;
 using Foundation;
-using System;
 using UIKit;
 
-namespace CRUDApp
+namespace CRUDApp.ViewComponents.Settings
 {
     public partial class SettingsView : UIView
     {

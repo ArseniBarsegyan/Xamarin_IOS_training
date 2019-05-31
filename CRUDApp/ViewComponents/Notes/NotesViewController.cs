@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using CRUDApp.Controllers;
-using CRUDApp.Data.Entities;
 using CRUDApp.Data.Repositories;
 using CRUDApp.ViewComponents.NoteEdit;
 using Foundation;

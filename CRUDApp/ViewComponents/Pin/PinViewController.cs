@@ -77,13 +77,33 @@ namespace CRUDApp.ViewComponents.Pin
 
                 _pinBuilder.Append(text);
 
-                if (_currentCount == 4)
+                switch (_currentCount)
                 {
-                    int.TryParse(_pinBuilder.ToString(), out _pin);
-                    await Task.Delay(25);
-                    ResetImagesAndCount();
-                    await Login();
+                    case 1:
+                        UIView.Animate(0.3, () => { _pinView.Pin1.Layer.BackgroundColor = UIColor.White.CGColor; });
+                        break;
+                    case 2:
+                        UIView.Animate(0.3, () => { _pinView.Pin2.Layer.BackgroundColor = UIColor.White.CGColor; });
+                        break;
+                    case 3:
+                        UIView.Animate(0.3, () => { _pinView.Pin3.Layer.BackgroundColor = UIColor.White.CGColor; });
+                        break;
+                    case 4:
+                        UIView.Animate(0.3, () => { _pinView.Pin4.Layer.BackgroundColor = UIColor.White.CGColor; });
+                        int.TryParse(_pinBuilder.ToString(), out _pin);
+                        await Task.Delay(25);
+                        ResetImagesAndCount();
+                        await Login();
+                        break;
                 }
+
+                //if (_currentCount == 4)
+                //{
+                //    int.TryParse(_pinBuilder.ToString(), out _pin);
+                //    await Task.Delay(25);
+                //    ResetImagesAndCount();
+                //    await Login();
+                //}
             }
         }
 
@@ -91,6 +111,19 @@ namespace CRUDApp.ViewComponents.Pin
         {
             if (_pinBuilder.Length > 0)
             {
+                switch (_pinBuilder.Length)
+                {
+                    // Since we reset counter we will never get length 4
+                    case 3:
+                        UIView.Animate(0.3, () => { _pinView.Pin3.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+                        break;
+                    case 2:
+                        UIView.Animate(0.3, () => { _pinView.Pin2.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+                        break;
+                    case 1:
+                        UIView.Animate(0.3, () => { _pinView.Pin1.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+                        break;
+                }
                 _pinBuilder.Length--;
             }
 
@@ -113,6 +146,10 @@ namespace CRUDApp.ViewComponents.Pin
 
         private void ResetImagesAndCount()
         {
+            UIView.Animate(0.3, () => { _pinView.Pin1.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+            UIView.Animate(0.3, () => { _pinView.Pin2.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+            UIView.Animate(0.3, () => { _pinView.Pin3.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+            UIView.Animate(0.3, () => { _pinView.Pin4.Layer.BackgroundColor = UIColor.Clear.CGColor; });
             _pinBuilder.Length = 0;
             _currentCount = 0;
         }

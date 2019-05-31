@@ -4,12 +4,11 @@ using System.Linq;
 using CRUDApp.Controllers;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Login;
-using CRUDApp.ViewComponents.Notes;
 using CRUDApp.ViewComponents.Settings;
 using UIKit;
 using Xamarin.SideMenu;
 
-namespace CRUDApp
+namespace CRUDApp.ViewComponents.Notes
 {
     public class SideMenuViewController : UITableViewController
     {
@@ -89,7 +88,7 @@ namespace CRUDApp
             var mainController = new SplitViewController();
             mainController.ShowDetailViewController(new UINavigationController(new LoginViewController()), this);
             window.RootViewController = mainController;
-            Settings.AppUser = string.Empty;
+            Helpers.Settings.AppUser = string.Empty;
         }
     }
 
