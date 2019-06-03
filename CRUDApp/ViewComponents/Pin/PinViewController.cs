@@ -2,9 +2,9 @@
 using System.Text;
 using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
-using CRUDApp.Controllers;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Notes;
+using CRUDApp.ViewComponents.Root;
 using Foundation;
 using UIKit;
 

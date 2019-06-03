@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace CRUDApp.Controllers
+namespace CRUDApp.ViewComponents.Root
 {
     public class SplitViewController : UISplitViewController
     {

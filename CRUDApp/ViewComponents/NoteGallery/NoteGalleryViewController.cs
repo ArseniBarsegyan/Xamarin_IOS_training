@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using CoreGraphics;
 using CRUDApp.Data.Entities;
+using CRUDApp.Helpers;
 using Foundation;
 using UIKit;
 
-namespace CRUDApp.Controllers
+namespace CRUDApp.ViewComponents.NoteGallery
 {
     public partial class NoteGalleryViewController : UICollectionViewController
     {
@@ -20,7 +21,7 @@ namespace CRUDApp.Controllers
         public override void ViewDidLoad()
         {
             View.BackgroundColor = UIColor.White;
-            Title = "Gallery";
+            Title = ConstantsHelper.Gallery;
             
             CollectionView.DataSource = new GalleryCollectionViewDataSource(new List<GalleryItemModel>
             {
@@ -29,13 +30,13 @@ namespace CRUDApp.Controllers
                     Id = 0,
                     ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 },
-                 new GalleryItemModel
+                new GalleryItemModel
                 {
                     Id = 0,
                     ImagePath = "https://www.w3schools.com/w3css/img_lights.jpg"
                 }
             });
-            CollectionView.RegisterClassForCell(typeof(GalleryViewCell), "GalleryCell");
+            CollectionView.RegisterClassForCell(typeof(GalleryViewCell), nameof(GalleryViewCell));
         }
     }
 
@@ -46,7 +47,7 @@ namespace CRUDApp.Controllers
     public class GalleryCollectionViewDataSource : UICollectionViewDataSource
     {
         private List<GalleryItemModel> _galleryItems;
-        private static NSString GalleryCellId = new NSString("GalleryCell");
+        private static NSString GalleryCellId = new NSString(nameof(GalleryViewCell));
 
         public GalleryCollectionViewDataSource(List<GalleryItemModel> galleryItems)
         {
@@ -79,9 +80,9 @@ namespace CRUDApp.Controllers
 
             ContentView.BackgroundColor = UIColor.White;
             _imageView = new UIImageView();
-            //_imageView = new UIImageView(UIImage.LoadFromData(NSData.FromUrl(NSUrl.FromString("https://www.w3schools.com/w3css/img_lights.jpg"))));
-            //_imageView.Center = ContentView.Center;
-            //_imageView.Transform = CGAffineTransform.MakeScale(0.9f, 0.9f);
+            _imageView = new UIImageView(UIImage.LoadFromData(NSData.FromUrl(NSUrl.FromString("https://www.w3schools.com/w3css/img_lights.jpg"))));
+            _imageView.Center = ContentView.Center;
+            _imageView.Transform = CGAffineTransform.MakeScale(0.9f, 0.9f);
 
             ContentView.AddSubview(_imageView);
         }

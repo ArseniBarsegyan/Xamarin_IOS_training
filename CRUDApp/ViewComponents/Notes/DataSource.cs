@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using CRUDApp.Data.Entities;
+using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
+using CRUDApp.ViewComponents.NoteEdit;
 using Foundation;
 using UIKit;
 
@@ -10,17 +12,17 @@ namespace CRUDApp.ViewComponents.Notes
 {
     public class DataSource : UITableViewSource
     {
-        private static readonly NSString CellIdentifier = new NSString(ConstantsHelper.NoteCellReuseIdentifier);
-        private readonly List<Note> _notes;
+        private static readonly NSString CellIdentifier = new NSString(nameof(NoteCell));
+        private readonly NoteRepository _repository;
         private readonly NotesController _controller;
 
-        public DataSource(NotesController controller, List<Note> notes)
+        public DataSource(NotesController controller)
         {
             _controller = controller;
-            _notes = notes;
+            _repository = controller.NoteRepository;
         }
 
-        public IList<Note> Notes => _notes;
+        public IList<Note> Notes => _repository.GetAll().ToList();
 
         public override nint NumberOfSections(UITableView tableView)
         {
@@ -29,15 +31,29 @@ namespace CRUDApp.ViewComponents.Notes
 
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-            return _notes.Count;
+            return Notes.Count;
         }
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = tableView.DequeueReusableCell(CellIdentifier, indexPath);
-            var note = _notes[indexPath.Row];
+            var note = Notes[indexPath.Row];
             cell.TextLabel.Text = note.Description ?? ConstantsHelper.NewNote;
             return cell;
+        }
+
+        public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+        {
+            var model = Notes.ElementAt(indexPath.Row);
+
+            if (model != null)
+            {
+                var noteEditViewController = new NoteEditViewController();
+                noteEditViewController.SetDataSource(this);
+                noteEditViewController.SetRepository(_repository);
+                noteEditViewController.SetDetailItem(model);
+                _controller.NavigationController.PushViewController(noteEditViewController, true);
+            }
         }
 
         public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)
@@ -49,8 +65,8 @@ namespace CRUDApp.ViewComponents.Notes
         {
             if (editingStyle == UITableViewCellEditingStyle.Delete)
             {
-                var noteToDelete = _notes.ElementAt(indexPath.Row);
-                _notes.RemoveAt(indexPath.Row);
+                var noteToDelete = Notes.ElementAt(indexPath.Row);
+                Notes.RemoveAt(indexPath.Row);
                 _controller.NoteRepository.DeleteNote(noteToDelete);
                 _controller.TableView.DeleteRows(new[] { indexPath }, UITableViewRowAnimation.Fade);
             }

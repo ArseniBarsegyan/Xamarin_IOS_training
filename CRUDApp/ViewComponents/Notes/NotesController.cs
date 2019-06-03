@@ -40,7 +40,7 @@ namespace CRUDApp.ViewComponents.Notes
             SetupSideMenu();
 
             NoteRepository = new NoteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName));
-            _dataSource = new DataSource(this, NoteRepository.GetAll().ToList());
+            _dataSource = new DataSource(this);
 
             _refreshControl = new UIRefreshControl();
             _refreshControl.ValueChanged += async (sender, args) =>
@@ -49,7 +49,7 @@ namespace CRUDApp.ViewComponents.Notes
             };
 
             TableView.RefreshControl = _refreshControl;
-            TableView.RegisterClassForCellReuse(typeof(NoteCell), ConstantsHelper.NoteCellReuseIdentifier);
+            TableView.RegisterClassForCellReuse(typeof(NoteCell), nameof(NoteCell));
             TableView.SeparatorColor = UIColor.Clear;
             //TableView.Source = new DataSource(this, NoteRepository.GetAll().ToList());
 
@@ -77,7 +77,7 @@ namespace CRUDApp.ViewComponents.Notes
             _refreshControl.BeginRefreshing();
             await Task.Delay(200);
             _refreshControl.EndRefreshing();
-            TableView.Source = new DataSource(this, NoteRepository.GetAll().ToList());
+            TableView.Source = new DataSource(this);
             TableView.ReloadData();
         }
 
