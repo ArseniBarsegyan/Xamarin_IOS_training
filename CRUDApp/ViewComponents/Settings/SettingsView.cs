@@ -1,5 +1,6 @@
 using System;
 using Cirrious.FluentLayouts.Touch;
+using CRUDApp.Helpers;
 using Foundation;
 using UIKit;
 
@@ -22,6 +23,7 @@ namespace CRUDApp.ViewComponents.Settings
             var rootView = ObjCRuntime.Runtime.GetNSObject(arr.ValueAt(0)) as SettingsView;
 
             UsePinSwitchCell = rootView?.usePinSwitchCell;
+            PinEntry = rootView?.pinEntry;
             SaveButton = rootView?.saveButton;
             SaveButton.Hidden = true;
             SaveButton.TouchUpInside += SaveButton_TouchUpInside;
@@ -37,6 +39,7 @@ namespace CRUDApp.ViewComponents.Settings
         }
 
         public UISwitch UsePinSwitchCell { get; private set; }
+        public UITextField PinEntry { get; private set; }
         public UIButton SaveButton { get; private set; }
 
         private void SubscribeOnEvents()
@@ -56,7 +59,8 @@ namespace CRUDApp.ViewComponents.Settings
 
         private void SaveButton_TouchUpInside(object sender, EventArgs e)
         {
-            NSUserDefaults.StandardUserDefaults.SetBool(UsePinSwitchCell.On, "UsePinKey");
+            NSUserDefaults.StandardUserDefaults.SetBool(UsePinSwitchCell.On, ConstantsHelper.UsePinKey);
+            NSUserDefaults.StandardUserDefaults.SetString(PinEntry.Text, ConstantsHelper.UserPin);
             SaveButton.Hidden = true;
         }
     }

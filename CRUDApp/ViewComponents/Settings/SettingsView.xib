@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -9,34 +10,43 @@
         <view contentMode="scaleToFill" id="1" customClass="SettingsView">
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <subviews>
-                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="192" translatesAutoresizingMaskIntoConstraints="NO">
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="192">
                     <rect key="frame" x="315" y="150" width="51" height="31"/>
                 </switch>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use pin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="193" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Use pin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="193">
                     <rect key="frame" x="50" y="150" width="118" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="409" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="409">
                     <rect key="frame" x="182" y="675" width="52" height="30"/>
                     <state key="normal" title="Save"/>
                 </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1111" borderStyle="roundedRect" minimumFontSize="17" id="703" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                    <rect key="frame" x="50" y="199" width="118" height="30"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint id="194" firstItem="193" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="50"/>
-                <constraint id="195" firstItem="193" firstAttribute="top" secondItem="1" secondAttribute="top" constant="150"/>
-                <constraint id="196" firstAttribute="trailing" secondItem="192" secondAttribute="trailing" constant="50"/>
-                <constraint id="197" firstItem="192" firstAttribute="top" secondItem="1" secondAttribute="top" constant="150"/>
-                <constraint id="410" firstItem="409" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="180"/>
-                <constraint id="411" firstAttribute="trailing" secondItem="409" secondAttribute="trailing" constant="180"/>
-                <constraint id="412" firstAttribute="bottom" secondItem="409" secondAttribute="bottom" constant="30"/>
+                <constraint firstItem="193" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="50" id="194"/>
+                <constraint firstItem="193" firstAttribute="top" secondItem="1" secondAttribute="top" constant="150" id="195"/>
+                <constraint firstAttribute="trailing" secondItem="192" secondAttribute="trailing" constant="50" id="196"/>
+                <constraint firstItem="192" firstAttribute="top" secondItem="1" secondAttribute="top" constant="150" id="197"/>
+                <constraint firstItem="409" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="180" id="410"/>
+                <constraint firstAttribute="trailing" secondItem="409" secondAttribute="trailing" constant="180" id="411"/>
+                <constraint firstAttribute="bottom" secondItem="409" secondAttribute="bottom" constant="30" id="412"/>
+                <constraint id="704" firstItem="703" firstAttribute="top" secondItem="193" secondAttribute="bottom" constant="30"/>
+                <constraint id="705" firstItem="703" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="50"/>
             </constraints>
             <connections>
-                <outlet property="usePinSwitchCell" destination="192" id="name-outlet-192"/>
                 <outlet property="saveButton" destination="409" id="name-outlet-409"/>
+                <outlet property="usePinSwitchCell" destination="192" id="name-outlet-192"/>
+                <outlet property="pinEntry" destination="703" id="name-outlet-703"/>
             </connections>
         </view>
     </objects>

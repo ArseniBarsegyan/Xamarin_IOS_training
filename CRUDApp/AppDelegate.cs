@@ -1,4 +1,5 @@
 ﻿using CRUDApp.Controllers;
+using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Login;
 using CRUDApp.ViewComponents.Pin;
 using Foundation;
@@ -8,7 +9,7 @@ namespace CRUDApp
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the
     // User Interface of the application, as well as listening (and optionally responding) to application events from iOS.
-    [Register("AppDelegate")]
+    [Register(nameof(AppDelegate))]
     public class AppDelegate : UIApplicationDelegate
     {
         // class-level declarations
@@ -27,7 +28,7 @@ namespace CRUDApp
             var mainController = new SplitViewController();
 
             NSUserDefaults preferences = NSUserDefaults.StandardUserDefaults;
-            var usePin = preferences.BoolForKey("UsePinKey");
+            var usePin = preferences.BoolForKey(ConstantsHelper.UsePinKey);
 
             UIViewController rootViewController = usePin ? new PinViewController() 
                 : (UIViewController)new LoginViewController();

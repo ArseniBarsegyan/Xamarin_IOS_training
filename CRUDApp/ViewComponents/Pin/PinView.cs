@@ -1,5 +1,6 @@
 using System;
 using Cirrious.FluentLayouts.Touch;
+using CRUDApp.Helpers;
 using Foundation;
 using UIKit;
 
@@ -18,7 +19,7 @@ namespace CRUDApp.ViewComponents.Pin
 
             var backgroundImage = new UIImageView(UIScreen.MainScreen.Bounds)
             {
-                Image = new UIImage("login_background.png"),
+                Image = new UIImage(ConstantsHelper.LoginBackground),
                 ContentMode = UIViewContentMode.ScaleAspectFill
             };
             rootView?.InsertSubview(backgroundImage, 0);
@@ -138,9 +139,8 @@ namespace CRUDApp.ViewComponents.Pin
         {
             if (sender is UIButton button)
             {
-                //button.BackgroundColor = UIColor.White;
-                Animate(0.3, () => { button.Layer.BackgroundColor = UIColor.White.CGColor; });
-                Animate(0.3, () => { button.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+                Animate(0.15, () => { button.Layer.BackgroundColor = UIColor.White.CGColor; });
+                Animate(0.15, () => { button.Layer.BackgroundColor = UIColor.Clear.CGColor; });
             }
         }
     }

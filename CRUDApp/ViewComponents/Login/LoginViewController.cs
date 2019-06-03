@@ -30,7 +30,7 @@ namespace CRUDApp.ViewComponents.Login
                 _loginView.WithSameBottom(View));
             
             _authenticationManager = new AuthenticationManager(
-                    new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "rm.db3")));
+                    new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName)));
         }
 
         public override void ViewWillAppear(bool animated)
@@ -53,9 +53,9 @@ namespace CRUDApp.ViewComponents.Login
             //TODO: name and password regex
             if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
             {
-                var okAlertController = UIAlertController.Create("Validation error", "Please enter name and password",
+                var okAlertController = UIAlertController.Create(ConstantsHelper.ValidationError, ConstantsHelper.EnterNameAndPassword,
                     UIAlertControllerStyle.Alert);
-                okAlertController.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                okAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, null));
                 PresentViewController(okAlertController, true, null);
                 return;
             }
@@ -65,9 +65,9 @@ namespace CRUDApp.ViewComponents.Login
                 var confirmPassword = _loginView.ConfirmPasswordTextField.Text;
                 if (password != confirmPassword)
                 {
-                    var okAlertController = UIAlertController.Create("Passwords error", "Passwords doesn't match",
+                    var okAlertController = UIAlertController.Create(ConstantsHelper.PasswordError, ConstantsHelper.PasswordsDoesNotMatch,
                         UIAlertControllerStyle.Alert);
-                    okAlertController.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    okAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, null));
                     PresentViewController(okAlertController, true, null);
                     return;
                 }
@@ -78,9 +78,9 @@ namespace CRUDApp.ViewComponents.Login
                 }
                 else
                 {
-                    var okAlertController = UIAlertController.Create("Error", "User already exists",
+                    var okAlertController = UIAlertController.Create(ConstantsHelper.Error, ConstantsHelper.UserAlreadyExists,
                         UIAlertControllerStyle.Alert);
-                    okAlertController.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                    okAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, null));
                     PresentViewController(okAlertController, true, null);
                 }
             }
@@ -95,7 +95,7 @@ namespace CRUDApp.ViewComponents.Login
             bool result = await _authenticationManager.Authenticate(username, password);
             if (result)
             {
-                NSUserDefaults.StandardUserDefaults.SetString(username, "UserName");
+                NSUserDefaults.StandardUserDefaults.SetString(username, ConstantsHelper.UserName);
                 //NavigationController.SetViewControllers(new UIViewController[] { new UISideMenuController() }, true);
                 UIStoryboard helloWorldStoryboard = UIStoryboard.FromName(nameof(NotesController), null);
                 var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();
@@ -103,9 +103,9 @@ namespace CRUDApp.ViewComponents.Login
             }
             else
             {
-                var okAlertController = UIAlertController.Create("Error", "No such user or password incorrect",
+                var okAlertController = UIAlertController.Create(ConstantsHelper.Error, ConstantsHelper.NoUserOrPasswordIncorret,
                     UIAlertControllerStyle.Alert);
-                okAlertController.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+                okAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, null));
                 PresentViewController(okAlertController, true, null);
             }
         }

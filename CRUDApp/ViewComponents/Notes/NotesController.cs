@@ -27,19 +27,19 @@ namespace CRUDApp.ViewComponents.Notes
             base.ViewDidLoad();
             
             NavigationController.SetNavigationBarHidden(false, false);
-            Title = NSBundle.MainBundle.GetLocalizedString("Notes", "Notes");
+            Title = NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.Notes, ConstantsHelper.Notes);
 
             //NavigationItem.LeftBarButtonItem = EditButtonItem;
 
             _sideMenuManager = new SideMenuManager();
             NavigationItem.SetLeftBarButtonItem(
-                new UIBarButtonItem("Menu", UIBarButtonItemStyle.Plain, (sender, e) => {
+                new UIBarButtonItem(ConstantsHelper.Menu, UIBarButtonItemStyle.Plain, (sender, e) => {
                     PresentViewController(_sideMenuManager.LeftNavigationController, true, null);
                 }),
                 false);
             SetupSideMenu();
 
-            NoteRepository = new NoteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "rm.db3"));
+            NoteRepository = new NoteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName));
             _dataSource = new DataSource(this, NoteRepository.GetAll().ToList());
 
             _refreshControl = new UIRefreshControl();
@@ -49,13 +49,13 @@ namespace CRUDApp.ViewComponents.Notes
             };
 
             TableView.RefreshControl = _refreshControl;
-            TableView.RegisterClassForCellReuse(typeof(NoteCell), "Cell");
+            TableView.RegisterClassForCellReuse(typeof(NoteCell), ConstantsHelper.NoteCellReuseIdentifier);
             TableView.SeparatorColor = UIColor.Clear;
             //TableView.Source = new DataSource(this, NoteRepository.GetAll().ToList());
 
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, NavigateToEditNoteController)
             {
-                AccessibilityLabel = "addNewNoteButton"
+                AccessibilityLabel = ConstantsHelper.AddNewNoteButtonAccessibilityLabel
             };
             NavigationItem.RightBarButtonItem = addButton;
         }
@@ -70,7 +70,6 @@ namespace CRUDApp.ViewComponents.Notes
             _sideMenuManager.AnimationFadeStrength = 0;
             _sideMenuManager.ShadowOpacity = 1f;
             _sideMenuManager.AnimationTransformScaleFactor = 1f;
-            //_sideMenuManager.AnimationBackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("stars.png"));
         }
 
         private async Task Refresh()

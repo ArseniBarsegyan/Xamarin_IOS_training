@@ -3,6 +3,7 @@ using Cirrious.FluentLayouts.Touch;
 using CRUDApp.Controllers;
 using CRUDApp.Data.Entities;
 using CRUDApp.Data.Repositories;
+using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Notes;
 using UIKit;
 
@@ -29,17 +30,17 @@ namespace CRUDApp.ViewComponents.NoteEdit
         {
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Done, AddNewItem)
             {
-                AccessibilityLabel = "confirmButton"
+                AccessibilityLabel = ConstantsHelper.ConfirmButtonAccessibilityLabel
             };
             View.BackgroundColor = UIColor.White;
-            Title = "New note";
+            Title = ConstantsHelper.NewNote;
             NavigationItem.RightBarButtonItem = addButton;
 
             #region LabelForEditor
 
             _noteDescriptionHintLabel = new UILabel
             {
-                Text = "Note:",
+                Text = ConstantsHelper.Note,
                 TextAlignment = UITextAlignment.Left,
                 TextColor = UIColor.DarkGray,
                 Font = UIFont.SystemFontOfSize(16),
@@ -57,7 +58,7 @@ namespace CRUDApp.ViewComponents.NoteEdit
 
             _noteDescriptionTextView = new UITextView
             {
-                Text = "New note",
+                Text = ConstantsHelper.NewNote,
                 Font = UIFont.SystemFontOfSize(16),
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
@@ -76,7 +77,7 @@ namespace CRUDApp.ViewComponents.NoteEdit
             {
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
-            _toGalleryButton.SetTitle("View gallery", UIControlState.Normal);
+            _toGalleryButton.SetTitle(ConstantsHelper.ViewGallery, UIControlState.Normal);
             _toGalleryButton.SetTitleColor(UIColor.Blue, UIControlState.Normal);
             View.AddSubview(_toGalleryButton);
             View.AddConstraints(_toGalleryButton.WithSameLeft(_noteDescriptionTextView),

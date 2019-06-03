@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using CRUDApp.Data.Repositories;
+using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.NoteEdit;
 using Foundation;
 using UIKit;
@@ -22,7 +23,7 @@ namespace CRUDApp.ViewComponents.Notes
             Title = NSBundle.MainBundle.GetLocalizedString("Master", "Master");
 
             NavigationItem.LeftBarButtonItem = EditButtonItem;
-            NoteRepository = new NoteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "rm.db3"));
+            NoteRepository = new NoteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName));
 
             _refreshControl = new UIRefreshControl();
             _refreshControl.ValueChanged += async (sender, args) =>
@@ -30,12 +31,12 @@ namespace CRUDApp.ViewComponents.Notes
                 await Refresh();
             };
             TableView.RefreshControl = _refreshControl;
-            TableView.RegisterClassForCellReuse(typeof(NoteCell), "Cell");
+            TableView.RegisterClassForCellReuse(typeof(NoteCell), ConstantsHelper.NoteCellReuseIdentifier);
             //TableView.Source = new DataSource(this, NoteRepository.GetAll().ToList());
 
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, NavigateToEditNoteController)
             {
-                AccessibilityLabel = "addNewNoteButton"
+                AccessibilityLabel = ConstantsHelper.AddNewNoteButtonAccessibilityLabel
             };
             NavigationItem.RightBarButtonItem = addButton;
         }

@@ -24,10 +24,10 @@ namespace CRUDApp.ViewComponents.Settings
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            Title = NSBundle.MainBundle.GetLocalizedString("Settings", "Settings");
+            Title = NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.Settings, ConstantsHelper.Settings);
             _sideMenuManager = new SideMenuManager();
             NavigationItem.SetLeftBarButtonItem(
-                new UIBarButtonItem("Menu", UIBarButtonItemStyle.Plain, (sender, e) => {
+                new UIBarButtonItem(ConstantsHelper.Menu, UIBarButtonItemStyle.Plain, (sender, e) => {
                     PresentViewController(_sideMenuManager.LeftNavigationController, true, null);
                 }),
                 false);
@@ -53,7 +53,6 @@ namespace CRUDApp.ViewComponents.Settings
             _sideMenuManager.AnimationFadeStrength = 0;
             _sideMenuManager.ShadowOpacity = 1f;
             _sideMenuManager.AnimationTransformScaleFactor = 1f;
-            //_sideMenuManager.AnimationBackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("stars.png"));
         }
     }
 }

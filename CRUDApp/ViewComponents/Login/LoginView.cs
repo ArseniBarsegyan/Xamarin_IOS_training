@@ -1,6 +1,7 @@
 using System;
 using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
+using CRUDApp.Helpers;
 using Foundation;
 using UIKit;
 
@@ -80,23 +81,23 @@ namespace CRUDApp.ViewComponents.Login
 
             if (IsRegisterMode)
             {
-                TitleLabel.Text = "Register";
+                TitleLabel.Text = ConstantsHelper.Register;
 
                 ConfirmPasswordLabel.Hidden = false;
                 ConfirmPasswordTextField.Hidden = false;
 
-                LoginButton.SetTitle("Register", UIControlState.Normal);
-                RegisterButton.SetTitle("Already have account? Login", UIControlState.Normal);
+                LoginButton.SetTitle(ConstantsHelper.Register, UIControlState.Normal);
+                RegisterButton.SetTitle(ConstantsHelper.AlreadyHaveAccountQuestion, UIControlState.Normal);
             }
             else
             {
-                TitleLabel.Text = "Login";
+                TitleLabel.Text = ConstantsHelper.Login;
 
                 ConfirmPasswordLabel.Hidden = true;
                 ConfirmPasswordTextField.Hidden = true;
 
-                LoginButton.SetTitle("Login", UIControlState.Normal);
-                RegisterButton.SetTitle("No account? Register", UIControlState.Normal);
+                LoginButton.SetTitle(ConstantsHelper.Login, UIControlState.Normal);
+                RegisterButton.SetTitle(ConstantsHelper.DontHaveAccountQuestion, UIControlState.Normal);
             }
         }
     }

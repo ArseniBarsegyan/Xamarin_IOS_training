@@ -4,7 +4,9 @@ using System.Linq;
 using CRUDApp.Controllers;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Login;
+using CRUDApp.ViewComponents.Pin;
 using CRUDApp.ViewComponents.Settings;
+using Foundation;
 using UIKit;
 using Xamarin.SideMenu;
 
@@ -43,7 +45,6 @@ namespace CRUDApp.ViewComponents.Notes
         public override void RowSelected(UITableView tableView, Foundation.NSIndexPath indexPath)
         {
             tableView.DeselectRow(indexPath, true);
-            var index = indexPath.Row;
             var item = _items.ElementAt(indexPath.Row);
             switch (item.Index)
             {
@@ -84,9 +85,15 @@ namespace CRUDApp.ViewComponents.Notes
 
         private void Logout()
         {
+            NSUserDefaults preferences = NSUserDefaults.StandardUserDefaults;
+            var usePin = preferences.BoolForKey(ConstantsHelper.UsePinKey);
+
             var window = UIApplication.SharedApplication.KeyWindow;
             var mainController = new SplitViewController();
-            mainController.ShowDetailViewController(new UINavigationController(new LoginViewController()), this);
+
+            UIViewController rootViewController = usePin ? new PinViewController()
+                : (UIViewController)new LoginViewController();
+            mainController.ShowDetailViewController(new UINavigationController(rootViewController), this);
             window.RootViewController = mainController;
             Helpers.Settings.AppUser = string.Empty;
         }

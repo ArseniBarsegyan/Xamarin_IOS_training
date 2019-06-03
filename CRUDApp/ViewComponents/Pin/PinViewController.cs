@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
 using CRUDApp.Controllers;
+using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Notes;
 using Foundation;
 using UIKit;
@@ -91,9 +92,8 @@ namespace CRUDApp.ViewComponents.Pin
                     case 4:
                         UIView.Animate(0.3, () => { _pinView.Pin4.Layer.BackgroundColor = UIColor.White.CGColor; });
                         int.TryParse(_pinBuilder.ToString(), out _pin);
-                        await Task.Delay(25);
-                        ResetImagesAndCount();
                         await Login();
+                        ResetImagesAndCount();
                         break;
                 }
 
@@ -136,7 +136,7 @@ namespace CRUDApp.ViewComponents.Pin
         private async Task Login()
         {
             NSUserDefaults preferences = NSUserDefaults.StandardUserDefaults;
-            var userPin = preferences.StringForKey("UserPin");
+            var userPin = preferences.StringForKey(ConstantsHelper.UserPin);
 
             if (_pinBuilder.ToString() == userPin)
             {

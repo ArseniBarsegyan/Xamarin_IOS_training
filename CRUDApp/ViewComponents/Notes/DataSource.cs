@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CRUDApp.Data.Entities;
+using CRUDApp.Helpers;
 using Foundation;
 using UIKit;
 
@@ -9,7 +10,7 @@ namespace CRUDApp.ViewComponents.Notes
 {
     public class DataSource : UITableViewSource
     {
-        private static readonly NSString CellIdentifier = new NSString("Cell");
+        private static readonly NSString CellIdentifier = new NSString(ConstantsHelper.NoteCellReuseIdentifier);
         private readonly List<Note> _notes;
         private readonly NotesController _controller;
 
@@ -35,7 +36,7 @@ namespace CRUDApp.ViewComponents.Notes
         {
             var cell = tableView.DequeueReusableCell(CellIdentifier, indexPath);
             var note = _notes[indexPath.Row];
-            cell.TextLabel.Text = note.Description ?? "New note";
+            cell.TextLabel.Text = note.Description ?? ConstantsHelper.NewNote;
             return cell;
         }
 

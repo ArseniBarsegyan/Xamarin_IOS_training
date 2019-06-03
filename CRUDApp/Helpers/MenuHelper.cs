@@ -13,35 +13,35 @@ namespace CRUDApp.Helpers
             {
                 new MasterPageItem
                 {
-                    Title = "Note",
+                    Title = ConstantsHelper.Notes,
                     IconSource = ConstantsHelper.NotesListIcon,
                     IsDisplayed = true,
                     Index = MenuViewIndex.NotesView
                 },
                 new MasterPageItem
                 {
-                    Title = "ToDo",
+                    Title = ConstantsHelper.ToDo,
                     IconSource = ConstantsHelper.ToDoListIcon,
                     IsDisplayed = true,
                     Index = MenuViewIndex.ToDoView
                 },
                 new MasterPageItem
                 {
-                    Title = "Achievements",
+                    Title = ConstantsHelper.Achievements,
                     IconSource = ConstantsHelper.AchievementsIcon,
                     IsDisplayed = true,
                     Index = MenuViewIndex.AchievementsView
                 },
                 new MasterPageItem
                 {
-                    Title = "Settings",
+                    Title = ConstantsHelper.Settings,
                     IconSource = ConstantsHelper.SettingsIcon,
                     IsDisplayed = true,
                     Index = MenuViewIndex.SettingsView
                 },
                 new MasterPageItem
                 {
-                    Title = "Logout",
+                    Title = ConstantsHelper.Logout,
                     IconSource = ConstantsHelper.LogoutIcon,
                     IsDisplayed = true,
                     Index = MenuViewIndex.Logout

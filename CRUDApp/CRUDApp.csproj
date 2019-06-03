@@ -96,6 +96,7 @@
     <Compile Include="ViewComponents\Notes\NotesViewController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
+    <Compile Include="ViewComponents\Settings\TextFieldRestrictDelegate.cs" />
     <Compile Include="ViewModels\NoteViewModel.cs" />
     <Compile Include="Extensions\ModelsConverterExtensions.cs" />
     <InterfaceDefinition Include="ViewComponents\Login\LoginView.xib" />
