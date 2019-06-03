@@ -24,6 +24,15 @@ namespace CRUDApp.ViewComponents.Settings
 
             UsePinSwitchCell = rootView?.usePinSwitchCell;
             PinEntry = rootView?.pinEntry;
+
+            PinEntry.KeyboardType = UIKeyboardType.NumberPad;
+            int pinEntryMaxLength = 4;
+            PinEntry.ShouldChangeCharacters = (field, range, replacementString) =>
+            {
+                var newContent = new NSString(field.Text).Replace(range, new NSString(replacementString)).ToString();
+                return newContent.Length <= pinEntryMaxLength && (replacementString.Length == 0 || int.TryParse(replacementString, out var number));
+            };
+
             SaveButton = rootView?.saveButton;
             SaveButton.Hidden = true;
             SaveButton.TouchUpInside += SaveButton_TouchUpInside;
@@ -44,15 +53,17 @@ namespace CRUDApp.ViewComponents.Settings
 
         private void SubscribeOnEvents()
         {
-            UsePinSwitchCell.ValueChanged += UsePinSwitchCell_ValueChanged;
+            UsePinSwitchCell.ValueChanged += Pin_ValueChanged;
+            PinEntry.ValueChanged += Pin_ValueChanged;
         }
 
         private void UnsubscribeFromEvents()
         {
-            UsePinSwitchCell.ValueChanged -= UsePinSwitchCell_ValueChanged;
+            UsePinSwitchCell.ValueChanged -= Pin_ValueChanged;
+            PinEntry.ValueChanged -= Pin_ValueChanged;
         }
 
-        private void UsePinSwitchCell_ValueChanged(object sender, EventArgs e)
+        private void Pin_ValueChanged(object sender, EventArgs e)
         {
             SaveButton.Hidden = false;
         }
