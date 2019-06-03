@@ -22,7 +22,8 @@ namespace CRUDApp.ViewComponents.NoteGallery
         {
             View.BackgroundColor = UIColor.White;
             Title = ConstantsHelper.Gallery;
-            
+
+            CollectionView.RegisterClassForCell(typeof(GalleryViewCell), nameof(GalleryViewCell));
             CollectionView.DataSource = new GalleryCollectionViewDataSource(new List<GalleryItemModel>
             {
                 new GalleryItemModel
@@ -32,16 +33,42 @@ namespace CRUDApp.ViewComponents.NoteGallery
                 },
                 new GalleryItemModel
                 {
-                    Id = 0,
+                    Id = 1,
+                    ImagePath = "https://www.w3schools.com/w3css/img_lights.jpg"
+                },
+                new GalleryItemModel
+                {
+                    Id = 2,
+                    ImagePath = "https://www.w3schools.com/w3css/img_lights.jpg"
+                },
+                new GalleryItemModel
+                {
+                    Id = 3,
                     ImagePath = "https://www.w3schools.com/w3css/img_lights.jpg"
                 }
             });
-            CollectionView.RegisterClassForCell(typeof(GalleryViewCell), nameof(GalleryViewCell));
+            CollectionView.CollectionViewLayout = new GalleryCollectionViewLayout();
+            BeginInvokeOnMainThread(() =>
+            {
+                CollectionView.ReloadData();
+            });
         }
     }
 
-    public class GalleryCollectionViewLayout : UICollectionViewLayout
+    public class GalleryCollectionViewLayout : UICollectionViewFlowLayout
     {
+        public GalleryCollectionViewLayout()
+        {
+            //SectionInset = new UIEdgeInsets(0, 0, 0, 0);
+            //MinimumInteritemSpacing = 5;
+            //MinimumLineSpacing = 5;
+            //ItemSize = new CGSize(150, 150);
+        }
+
+        //public override bool ShouldInvalidateLayoutForBoundsChange(CGRect newBounds)
+        //{
+        //    return true;
+        //}
     }    
 
     public class GalleryCollectionViewDataSource : UICollectionViewDataSource
@@ -58,7 +85,11 @@ namespace CRUDApp.ViewComponents.NoteGallery
         {
             var cell = (GalleryViewCell)collectionView.DequeueReusableCell(GalleryCellId, indexPath);
             var galleryItem = _galleryItems[indexPath.Row];
-            cell.Image = new UIImage(NSData.FromUrl(NSUrl.FromString(galleryItem.ImagePath)));
+            BeginInvokeOnMainThread(() =>
+            {
+                cell.Image = new UIImage(NSData.FromUrl(NSUrl.FromString(galleryItem.ImagePath)));
+                //cell.Image = UIImage.FromBundle("login_background.png");
+            });
             return cell;
         }
 
@@ -80,7 +111,8 @@ namespace CRUDApp.ViewComponents.NoteGallery
 
             ContentView.BackgroundColor = UIColor.White;
             _imageView = new UIImageView();
-            _imageView = new UIImageView(UIImage.LoadFromData(NSData.FromUrl(NSUrl.FromString("https://www.w3schools.com/w3css/img_lights.jpg"))));
+            //_imageView.Image = UIImage.LoadFromData(NSData.FromUrl(NSUrl.FromString("https://www.w3schools.com/w3css/img_lights.jpg")));
+            //_imageView.Image = UIImage.FromBundle("login_background.png");
             _imageView.Center = ContentView.Center;
             _imageView.Transform = CGAffineTransform.MakeScale(0.9f, 0.9f);
 
@@ -89,10 +121,7 @@ namespace CRUDApp.ViewComponents.NoteGallery
 
         public UIImage Image
         {
-            set
-            {
-                _imageView.Image = value;
-            }
+            set => _imageView.Image = value;
         }
     }
 }
