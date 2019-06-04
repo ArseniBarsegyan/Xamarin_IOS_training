@@ -3,7 +3,7 @@ using CoreGraphics;
 using Foundation;
 using UIKit;
 
-namespace CRUDApp.ViewComponents.NoteGallery
+namespace CRUDApp.ViewComponents.NoteEdit.NoteGallery
 {
     public class GalleryViewCell : UICollectionViewCell
     {

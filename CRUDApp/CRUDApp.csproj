@@ -85,10 +85,10 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Info.plist" />
-    <Compile Include="ViewComponents\NoteGallery\GalleryCollectionViewDelegate.cs" />
-    <Compile Include="ViewComponents\NoteGallery\GalleryCollectionViewLayout.cs" />
-    <Compile Include="ViewComponents\NoteGallery\GalleryCollectionViewSource.cs" />
-    <Compile Include="ViewComponents\NoteGallery\GalleryViewCell.cs" />
+    <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewDelegate.cs" />
+    <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewLayout.cs" />
+    <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewSource.cs" />
+    <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryViewCell.cs" />
     <Compile Include="ViewComponents\Notes\DataSource.cs" />
     <Compile Include="ViewComponents\Notes\NoteCell.cs" />
     <Compile Include="ViewComponents\Notes\NotesController.cs" />
@@ -116,7 +116,6 @@
       <DependentUpon>PinView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Pin\PinViewController.cs" />
-    <Compile Include="ViewComponents\NoteGallery\NoteGalleryViewController.cs" />
     <Compile Include="ViewComponents\Root\SplitViewController.cs" />
   </ItemGroup>
   <ItemGroup>

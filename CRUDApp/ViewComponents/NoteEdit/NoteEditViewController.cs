@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Cirrious.FluentLayouts.Touch;
+using CoreGraphics;
 using CRUDApp.Data.Entities;
 using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
-using CRUDApp.ViewComponents.NoteGallery;
+using CRUDApp.ViewComponents.NoteEdit.NoteGallery;
 using CRUDApp.ViewComponents.Notes;
 using UIKit;
 
@@ -17,7 +19,6 @@ namespace CRUDApp.ViewComponents.NoteEdit
 
         private UITextView _noteDescriptionTextView;
         private UILabel _noteDescriptionHintLabel;
-        private UIButton _toGalleryButton;
 
         public NoteEditViewController()
         {
@@ -69,43 +70,34 @@ namespace CRUDApp.ViewComponents.NoteEdit
             _noteDescriptionTextView.WithSameLeft(_noteDescriptionHintLabel),
             _noteDescriptionTextView.Below(_noteDescriptionHintLabel, 10f),
             _noteDescriptionTextView.WithSameWidth(View),
-            _noteDescriptionTextView.Height().EqualTo(300)
+            _noteDescriptionTextView.Height().EqualTo(200)
             );
             #endregion
 
-            #region ToGalleryLink
-            _toGalleryButton = new UIButton(UIButtonType.Custom)
+            ConfigureView();
+
+            #region NoteItemsGallery
+            var collectionView = new UICollectionView(CGRect.Empty, new GalleryCollectionViewLayout())
             {
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
-            _toGalleryButton.SetTitle(ConstantsHelper.ViewGallery, UIControlState.Normal);
-            _toGalleryButton.SetTitleColor(UIColor.Blue, UIControlState.Normal);
-            View.AddSubview(_toGalleryButton);
-            View.AddConstraints(_toGalleryButton.WithSameLeft(_noteDescriptionTextView),
-                _toGalleryButton.AtTrailingOf(View, 10f),
-                _toGalleryButton.Below(_noteDescriptionTextView, 50f),
-                _toGalleryButton.Height().EqualTo(75f));
+            View.AddSubview(collectionView);
+
+            collectionView.BackgroundColor = UIColor.White;
+
+            collectionView.AlwaysBounceVertical = true;
+            collectionView.Bounces = true;
+
+            collectionView.RegisterClassForCell(typeof(GalleryViewCell), nameof(GalleryViewCell));
+            collectionView.Source = new GalleryCollectionViewSource(new List<GalleryItemModel>());
+
+            collectionView.Delegate = new GalleryCollectionViewDelegate(new UIEdgeInsets(5, 5, 5, 5));
+            collectionView.ReloadData();
+
+            View.AddConstraints(collectionView.Below(_noteDescriptionTextView, 30f),
+                collectionView.WithSameWidth(View),
+                collectionView.Height().EqualTo(400f));
             #endregion
-
-            ConfigureView();
-        }
-
-        public override void ViewWillAppear(bool animated)
-        {
-            base.ViewWillAppear(animated);
-            _toGalleryButton.TouchUpInside += ToGalleryButton_TouchUpInside;
-        }
-
-        public override void ViewWillDisappear(bool animated)
-        {
-            base.ViewWillDisappear(animated);
-            _toGalleryButton.TouchUpInside -= ToGalleryButton_TouchUpInside;
-        }
-
-        private void ToGalleryButton_TouchUpInside(object sender, EventArgs e)
-        {
-            var galleryController = new NoteGalleryViewController(new GalleryCollectionViewLayout());
-            NavigationController.PushViewController(galleryController, true);
         }
 
         private void SaveChanges(object sender, EventArgs args)

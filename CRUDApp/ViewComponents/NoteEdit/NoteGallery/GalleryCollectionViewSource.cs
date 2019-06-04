@@ -4,7 +4,7 @@ using CRUDApp.Data.Entities;
 using Foundation;
 using UIKit;
 
-namespace CRUDApp.ViewComponents.NoteGallery
+namespace CRUDApp.ViewComponents.NoteEdit.NoteGallery
 {
     public class GalleryCollectionViewSource : UICollectionViewSource
     {

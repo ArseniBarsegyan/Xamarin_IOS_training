@@ -1,12 +1,12 @@
-﻿using CoreGraphics;
-using UIKit;
+﻿using UIKit;
 
-namespace CRUDApp.ViewComponents.NoteGallery
+namespace CRUDApp.ViewComponents.NoteEdit.NoteGallery
 {
     public class GalleryCollectionViewLayout : UICollectionViewFlowLayout
     {
         public GalleryCollectionViewLayout()
         {
+            ScrollDirection = UICollectionViewScrollDirection.Vertical;
         }
     }
 }
