@@ -188,6 +188,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Entitlements.plist" />
+    <BundleResource Include="Resources\video%401x.png" />
+    <BundleResource Include="Resources\video%402x.png" />
+    <BundleResource Include="Resources\video%403x.png" />
+    <BundleResource Include="Resources\video_dark%401x.png" />
+    <BundleResource Include="Resources\video_dark%402x.png" />
+    <BundleResource Include="Resources\video_dark%403x.png" />
+    <BundleResource Include="Resources\add%401x.png" />
+    <BundleResource Include="Resources\add%402x.png" />
+    <BundleResource Include="Resources\add%403x.png" />
+    <BundleResource Include="Resources\add_dark%401x.png" />
+    <BundleResource Include="Resources\add_dark%402x.png" />
+    <BundleResource Include="Resources\add_dark%403x.png" />
+    <BundleResource Include="Resources\camera%401x.png" />
+    <BundleResource Include="Resources\camera%402x.png" />
+    <BundleResource Include="Resources\camera%403x.png" />
+    <BundleResource Include="Resources\camera_dark%401x.png" />
+    <BundleResource Include="Resources\camera_dark%402x.png" />
+    <BundleResource Include="Resources\camera_dark%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\achievements_icon%401x.png" />

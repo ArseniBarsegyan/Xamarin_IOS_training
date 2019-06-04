@@ -2,6 +2,8 @@
 {
     public static class ConstantsHelper
     {
+        public const string AddIcon = "add.png";
+        public const string AddIconDark = "add_dark.png";
         public const string Achievements = "Achievements";
         public const string AchievementSteps = "AchievementSteps";
         public const string AchievementsIcon = "achievements_icon.png";
@@ -9,6 +11,8 @@
         public const string AlreadyHaveAccountQuestion = "Already have account? Login";
         public const string Birthdays = "Birthdays";
         public const string NoteCellReuseIdentifier = "NoteCell";
+        public const string CameraIcon = "camera.png";
+        public const string CameraIconDark = "camera_dark.png";
         public const string ConfirmButtonAccessibilityLabel = "confirmButton";
         public const string DatabaseName = "rm.db3";
         public const string DontHaveAccountQuestion = "No account? Register";
@@ -42,5 +46,7 @@
         public const string UserPin = "UserPin";
         public const string ValidationError = "Validation error";
         public const string ViewGallery = "View gallery";
+        public const string VideoIcon = "video.png";
+        public const string VideoIconDark = "video_dark.png";
     }
 }

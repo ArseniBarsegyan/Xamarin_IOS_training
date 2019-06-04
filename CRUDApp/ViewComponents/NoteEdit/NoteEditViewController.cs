@@ -140,12 +140,22 @@ namespace CRUDApp.ViewComponents.NoteEdit
                 collectionView.AtBottomOf(View, 50f));
             #endregion
 
-            #region ContextOptions
+            #region BottomBar
             var bottomBar = new UIView
             {
                 BackgroundColor = UIColor.FromRGB(50, 50, 50),
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
+            var pickImage = new UIImageView(UIImage.FromBundle(ConstantsHelper.AddIcon))
+            {
+                TranslatesAutoresizingMaskIntoConstraints = false
+            };
+            bottomBar.AddSubview(pickImage);
+            bottomBar.AddConstraints(pickImage.Height().EqualTo(30f),
+                pickImage.AtLeftOf(bottomBar, 10f),
+                pickImage.Width().EqualTo(30f),
+                pickImage.WithSameCenterY(bottomBar));
+
             View.AddSubview(bottomBar);
             View.AddConstraints(bottomBar.WithSameWidth(View),
                 bottomBar.Height().EqualTo(50f),
