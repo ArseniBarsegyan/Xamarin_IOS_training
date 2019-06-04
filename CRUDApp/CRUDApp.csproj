@@ -85,6 +85,10 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Info.plist" />
+    <Compile Include="ViewComponents\NoteGallery\GalleryCollectionViewDelegate.cs" />
+    <Compile Include="ViewComponents\NoteGallery\GalleryCollectionViewLayout.cs" />
+    <Compile Include="ViewComponents\NoteGallery\GalleryCollectionViewSource.cs" />
+    <Compile Include="ViewComponents\NoteGallery\GalleryViewCell.cs" />
     <Compile Include="ViewComponents\Notes\DataSource.cs" />
     <Compile Include="ViewComponents\Notes\NoteCell.cs" />
     <Compile Include="ViewComponents\Notes\NotesController.cs" />
