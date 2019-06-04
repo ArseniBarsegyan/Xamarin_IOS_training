@@ -39,7 +39,6 @@ namespace CRUDApp.ViewComponents.NoteEdit
             NavigationItem.RightBarButtonItem = addButton;
 
             #region LabelForEditor
-
             _noteDescriptionHintLabel = new UILabel
             {
                 Text = ConstantsHelper.Note,
@@ -57,7 +56,6 @@ namespace CRUDApp.ViewComponents.NoteEdit
             #endregion
 
             #region EditorForDescription
-
             _noteDescriptionTextView = new UITextView
             {
                 Text = ConstantsHelper.NewNote,
@@ -89,14 +87,69 @@ namespace CRUDApp.ViewComponents.NoteEdit
             collectionView.Bounces = true;
 
             collectionView.RegisterClassForCell(typeof(GalleryViewCell), nameof(GalleryViewCell));
-            collectionView.Source = new GalleryCollectionViewSource(new List<GalleryItemModel>());
+            collectionView.Source = new GalleryCollectionViewSource(new List<GalleryItemModel>
+            {
+                new GalleryItemModel
+                {
+                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                },
+                new GalleryItemModel
+                {
+                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                },
+                new GalleryItemModel
+                {
+                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                },
+                new GalleryItemModel
+                {
+                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                },
+                new GalleryItemModel
+                {
+                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                },
+                new GalleryItemModel
+                {
+                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                },
+                new GalleryItemModel
+                {
+                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                },
+                new GalleryItemModel
+                {
+                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                },
+                new GalleryItemModel
+                {
+                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                },
+                new GalleryItemModel
+                {
+                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                }
+            });
 
             collectionView.Delegate = new GalleryCollectionViewDelegate(new UIEdgeInsets(5, 5, 5, 5));
             collectionView.ReloadData();
 
             View.AddConstraints(collectionView.Below(_noteDescriptionTextView, 30f),
                 collectionView.WithSameWidth(View),
-                collectionView.Height().EqualTo(400f));
+                collectionView.Height().EqualTo(400f),
+                collectionView.AtBottomOf(View, 50f));
+            #endregion
+
+            #region ContextOptions
+            var bottomBar = new UIView
+            {
+                BackgroundColor = UIColor.FromRGB(50, 50, 50),
+                TranslatesAutoresizingMaskIntoConstraints = false
+            };
+            View.AddSubview(bottomBar);
+            View.AddConstraints(bottomBar.WithSameWidth(View),
+                bottomBar.Height().EqualTo(50f),
+                bottomBar.AtBottomOf(View));
             #endregion
         }
 
