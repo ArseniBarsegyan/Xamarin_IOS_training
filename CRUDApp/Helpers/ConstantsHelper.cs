@@ -11,6 +11,8 @@
         public const string AlreadyHaveAccountQuestion = "Already have account? Login";
         public const string Birthdays = "Birthdays";
         public const string NoteCellReuseIdentifier = "NoteCell";
+        public const string CameraNotAvailableError = "Camera not available";
+        public const string CameraNotAvailableMessage = "Ensure that camera is available";
         public const string CameraIcon = "camera.png";
         public const string CameraIconDark = "camera_dark.png";
         public const string ConfirmButtonAccessibilityLabel = "confirmButton";

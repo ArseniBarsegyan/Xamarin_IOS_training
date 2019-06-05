@@ -85,6 +85,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Info.plist" />
+    <Compile Include="ViewComponents\NoteEdit\CameraDelegate.cs" />
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewDelegate.cs" />
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewLayout.cs" />
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewSource.cs" />

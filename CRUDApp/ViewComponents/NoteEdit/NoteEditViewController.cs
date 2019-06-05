@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
@@ -9,7 +8,6 @@ using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.NoteEdit.NoteGallery;
 using CRUDApp.ViewComponents.Notes;
-using Foundation;
 using GMImagePicker;
 using UIKit;
 
@@ -17,6 +15,8 @@ namespace CRUDApp.ViewComponents.NoteEdit
 {
     public class NoteEditViewController : UIViewController
     {
+        private UIImagePickerController _picker;
+
         private Note _noteEditModel;
         private NoteRepository _repository;
         private DataSource _dataSource;
@@ -225,9 +225,10 @@ namespace CRUDApp.ViewComponents.NoteEdit
                 AnimateButton(_pickImage);
                 await PickMultipleImages();
             }) { NumberOfTapsRequired = 1 };
-            _cameraTapGestureRecognizer = new UITapGestureRecognizer(() =>
+            _cameraTapGestureRecognizer = new UITapGestureRecognizer(async() =>
             {
                 AnimateButton(_cameraImage);
+                await TakePhoto();
             }) { NumberOfTapsRequired = 1 };
             _videoTapGestureRecognizer = new UITapGestureRecognizer(() =>
             {
@@ -245,6 +246,26 @@ namespace CRUDApp.ViewComponents.NoteEdit
             _pickImage.RemoveGestureRecognizer(_pickTapGestureRecognizer);
             _cameraImage.RemoveGestureRecognizer(_cameraTapGestureRecognizer);
             _videoImage.RemoveGestureRecognizer(_videoTapGestureRecognizer);
+        }
+
+        private async Task TakePhoto()
+        {
+            if (UIImagePickerController.IsSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
+            {
+                _picker = new UIImagePickerController
+                {
+                    Delegate = new CameraDelegate(),
+                    SourceType = UIImagePickerControllerSourceType.Camera
+                };
+                await PresentViewControllerAsync(_picker, true);
+            }
+            else
+            {
+                var okAlertController = UIAlertController.Create(ConstantsHelper.CameraNotAvailableError, ConstantsHelper.CameraNotAvailableMessage,
+                    UIAlertControllerStyle.Alert);
+                okAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, null));
+                await PresentViewControllerAsync(okAlertController, true);
+            }
         }
 
         private async Task PickMultipleImages()
