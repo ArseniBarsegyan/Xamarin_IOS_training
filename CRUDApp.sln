@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDApp", "CRUDApp\CRUDApp.csproj", "{C9EA6759-122C-4A0E-BA0C-43BCAD3D1149}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMImagePickerLibrary", "GMImagePickerLibrary\GMImagePickerLibrary.csproj", "{B601DCDA-FABD-47C6-B6FA-E0D685522EBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -19,5 +21,13 @@ Global
 		{C9EA6759-122C-4A0E-BA0C-43BCAD3D1149}.Debug|iPhone.Build.0 = Debug|iPhone
 		{C9EA6759-122C-4A0E-BA0C-43BCAD3D1149}.Release|iPhone.ActiveCfg = Release|iPhone
 		{C9EA6759-122C-4A0E-BA0C-43BCAD3D1149}.Release|iPhone.Build.0 = Release|iPhone
+		{B601DCDA-FABD-47C6-B6FA-E0D685522EBC}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{B601DCDA-FABD-47C6-B6FA-E0D685522EBC}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{B601DCDA-FABD-47C6-B6FA-E0D685522EBC}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{B601DCDA-FABD-47C6-B6FA-E0D685522EBC}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{B601DCDA-FABD-47C6-B6FA-E0D685522EBC}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{B601DCDA-FABD-47C6-B6FA-E0D685522EBC}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{B601DCDA-FABD-47C6-B6FA-E0D685522EBC}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{B601DCDA-FABD-47C6-B6FA-E0D685522EBC}.Release|iPhone.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
