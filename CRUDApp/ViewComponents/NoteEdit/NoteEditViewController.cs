@@ -20,6 +20,8 @@ namespace CRUDApp.ViewComponents.NoteEdit
         private UITextView _noteDescriptionTextView;
         private UILabel _noteDescriptionHintLabel;
 
+        private UILabel _galleryHintLabel;
+
         public NoteEditViewController()
         {
         }
@@ -44,7 +46,7 @@ namespace CRUDApp.ViewComponents.NoteEdit
                 Text = ConstantsHelper.Note,
                 TextAlignment = UITextAlignment.Left,
                 TextColor = UIColor.DarkGray,
-                Font = UIFont.SystemFontOfSize(16),
+                Font = UIFont.SystemFontOfSize(14),
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
             View.AddSubview(_noteDescriptionHintLabel);
@@ -73,6 +75,23 @@ namespace CRUDApp.ViewComponents.NoteEdit
             #endregion
 
             ConfigureView();
+
+            #region GalleryTitle
+            _galleryHintLabel = new UILabel
+            {
+                Text = ConstantsHelper.Gallery,
+                TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.DarkGray,
+                Font = UIFont.SystemFontOfSize(14),
+                TranslatesAutoresizingMaskIntoConstraints = false
+            };
+            View.AddSubview(_galleryHintLabel);
+            View.AddConstraints(_galleryHintLabel.AtLeftOf(View, 10f),
+                _galleryHintLabel.Below(_noteDescriptionTextView, 10f),
+                _galleryHintLabel.Width().EqualTo(100f),
+                _galleryHintLabel.Height().EqualTo(20f)
+            );
+            #endregion
 
             #region NoteItemsGallery
             var collectionView = new UICollectionView(CGRect.Empty, new GalleryCollectionViewLayout())
@@ -134,10 +153,10 @@ namespace CRUDApp.ViewComponents.NoteEdit
             collectionView.Delegate = new GalleryCollectionViewDelegate(new UIEdgeInsets(5, 5, 5, 5));
             collectionView.ReloadData();
 
-            View.AddConstraints(collectionView.Below(_noteDescriptionTextView, 30f),
+            View.AddConstraints(collectionView.Below(_galleryHintLabel, 30f),
                 collectionView.WithSameWidth(View),
-                collectionView.Height().EqualTo(400f),
-                collectionView.AtBottomOf(View, 50f));
+                collectionView.Below(_galleryHintLabel, 5f),
+                collectionView.AtBottomOf(View, 70f));
             #endregion
 
             #region BottomBar
@@ -150,15 +169,31 @@ namespace CRUDApp.ViewComponents.NoteEdit
             {
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
-            bottomBar.AddSubview(pickImage);
+            var cameraImage = new UIImageView(UIImage.FromBundle(ConstantsHelper.CameraIcon))
+            {
+                TranslatesAutoresizingMaskIntoConstraints = false
+            };
+            var videoImage = new UIImageView(UIImage.FromBundle(ConstantsHelper.VideoIcon))
+            {
+                TranslatesAutoresizingMaskIntoConstraints = false
+            };
+            bottomBar.AddSubviews(pickImage, cameraImage, videoImage);
             bottomBar.AddConstraints(pickImage.Height().EqualTo(30f),
-                pickImage.AtLeftOf(bottomBar, 10f),
+                pickImage.AtLeftOf(bottomBar, 20f),
                 pickImage.Width().EqualTo(30f),
-                pickImage.WithSameCenterY(bottomBar));
+                pickImage.WithSameCenterY(bottomBar),
+                cameraImage.ToRightOf(pickImage, 40f),
+                cameraImage.Height().EqualTo(30f),
+                cameraImage.Width().EqualTo(30f),
+                cameraImage.WithSameCenterY(bottomBar),
+                videoImage.ToRightOf(cameraImage, 40f),
+                videoImage.Height().EqualTo(30f),
+                videoImage.Width().EqualTo(30f),
+                videoImage.WithSameCenterY(bottomBar));
 
             View.AddSubview(bottomBar);
             View.AddConstraints(bottomBar.WithSameWidth(View),
-                bottomBar.Height().EqualTo(50f),
+                bottomBar.Height().EqualTo(70f),
                 bottomBar.AtBottomOf(View));
             #endregion
         }

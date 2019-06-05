@@ -18,7 +18,7 @@
         public const string DontHaveAccountQuestion = "No account? Register";
         public const string Error = "Error";
         public const string EnterNameAndPassword = "Please enter name and password";
-        public const string Gallery = "Gallery";
+        public const string Gallery = "Gallery:";
         public const string GalleryItems = "GalleryItems";
         public const string LoginBackground = "login_background.png";
         public const string Login = "Login";
