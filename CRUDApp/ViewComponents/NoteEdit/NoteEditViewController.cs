@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
 using CRUDApp.Data.Entities;
@@ -7,6 +8,8 @@ using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.NoteEdit.NoteGallery;
 using CRUDApp.ViewComponents.Notes;
+using Foundation;
+using GMImagePicker;
 using UIKit;
 
 namespace CRUDApp.ViewComponents.NoteEdit
@@ -21,6 +24,14 @@ namespace CRUDApp.ViewComponents.NoteEdit
         private UILabel _noteDescriptionHintLabel;
 
         private UILabel _galleryHintLabel;
+
+        private UIImageView _pickImage;
+        private UIImageView _cameraImage;
+        private UIImageView _videoImage;
+
+        private UITapGestureRecognizer _pickTapGestureRecognizer;
+        private UITapGestureRecognizer _cameraTapGestureRecognizer;
+        private UITapGestureRecognizer _videoTapGestureRecognizer;
 
         public NoteEditViewController()
         {
@@ -163,39 +174,92 @@ namespace CRUDApp.ViewComponents.NoteEdit
             var bottomBar = new UIView
             {
                 BackgroundColor = UIColor.FromRGB(50, 50, 50),
-                TranslatesAutoresizingMaskIntoConstraints = false
+                TranslatesAutoresizingMaskIntoConstraints = false,
             };
-            var pickImage = new UIImageView(UIImage.FromBundle(ConstantsHelper.AddIcon))
+            _pickImage = new UIImageView(UIImage.FromBundle(ConstantsHelper.AddIcon))
             {
+                ContentMode = UIViewContentMode.Center,
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
-            var cameraImage = new UIImageView(UIImage.FromBundle(ConstantsHelper.CameraIcon))
+            _cameraImage = new UIImageView(UIImage.FromBundle(ConstantsHelper.CameraIcon))
             {
+                ContentMode = UIViewContentMode.Center,
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
-            var videoImage = new UIImageView(UIImage.FromBundle(ConstantsHelper.VideoIcon))
+            _videoImage = new UIImageView(UIImage.FromBundle(ConstantsHelper.VideoIcon))
             {
+                ContentMode = UIViewContentMode.Center,
                 TranslatesAutoresizingMaskIntoConstraints = false
             };
-            bottomBar.AddSubviews(pickImage, cameraImage, videoImage);
-            bottomBar.AddConstraints(pickImage.Height().EqualTo(30f),
-                pickImage.AtLeftOf(bottomBar, 20f),
-                pickImage.Width().EqualTo(30f),
-                pickImage.WithSameCenterY(bottomBar),
-                cameraImage.ToRightOf(pickImage, 40f),
-                cameraImage.Height().EqualTo(30f),
-                cameraImage.Width().EqualTo(30f),
-                cameraImage.WithSameCenterY(bottomBar),
-                videoImage.ToRightOf(cameraImage, 40f),
-                videoImage.Height().EqualTo(30f),
-                videoImage.Width().EqualTo(30f),
-                videoImage.WithSameCenterY(bottomBar));
+
+            bottomBar.AddSubviews(_pickImage, _cameraImage, _videoImage);
+            bottomBar.AddConstraints(_pickImage.Height().EqualTo(70f),
+                _pickImage.AtLeftOf(bottomBar),
+                _pickImage.Width().EqualTo(70f),
+                _pickImage.WithSameCenterY(bottomBar),
+                _cameraImage.ToRightOf(_pickImage),
+                _cameraImage.Height().EqualTo(70f),
+                _cameraImage.Width().EqualTo(70f),
+                _cameraImage.WithSameCenterY(bottomBar),
+                _videoImage.ToRightOf(_cameraImage),
+                _videoImage.Height().EqualTo(70f),
+                _videoImage.Width().EqualTo(70f),
+                _videoImage.WithSameCenterY(bottomBar));
 
             View.AddSubview(bottomBar);
             View.AddConstraints(bottomBar.WithSameWidth(View),
                 bottomBar.Height().EqualTo(70f),
                 bottomBar.AtBottomOf(View));
             #endregion
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            _pickImage.UserInteractionEnabled = true;
+            _cameraImage.UserInteractionEnabled = true;
+            _videoImage.UserInteractionEnabled = true;
+            _pickTapGestureRecognizer = new UITapGestureRecognizer(async() =>
+            {
+                AnimateButton(_pickImage);
+                await PickMultipleImages();
+            }) { NumberOfTapsRequired = 1 };
+            _cameraTapGestureRecognizer = new UITapGestureRecognizer(() =>
+            {
+                AnimateButton(_cameraImage);
+            }) { NumberOfTapsRequired = 1 };
+            _videoTapGestureRecognizer = new UITapGestureRecognizer(() =>
+            {
+                AnimateButton(_videoImage);
+            }) {NumberOfTapsRequired = 1};
+
+            _pickImage.AddGestureRecognizer(_pickTapGestureRecognizer);
+            _cameraImage.AddGestureRecognizer(_cameraTapGestureRecognizer);
+            _videoImage.AddGestureRecognizer(_videoTapGestureRecognizer);
+        }
+
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+            _pickImage.RemoveGestureRecognizer(_pickTapGestureRecognizer);
+            _cameraImage.RemoveGestureRecognizer(_cameraTapGestureRecognizer);
+            _videoImage.RemoveGestureRecognizer(_videoTapGestureRecognizer);
+        }
+
+        private async Task PickMultipleImages()
+        {
+            var picker = new GMImagePickerController();
+            picker.FinishedPickingAssets += (sender, args) =>
+            {
+                Console.WriteLine("Finished picking");
+            };
+            await PresentViewControllerAsync(picker, true);
+        }
+
+        private void AnimateButton(UIImageView image)
+        {
+            UIView.Animate(0.3, () => { image.Layer.BackgroundColor = UIColor.FromRGB(68, 138, 255).CGColor; });
+            UIView.Animate(0.15, () => { image.Layer.BackgroundColor = UIColor.Clear.CGColor; });
         }
 
         private void SaveChanges(object sender, EventArgs args)
@@ -237,6 +301,13 @@ namespace CRUDApp.ViewComponents.NoteEdit
                 _noteEditModel = note;
                 ConfigureView();
             }
+        }
+
+        private void ResetButtons()
+        {
+            _pickImage.BackgroundColor = UIColor.Clear;
+            _cameraImage.BackgroundColor = UIColor.Clear;
+            _videoImage.BackgroundColor = UIColor.Clear;
         }
 
         private void ConfigureView()
