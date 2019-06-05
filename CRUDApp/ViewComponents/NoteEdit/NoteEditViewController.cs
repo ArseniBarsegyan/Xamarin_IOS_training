@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
@@ -251,6 +252,8 @@ namespace CRUDApp.ViewComponents.NoteEdit
             var picker = new GMImagePickerController();
             picker.FinishedPickingAssets += (sender, args) =>
             {
+                var photoAssets = args.Assets;
+
                 Console.WriteLine("Finished picking");
             };
             await PresentViewControllerAsync(picker, true);

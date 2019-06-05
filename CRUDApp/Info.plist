@@ -44,5 +44,9 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleName</key>
 	<string>CRUDApp</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>CRUDApp requires access to your gallery</string>
+	<key>NSCameraUsageDescription</key>
+	<string>CRUDApp requires access to your camera</string>
 </dict>
 </plist>
