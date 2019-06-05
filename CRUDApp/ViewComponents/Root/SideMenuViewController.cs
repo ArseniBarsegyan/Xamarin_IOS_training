@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Login;
+using CRUDApp.ViewComponents.Notes;
 using CRUDApp.ViewComponents.Pin;
-using CRUDApp.ViewComponents.Root;
 using CRUDApp.ViewComponents.Settings;
+using CRUDApp.ViewComponents.ToDo;
 using Foundation;
 using UIKit;
 using Xamarin.SideMenu;
 
-namespace CRUDApp.ViewComponents.Notes
+namespace CRUDApp.ViewComponents.Root
 {
     public class SideMenuViewController : UITableViewController
     {
@@ -51,6 +52,9 @@ namespace CRUDApp.ViewComponents.Notes
                 case MenuViewIndex.NotesView:
                     NavigateToNotesSection();
                     break;
+                case MenuViewIndex.ToDoView:
+                    NavigateToToDoSection();
+                    break;
                 case MenuViewIndex.SettingsView:
                     NavigateToSettingsSection();
                     break;
@@ -69,6 +73,17 @@ namespace CRUDApp.ViewComponents.Notes
             var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();
 
             mainController.ShowDetailViewController(new UINavigationController(initialViewController), this);
+            window.RootViewController = mainController;
+        }
+
+        private void NavigateToToDoSection()
+        {
+            var window = UIApplication.SharedApplication.KeyWindow;
+            var mainController = new SplitViewController();
+
+            var toDoController = new ToDoController();
+
+            mainController.ShowDetailViewController(new UINavigationController(toDoController), this);
             window.RootViewController = mainController;
         }
 

@@ -1,30 +1,28 @@
 ﻿using System;
-using Cirrious.FluentLayouts.Touch;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Root;
-using Foundation;
 using UIKit;
 using Xamarin.SideMenu;
 
-namespace CRUDApp.ViewComponents.Settings
+namespace CRUDApp.ViewComponents.ToDo
 {
-    public class SettingsViewController : UIViewController
+    public class ToDoController : UITabBarController
     {
-        private SettingsView _settingsView;
+        private UIViewController _activeTab, _doneTab;
         private SideMenuManager _sideMenuManager;
 
-        public SettingsViewController(IntPtr handler) : base(handler)
+        public ToDoController()
         {
         }
 
-        public SettingsViewController()
+        public ToDoController(IntPtr handle) : base(handle)
         {
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            Title = NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.Settings, ConstantsHelper.Settings);
+
             _sideMenuManager = new SideMenuManager();
             NavigationItem.SetLeftBarButtonItem(
                 new UIBarButtonItem(ConstantsHelper.Menu, UIBarButtonItemStyle.Plain, (sender, e) => {
@@ -33,14 +31,24 @@ namespace CRUDApp.ViewComponents.Settings
                 false);
             SetupSideMenu();
 
-            _settingsView = new SettingsView();
-            View.AddSubview(_settingsView);
+            _activeTab = new UIViewController
+            {
+                Title = "Active",
+                View =
+                {
+                    BackgroundColor = UIColor.Blue
+                }
+            };
+            _doneTab = new UIViewController
+            {
+                Title = "Done",
+                View =
+                {
+                    BackgroundColor = UIColor.Green
+                }
+            };
 
-            View.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
-            View.AddConstraints(_settingsView.WithSameRight(View),
-                _settingsView.WithSameLeft(View),
-                _settingsView.WithSameTop(View),
-                _settingsView.WithSameBottom(View));
+            ViewControllers = new[] { _activeTab, _doneTab };
         }
 
         private void SetupSideMenu()

@@ -98,12 +98,13 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
+    <Compile Include="ViewComponents\ToDo\ToDoController.cs" />
     <Compile Include="ViewModels\NoteViewModel.cs" />
     <Compile Include="Extensions\ModelsConverterExtensions.cs" />
     <InterfaceDefinition Include="ViewComponents\Login\LoginView.xib" />
     <InterfaceDefinition Include="ViewComponents\Notes\NotesController.storyboard" />
     <Compile Include="ViewComponents\NoteEdit\NoteEditViewController.cs" />
-    <Compile Include="ViewComponents\Notes\SideMenuViewController.cs" />
+    <Compile Include="ViewComponents\Root\SideMenuViewController.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
     <InterfaceDefinition Include="ViewComponents\Settings\SettingsView.xib" />
     <Compile Include="ViewComponents\Settings\SettingsViewController.cs" />
