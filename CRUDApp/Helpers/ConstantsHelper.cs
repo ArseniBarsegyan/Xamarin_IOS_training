@@ -2,12 +2,14 @@
 {
     public static class ConstantsHelper
     {
+        public const string Active = "Active";
         public const string AddIcon = "add.png";
         public const string AddIconDark = "add_dark.png";
         public const string Achievements = "Achievements";
         public const string AchievementSteps = "AchievementSteps";
         public const string AchievementsIcon = "achievements_icon.png";
         public const string AddNewNoteButtonAccessibilityLabel = "addNewNoteButton";
+        public const string AddNewToDoButtonAccessibilityLabel = "addNewToDoButton";
         public const string AlreadyHaveAccountQuestion = "Already have account? Login";
         public const string Birthdays = "Birthdays";
         public const string NoteCellReuseIdentifier = "NoteCell";
@@ -17,7 +19,9 @@
         public const string CameraIconDark = "camera_dark.png";
         public const string ConfirmButtonAccessibilityLabel = "confirmButton";
         public const string DatabaseName = "rm.db3";
+        public const string Done = "Done";
         public const string DontHaveAccountQuestion = "No account? Register";
+        public const string EditToDo = "Edit ToDo";
         public const string Error = "Error";
         public const string EnterNameAndPassword = "Please enter name and password";
         public const string Gallery = "Gallery:";

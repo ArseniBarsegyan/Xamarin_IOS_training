@@ -14,7 +14,7 @@ namespace CRUDApp.ViewComponents.Notes
     public partial class NotesController : UITableViewController
     {
         public NoteRepository NoteRepository { get; private set; }
-        private DataSource _dataSource;
+        private NotesDataSource _notesDataSource;
         private UIRefreshControl _refreshControl;
         private SideMenuManager _sideMenuManager;
 
@@ -40,7 +40,7 @@ namespace CRUDApp.ViewComponents.Notes
             SetupSideMenu();
 
             NoteRepository = new NoteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName));
-            _dataSource = new DataSource(this);
+            _notesDataSource = new NotesDataSource(this);
 
             _refreshControl = new UIRefreshControl();
             _refreshControl.ValueChanged += async (sender, args) =>
@@ -51,7 +51,7 @@ namespace CRUDApp.ViewComponents.Notes
             TableView.RefreshControl = _refreshControl;
             TableView.RegisterClassForCellReuse(typeof(NoteCell), nameof(NoteCell));
             TableView.SeparatorColor = UIColor.Clear;
-            //TableView.Source = new DataSource(this, NoteRepository.GetAll().ToList());
+            //TableView.Source = new NotesDataSource(this, NoteRepository.GetAll().ToList());
 
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, NavigateToEditNoteController)
             {
@@ -77,14 +77,14 @@ namespace CRUDApp.ViewComponents.Notes
             _refreshControl.BeginRefreshing();
             await Task.Delay(200);
             _refreshControl.EndRefreshing();
-            TableView.Source = new DataSource(this);
+            TableView.Source = new NotesDataSource(this);
             TableView.ReloadData();
         }
 
         private void NavigateToEditNoteController(object sender, EventArgs e)
         {
             var noteEditViewController = new NoteEditViewController();
-            noteEditViewController.SetDataSource(_dataSource);
+            noteEditViewController.SetDataSource(_notesDataSource);
             noteEditViewController.SetRepository(NoteRepository);
             NavigationController.PushViewController(noteEditViewController, true);
         }

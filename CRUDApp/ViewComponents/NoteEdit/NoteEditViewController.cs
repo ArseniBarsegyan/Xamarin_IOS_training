@@ -19,7 +19,7 @@ namespace CRUDApp.ViewComponents.NoteEdit
 
         private Note _noteEditModel;
         private NoteRepository _repository;
-        private DataSource _dataSource;
+        private NotesDataSource _notesDataSource;
 
         private UITextView _noteDescriptionTextView;
         private UILabel _noteDescriptionHintLabel;
@@ -303,7 +303,7 @@ namespace CRUDApp.ViewComponents.NoteEdit
             _repository.Save(_noteEditModel);
             if (!isEditMode)
             {
-                _dataSource.Notes.Add(_noteEditModel);
+                _notesDataSource.Notes.Add(_noteEditModel);
             }
             NavigationController.PopViewController(true);
         }
@@ -313,9 +313,9 @@ namespace CRUDApp.ViewComponents.NoteEdit
             _repository = repository;
         }
 
-        public void SetDataSource(DataSource dataSource)
+        public void SetDataSource(NotesDataSource notesDataSource)
         {
-            _dataSource = dataSource;
+            _notesDataSource = notesDataSource;
         }
 
         public void SetDetailItem(Note note)

@@ -10,13 +10,13 @@ using UIKit;
 
 namespace CRUDApp.ViewComponents.Notes
 {
-    public class DataSource : UITableViewSource
+    public class NotesDataSource : UITableViewSource
     {
         private static readonly NSString CellIdentifier = new NSString(nameof(NoteCell));
         private readonly NoteRepository _repository;
         private readonly NotesController _controller;
 
-        public DataSource(NotesController controller)
+        public NotesDataSource(NotesController controller)
         {
             _controller = controller;
             _repository = controller.NoteRepository;

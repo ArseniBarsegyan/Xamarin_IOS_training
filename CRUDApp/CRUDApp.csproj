@@ -90,7 +90,7 @@
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewLayout.cs" />
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewSource.cs" />
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryViewCell.cs" />
-    <Compile Include="ViewComponents\Notes\DataSource.cs" />
+    <Compile Include="ViewComponents\Notes\NotesDataSource.cs" />
     <Compile Include="ViewComponents\Notes\NoteCell.cs" />
     <Compile Include="ViewComponents\Notes\NotesController.cs" />
     <Compile Include="ViewComponents\Notes\NotesController.designer.cs">
@@ -98,7 +98,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
+    <Compile Include="ViewComponents\ToDo\ToDoDataSource.cs" />
+    <Compile Include="ViewComponents\ToDo\Active\ToDoActiveViewController.cs" />
+    <Compile Include="ViewComponents\ToDo\ToDoCell.cs" />
     <Compile Include="ViewComponents\ToDo\ToDoController.cs" />
+    <Compile Include="ViewComponents\ToDo\Done\ToDoDoneViewController.cs" />
+    <Compile Include="ViewComponents\ToDo\ToDoEdit\ToDoEditViewController.cs" />
     <Compile Include="ViewModels\NoteViewModel.cs" />
     <Compile Include="Extensions\ModelsConverterExtensions.cs" />
     <InterfaceDefinition Include="ViewComponents\Login\LoginView.xib" />

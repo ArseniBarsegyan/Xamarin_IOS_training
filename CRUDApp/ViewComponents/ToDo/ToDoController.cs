@@ -1,6 +1,12 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Root;
+using CRUDApp.ViewComponents.ToDo.Active;
+using CRUDApp.ViewComponents.ToDo.Done;
+using CRUDApp.ViewComponents.ToDo.ToDoEdit;
 using UIKit;
 using Xamarin.SideMenu;
 
@@ -10,6 +16,7 @@ namespace CRUDApp.ViewComponents.ToDo
     {
         private UIViewController _activeTab, _doneTab;
         private SideMenuManager _sideMenuManager;
+        private ToDoRepository _repository;
 
         public ToDoController()
         {
@@ -31,24 +38,31 @@ namespace CRUDApp.ViewComponents.ToDo
                 false);
             SetupSideMenu();
 
-            _activeTab = new UIViewController
+            var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, NavigateToEditToDoController)
             {
-                Title = "Active",
-                View =
-                {
-                    BackgroundColor = UIColor.Blue
-                }
+                AccessibilityLabel = ConstantsHelper.AddNewToDoButtonAccessibilityLabel
             };
-            _doneTab = new UIViewController
+            NavigationItem.RightBarButtonItem = addButton;
+
+            _repository = new ToDoRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName));
+            var activeCount = _repository.GetAll().Count(x => x.Status == "Active");
+            var doneCount = _repository.GetAll().Count(x => x.Status == "Done");
+
+            _activeTab = new ToDoActiveViewController(_repository);
+            _doneTab = new ToDoDoneViewController(_repository);
+
+            if (activeCount > 0)
             {
-                Title = "Done",
-                View =
-                {
-                    BackgroundColor = UIColor.Green
-                }
-            };
+                _activeTab.TabBarItem.BadgeValue = activeCount.ToString();
+            }
+
+            if (doneCount > 0)
+            {
+                _doneTab.TabBarItem.BadgeValue = doneCount.ToString();
+            }
 
             ViewControllers = new[] { _activeTab, _doneTab };
+            SelectedIndex = 1;
         }
 
         private void SetupSideMenu()
@@ -61,6 +75,13 @@ namespace CRUDApp.ViewComponents.ToDo
             _sideMenuManager.AnimationFadeStrength = 0;
             _sideMenuManager.ShadowOpacity = 1f;
             _sideMenuManager.AnimationTransformScaleFactor = 1f;
+        }
+
+        private void NavigateToEditToDoController(object sender, EventArgs e)
+        {
+            var toDoEditViewController = new ToDoEditViewController();
+            toDoEditViewController.SetRepository(_repository);
+            NavigationController.PushViewController(toDoEditViewController, true);
         }
     }
 }
