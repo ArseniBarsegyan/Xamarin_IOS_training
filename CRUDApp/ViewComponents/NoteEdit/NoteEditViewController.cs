@@ -53,7 +53,6 @@ namespace CRUDApp.ViewComponents.NoteEdit
             Title = NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.NewNote, ConstantsHelper.NewNote);
             NavigationItem.RightBarButtonItem = addButton;
 
-            #region LabelForEditor
             _noteDescriptionHintLabel = new UILabel
             {
                 Text = ConstantsHelper.Note,
@@ -66,11 +65,8 @@ namespace CRUDApp.ViewComponents.NoteEdit
             View.AddConstraints(_noteDescriptionHintLabel.AtLeftOf(View, 10f),
                 _noteDescriptionHintLabel.AtTopOf(View, 80f),
                 _noteDescriptionHintLabel.Width().EqualTo(100f),
-                _noteDescriptionHintLabel.Height().EqualTo(20f)
-                );
-            #endregion
+                _noteDescriptionHintLabel.Height().EqualTo(20f));
 
-            #region EditorForDescription
             _noteDescriptionTextView = new UITextView
             {
                 Text = ConstantsHelper.NewNote,
@@ -83,13 +79,10 @@ namespace CRUDApp.ViewComponents.NoteEdit
             _noteDescriptionTextView.WithSameLeft(_noteDescriptionHintLabel),
             _noteDescriptionTextView.Below(_noteDescriptionHintLabel, 10f),
             _noteDescriptionTextView.WithSameWidth(View),
-            _noteDescriptionTextView.Height().EqualTo(200)
-            );
-            #endregion
+            _noteDescriptionTextView.Height().EqualTo(200));
 
             ConfigureView();
 
-            #region GalleryTitle
             _galleryHintLabel = new UILabel
             {
                 Text = ConstantsHelper.Gallery,
@@ -102,11 +95,8 @@ namespace CRUDApp.ViewComponents.NoteEdit
             View.AddConstraints(_galleryHintLabel.AtLeftOf(View, 10f),
                 _galleryHintLabel.Below(_noteDescriptionTextView, 10f),
                 _galleryHintLabel.Width().EqualTo(100f),
-                _galleryHintLabel.Height().EqualTo(20f)
-            );
-            #endregion
+                _galleryHintLabel.Height().EqualTo(20f));
 
-            #region NoteItemsGallery
             var collectionView = new UICollectionView(CGRect.Empty, new GalleryCollectionViewLayout())
             {
                 TranslatesAutoresizingMaskIntoConstraints = false
@@ -114,10 +104,8 @@ namespace CRUDApp.ViewComponents.NoteEdit
             View.AddSubview(collectionView);
 
             collectionView.BackgroundColor = UIColor.White;
-
             collectionView.AlwaysBounceVertical = true;
             collectionView.Bounces = true;
-
             collectionView.RegisterClassForCell(typeof(GalleryViewCell), nameof(GalleryViewCell));
             collectionView.Source = new GalleryCollectionViewSource(new List<GalleryItemModel>
             {
@@ -162,7 +150,6 @@ namespace CRUDApp.ViewComponents.NoteEdit
                     ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 }
             });
-
             collectionView.Delegate = new GalleryCollectionViewDelegate(new UIEdgeInsets(5, 5, 5, 5));
             collectionView.ReloadData();
 
@@ -170,9 +157,7 @@ namespace CRUDApp.ViewComponents.NoteEdit
                 collectionView.WithSameWidth(View),
                 collectionView.Below(_galleryHintLabel, 5f),
                 collectionView.AtBottomOf(View, 70f));
-            #endregion
 
-            #region BottomBar
             var bottomBar = new UIView
             {
                 BackgroundColor = UIColor.FromRGB(50, 50, 50),
@@ -212,7 +197,6 @@ namespace CRUDApp.ViewComponents.NoteEdit
             View.AddConstraints(bottomBar.WithSameWidth(View),
                 bottomBar.Height().EqualTo(70f),
                 bottomBar.AtBottomOf(View));
-            #endregion
         }
 
         public override void ViewWillAppear(bool animated)
