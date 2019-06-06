@@ -8,6 +8,7 @@ using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.NoteEdit.NoteGallery;
 using CRUDApp.ViewComponents.Notes;
+using Foundation;
 using GMImagePicker;
 using UIKit;
 
@@ -49,7 +50,7 @@ namespace CRUDApp.ViewComponents.NoteEdit
                 AccessibilityLabel = ConstantsHelper.ConfirmButtonAccessibilityLabel
             };
             View.BackgroundColor = UIColor.White;
-            Title = ConstantsHelper.NewNote;
+            Title = NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.NewNote, ConstantsHelper.NewNote);
             NavigationItem.RightBarButtonItem = addButton;
 
             #region LabelForEditor

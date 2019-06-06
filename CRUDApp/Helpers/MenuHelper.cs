@@ -34,6 +34,13 @@ namespace CRUDApp.Helpers
                 },
                 new MasterPageItem
                 {
+                    Title = ConstantsHelper.Maps,
+                    IconSource = ConstantsHelper.MapsIcon,
+                    IsDisplayed = true,
+                    Index = MenuViewIndex.MapsView
+                },
+                new MasterPageItem
+                {
                     Title = ConstantsHelper.Settings,
                     IconSource = ConstantsHelper.SettingsIcon,
                     IsDisplayed = true,
@@ -76,6 +83,7 @@ namespace CRUDApp.Helpers
         NotesView,
         ToDoView,
         AchievementsView,
+        MapsView,
         SettingsView,
         Logout
     }

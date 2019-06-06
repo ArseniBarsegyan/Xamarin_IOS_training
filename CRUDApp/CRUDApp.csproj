@@ -85,6 +85,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Info.plist" />
+    <Compile Include="ViewComponents\Maps\MapsViewController.cs" />
     <Compile Include="ViewComponents\NoteEdit\CameraDelegate.cs" />
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewDelegate.cs" />
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewLayout.cs" />
@@ -216,6 +217,9 @@
     <BundleResource Include="Resources\camera_dark%401x.png" />
     <BundleResource Include="Resources\camera_dark%402x.png" />
     <BundleResource Include="Resources\camera_dark%403x.png" />
+    <BundleResource Include="Resources\maps%401x.png" />
+    <BundleResource Include="Resources\maps%402x.png" />
+    <BundleResource Include="Resources\maps%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\achievements_icon%401x.png" />

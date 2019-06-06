@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Login;
+using CRUDApp.ViewComponents.Maps;
 using CRUDApp.ViewComponents.Notes;
 using CRUDApp.ViewComponents.Pin;
 using CRUDApp.ViewComponents.Settings;
@@ -55,6 +56,9 @@ namespace CRUDApp.ViewComponents.Root
                 case MenuViewIndex.ToDoView:
                     NavigateToToDoSection();
                     break;
+                case MenuViewIndex.MapsView:
+                    NavigateToMapsSection();
+                    break;
                 case MenuViewIndex.SettingsView:
                     NavigateToSettingsSection();
                     break;
@@ -84,6 +88,17 @@ namespace CRUDApp.ViewComponents.Root
             var toDoController = new ToDoController();
 
             mainController.ShowDetailViewController(new UINavigationController(toDoController), this);
+            window.RootViewController = mainController;
+        }
+
+        private void NavigateToMapsSection()
+        {
+            var window = UIApplication.SharedApplication.KeyWindow;
+            var mainController = new SplitViewController();
+
+            var mapsViewController = new MapsViewController();
+
+            mainController.ShowDetailViewController(new UINavigationController(mapsViewController), this);
             window.RootViewController = mainController;
         }
 

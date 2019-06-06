@@ -30,6 +30,8 @@
         public const string Login = "Login";
         public const string Logout = "Logout";
         public const string LogoutIcon = "logout.png";
+        public const string Maps = "Maps";
+        public const string MapsIcon = "maps.png";
         public const string Menu = "Menu";
         public const string NewNote = "New note";
         public const string Note = "Note: ";
