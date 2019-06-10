@@ -13,6 +13,7 @@
         public const string AlreadyHaveAccountQuestion = "Already have account? Login";
         public const string Birthdays = "Birthdays";
         public const string NoteCellReuseIdentifier = "NoteCell";
+        public const string Cancel = "Cancel";
         public const string CameraNotAvailableError = "Camera not available";
         public const string CameraNotAvailableMessage = "Ensure that camera is available";
         public const string CameraIcon = "camera.png";

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
 using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
@@ -10,6 +11,14 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
     public class ToDoEditViewController : UIViewController
     {
         private ToDoRepository _repository;
+
+        private UILabel _dateLabel;
+        private UILabel _currentDateLabel;
+        private UILabel _timeLabel;
+        private UILabel _descriptionLabel;
+        private UITextView _descriptionEditor;
+
+        private UITapGestureRecognizer _currentDateGestureRecognizer;
 
         public ToDoEditViewController(IntPtr handle) : base(handle)
         {
@@ -25,63 +34,108 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
             Title = NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.EditToDo, ConstantsHelper.EditToDo);
             View.BackgroundColor = UIColor.White;
 
-            var dateLabel = new UILabel();
-            dateLabel.Text = "Date:";
-            dateLabel.Font = UIFont.SystemFontOfSize(16);
-            dateLabel.TranslatesAutoresizingMaskIntoConstraints = false;
+            _dateLabel = new UILabel();
+            _dateLabel.Text = "Date:";
+            _dateLabel.Font = UIFont.SystemFontOfSize(16);
+            _dateLabel.TranslatesAutoresizingMaskIntoConstraints = false;
 
-            var currentDateLabel = new UILabel();
-            currentDateLabel.Text = DateTime.Now.ToString("d");
-            currentDateLabel.Font = UIFont.SystemFontOfSize(16);
-            currentDateLabel.TranslatesAutoresizingMaskIntoConstraints = false;
+            _currentDateLabel = new UILabel();
+            _currentDateLabel.UserInteractionEnabled = true;
+            _currentDateLabel.Text = DateTime.Now.ToString("d");
+            _currentDateLabel.Font = UIFont.SystemFontOfSize(16);
+            _currentDateLabel.TranslatesAutoresizingMaskIntoConstraints = false;
 
-            //var datePicker = new UIDatePicker();
-            //datePicker.TranslatesAutoresizingMaskIntoConstraints = false;
-            //datePicker.MinimumDate = (NSDate) DateTime.Today.AddYears(-1);
-            //datePicker.MaximumDate = (NSDate)DateTime.Today.AddYears(1);
+            _timeLabel = new UILabel();
+            _timeLabel.Text = "Time:";
+            _timeLabel.Font = UIFont.SystemFontOfSize(16);
+            _timeLabel.TranslatesAutoresizingMaskIntoConstraints = false;
 
-            var timeLabel = new UILabel();
-            timeLabel.Text = "Time:";
-            timeLabel.Font = UIFont.SystemFontOfSize(16);
-            timeLabel.TranslatesAutoresizingMaskIntoConstraints = false;
+            _descriptionLabel = new UILabel();
+            _descriptionLabel.Text = "Description:";
+            _descriptionLabel.Font = UIFont.SystemFontOfSize(16);
+            _descriptionLabel.TranslatesAutoresizingMaskIntoConstraints = false;
 
-            var descriptionLabel = new UILabel();
-            descriptionLabel.Text = "Description:";
-            descriptionLabel.Font = UIFont.SystemFontOfSize(16);
-            descriptionLabel.TranslatesAutoresizingMaskIntoConstraints = false;
+            _descriptionEditor = new UITextView();
+            _descriptionEditor.Text = "Test to-do";
+            _descriptionEditor.Font = UIFont.SystemFontOfSize(16);
+            _descriptionEditor.TranslatesAutoresizingMaskIntoConstraints = false;
 
-            var descriptionEditor = new UITextView();
-            descriptionEditor.Text = "Test to-do";
-            descriptionEditor.Font = UIFont.SystemFontOfSize(16);
-            descriptionEditor.TranslatesAutoresizingMaskIntoConstraints = false;
+            _currentDateGestureRecognizer = new UITapGestureRecognizer(async () => { await ShowDateTimePopup(); })
+                { NumberOfTapsRequired = 1 };
 
-            View.AddSubviews(dateLabel, currentDateLabel, timeLabel, descriptionLabel, descriptionEditor);
+            View.AddSubviews(_dateLabel, 
+                _currentDateLabel, 
+                _timeLabel, 
+                _descriptionLabel, 
+                _descriptionEditor);
 
-            View.AddConstraints(dateLabel.AtLeftOf(View, 10f),
-                dateLabel.AtTopOf(View, 80f),
-                dateLabel.Width().EqualTo(100f),
-                dateLabel.Height().EqualTo(30f),
-                currentDateLabel.WithSameCenterY(dateLabel),
-                currentDateLabel.ToRightOf(dateLabel, 10f),
-                currentDateLabel.Width().EqualTo(View.Bounds.Width),
-                currentDateLabel.Height().EqualTo(30f),
-                timeLabel.Below(dateLabel, 10f),
-                timeLabel.WithSameLeft(dateLabel),
-                timeLabel.Width().EqualTo(100f),
-                timeLabel.Height().EqualTo(30f),
-                descriptionLabel.Below(timeLabel, 10f),
-                descriptionLabel.WithSameLeft(timeLabel),
-                descriptionLabel.Width().EqualTo(100f),
-                descriptionLabel.Height().EqualTo(30f),
-                descriptionEditor.Below(descriptionLabel, 10f),
-                descriptionEditor.WithSameLeft(descriptionLabel),
-                descriptionEditor.Width().EqualTo(View.Frame.Width),
-                descriptionEditor.Height().EqualTo(500f));
+            View.AddConstraints(_dateLabel.AtLeftOf(View, 10f),
+                _dateLabel.AtTopOf(View, 80f),
+                _dateLabel.Width().EqualTo(100f),
+                _dateLabel.Height().EqualTo(30f),
+                _currentDateLabel.WithSameCenterY(_dateLabel),
+                _currentDateLabel.ToRightOf(_dateLabel, 10f),
+                _currentDateLabel.Width().EqualTo(View.Bounds.Width),
+                _currentDateLabel.Height().EqualTo(30f),
+                _timeLabel.Below(_dateLabel, 10f),
+                _timeLabel.WithSameLeft(_dateLabel),
+                _timeLabel.Width().EqualTo(100f),
+                _timeLabel.Height().EqualTo(30f),
+                _descriptionLabel.Below(_timeLabel, 10f),
+                _descriptionLabel.WithSameLeft(_timeLabel),
+                _descriptionLabel.Width().EqualTo(100f),
+                _descriptionLabel.Height().EqualTo(30f),
+                _descriptionEditor.Below(_descriptionLabel, 10f),
+                _descriptionEditor.WithSameLeft(_descriptionLabel),
+                _descriptionEditor.Width().EqualTo(View.Frame.Width),
+                _descriptionEditor.Height().EqualTo(500f));
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            _currentDateLabel.AddGestureRecognizer(_currentDateGestureRecognizer);
+        }
+
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+            _currentDateLabel.RemoveGestureRecognizer(_currentDateGestureRecognizer);
         }
 
         public void SetRepository(ToDoRepository repository)
         {
             _repository = repository;
+        }
+
+        private async Task ShowDateTimePopup()
+        {
+            var dateTimeAlertController = new UIAlertController();
+
+            var datePicker = new UIDatePicker();
+            datePicker.TranslatesAutoresizingMaskIntoConstraints = false;
+            datePicker.MinimumDate = (NSDate)DateTime.Today.AddYears(-1);
+            datePicker.MaximumDate = (NSDate)DateTime.Today.AddYears(1);
+
+            var rootView = dateTimeAlertController.View;
+            rootView.AddConstraints(datePicker.WithSameTop(rootView), 
+                datePicker.AtBottomOf(rootView, 100f), 
+                datePicker.WithSameLeft(rootView), 
+                datePicker.WithSameRight(rootView));
+            rootView.AddSubview(datePicker);
+
+            dateTimeAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, action =>
+                {
+                    SetDate(datePicker.Date);
+                }));
+            dateTimeAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Cancel, UIAlertActionStyle.Cancel, null));
+            PresentViewController(dateTimeAlertController, true, null);
+        }
+
+        private void SetDate(NSDate dateTime)
+        {
+            var formatter = new NSDateFormatter { DateFormat = "dd/MM/yyyy" };
+            _currentDateLabel.Text = formatter.StringFor(dateTime);
         }
     }
 }
