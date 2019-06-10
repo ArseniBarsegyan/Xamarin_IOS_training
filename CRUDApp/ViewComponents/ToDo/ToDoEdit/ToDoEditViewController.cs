@@ -13,7 +13,7 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
         private ToDoRepository _repository;
 
         private UILabel _dateLabel;
-        private UILabel _currentDateLabel;
+        private UITextField _currentDateLabel;
         private UILabel _timeLabel;
         private UILabel _descriptionLabel;
         private UITextView _descriptionEditor;
@@ -39,9 +39,15 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
             _dateLabel.Font = UIFont.SystemFontOfSize(16);
             _dateLabel.TranslatesAutoresizingMaskIntoConstraints = false;
 
-            _currentDateLabel = new UILabel();
+            _currentDateLabel = new UITextField();
+            _currentDateLabel.Layer.BorderColor = UIColor.LightGray.CGColor;
+            _currentDateLabel.Layer.BorderWidth = 0.5f;
+            _currentDateLabel.Layer.CornerRadius = 5f;
             _currentDateLabel.UserInteractionEnabled = true;
-            _currentDateLabel.Text = DateTime.Now.ToString("d");
+            _currentDateLabel.TextAlignment = UITextAlignment.Center;
+
+            var formatter = new NSDateFormatter { DateFormat = "dd/MM/yyyy" };
+            _currentDateLabel.Text = formatter.StringFor(NSDate.Now);
             _currentDateLabel.Font = UIFont.SystemFontOfSize(16);
             _currentDateLabel.TranslatesAutoresizingMaskIntoConstraints = false;
 
@@ -74,8 +80,8 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
                 _dateLabel.Width().EqualTo(100f),
                 _dateLabel.Height().EqualTo(30f),
                 _currentDateLabel.WithSameCenterY(_dateLabel),
-                _currentDateLabel.ToRightOf(_dateLabel, 10f),
-                _currentDateLabel.Width().EqualTo(View.Bounds.Width),
+                _currentDateLabel.ToRightOf(_dateLabel),
+                _currentDateLabel.Width().EqualTo(200f),
                 _currentDateLabel.Height().EqualTo(30f),
                 _timeLabel.Below(_dateLabel, 10f),
                 _timeLabel.WithSameLeft(_dateLabel),
@@ -87,7 +93,7 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
                 _descriptionLabel.Height().EqualTo(30f),
                 _descriptionEditor.Below(_descriptionLabel, 10f),
                 _descriptionEditor.WithSameLeft(_descriptionLabel),
-                _descriptionEditor.Width().EqualTo(View.Frame.Width),
+                _descriptionEditor.Width().EqualTo(View.Bounds.Width - 20f),
                 _descriptionEditor.Height().EqualTo(500f));
         }
 
@@ -113,6 +119,7 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
             var dateTimeAlertController = new UIAlertController();
 
             var datePicker = new UIDatePicker();
+            datePicker.Mode = UIDatePickerMode.Date;
             datePicker.TranslatesAutoresizingMaskIntoConstraints = false;
             datePicker.MinimumDate = (NSDate)DateTime.Today.AddYears(-1);
             datePicker.MaximumDate = (NSDate)DateTime.Today.AddYears(1);
