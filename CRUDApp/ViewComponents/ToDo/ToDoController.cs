@@ -45,11 +45,20 @@ namespace CRUDApp.ViewComponents.ToDo
             NavigationItem.RightBarButtonItem = addButton;
 
             _repository = new ToDoRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName));
-            var activeCount = _repository.GetAll().Count(x => x.Status == "Active");
-            var doneCount = _repository.GetAll().Count(x => x.Status == "Done");
 
             _activeTab = new ToDoActiveViewController(_repository);
             _doneTab = new ToDoDoneViewController(_repository);
+
+            ViewControllers = new[] { _activeTab, _doneTab };
+            SelectedIndex = 1;
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
+            var activeCount = _repository.GetAll().Count(x => x.Status == "Active");
+            var doneCount = _repository.GetAll().Count(x => x.Status == "Done");
 
             if (activeCount > 0)
             {
@@ -60,9 +69,6 @@ namespace CRUDApp.ViewComponents.ToDo
             {
                 _doneTab.TabBarItem.BadgeValue = doneCount.ToString();
             }
-
-            ViewControllers = new[] { _activeTab, _doneTab };
-            SelectedIndex = 1;
         }
 
         private void SetupSideMenu()
@@ -79,7 +85,7 @@ namespace CRUDApp.ViewComponents.ToDo
 
         private void NavigateToEditToDoController(object sender, EventArgs e)
         {
-            var toDoEditViewController = new ToDoEditViewController();
+            var toDoEditViewController = new ToDoEditViewController(0);
             toDoEditViewController.SetRepository(_repository);
             NavigationController.PushViewController(toDoEditViewController, true);
         }

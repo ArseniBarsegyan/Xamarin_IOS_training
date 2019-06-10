@@ -33,8 +33,6 @@ namespace CRUDApp.ViewComponents.ToDo.Active
             };
             TableView.RefreshControl = _refreshControl;
             
-            _dataSource = new ToDoDataSource(_repository.GetAll().Where(x => x.Status == "Active").ToList());
-            TableView.Source = _dataSource;
             Title = NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.Active, ConstantsHelper.Active);
             TableView.RegisterClassForCellReuse(typeof(ToDoCell), nameof(ToDoCell));
             TableView.SeparatorColor = UIColor.LightGray;
