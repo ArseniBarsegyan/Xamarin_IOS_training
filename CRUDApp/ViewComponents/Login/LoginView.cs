@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
 using CRUDApp.Helpers;
@@ -9,6 +10,9 @@ namespace CRUDApp.ViewComponents.Login
 {
     public partial class LoginView : UIView
     {
+        private NSLayoutConstraint[] _viewConstraints;
+        private LoginView _rootView;
+
         public LoginView (IntPtr handle) : base (handle)
         {
         }
@@ -22,7 +26,8 @@ namespace CRUDApp.ViewComponents.Login
         {
             var arr = NSBundle.MainBundle.LoadNib(nameof(LoginView), this, null);
             var rootView = ObjCRuntime.Runtime.GetNSObject(arr.ValueAt(0)) as LoginView;
-
+            _viewConstraints = rootView.Constraints;
+            _rootView = rootView;
             TitleLabel = rootView.titleLabel;
             LoginButton = rootView.loginButton;
             LoginTextField = rootView.loginTextField;
@@ -30,6 +35,7 @@ namespace CRUDApp.ViewComponents.Login
             ConfirmPasswordLabel = rootView.confirmPasswordLabel;
             ConfirmPasswordTextField = rootView.confirmPasswordTextField;
             RegisterButton = rootView.registerButton;
+            QuestionLabel = rootView.questionLabel;
 
             SubscribeOnEvents();
 
@@ -56,12 +62,25 @@ namespace CRUDApp.ViewComponents.Login
             }
         }
 
+        public void StartAnimation()
+        {
+            LayoutIfNeeded();
+            Animate(1.5, () =>
+            {
+                _rootView.RemoveConstraint(_rootView.Constraints.ElementAt(19));
+
+                this.AddConstraints(RegisterButton.AtBottomOf(this, 50f),
+                    QuestionLabel.Above(RegisterButton, 25f));
+                LayoutIfNeeded();
+            });
+        }
+
         private void SubscribeOnEvents()
         {
             RegisterButton.TouchUpInside += RegisterButton_OnTouchUpInside;
         }
 
-        private void UnsubscribeOnEvents()
+        private void UnsubscribeFromEvents()
         {
             RegisterButton.TouchUpInside -= RegisterButton_OnTouchUpInside;
         }
@@ -74,31 +93,39 @@ namespace CRUDApp.ViewComponents.Login
         public UITextField ConfirmPasswordTextField { get; private set; }
         public UILabel ConfirmPasswordLabel { get; private set; }
         public UIButton RegisterButton { get; private set; }
+        public UILabel QuestionLabel { get; private set; }
 
         private void RegisterButton_OnTouchUpInside(object sender, EventArgs args)
         {
             IsRegisterMode = !IsRegisterMode;
 
-            if (IsRegisterMode)
+            Animate(0.5, () =>
             {
-                TitleLabel.Text = ConstantsHelper.Register;
+                if (IsRegisterMode)
+                {
+                    TitleLabel.Text = ConstantsHelper.Register;
 
-                ConfirmPasswordLabel.Hidden = false;
-                ConfirmPasswordTextField.Hidden = false;
+                    ConfirmPasswordLabel.Hidden = false;
+                    ConfirmPasswordTextField.Hidden = false;
 
-                LoginButton.SetTitle(ConstantsHelper.Register, UIControlState.Normal);
-                RegisterButton.SetTitle(ConstantsHelper.AlreadyHaveAccountQuestion, UIControlState.Normal);
-            }
-            else
-            {
-                TitleLabel.Text = ConstantsHelper.Login;
+                    LoginButton.SetTitle(ConstantsHelper.Register, UIControlState.Normal);
+                    LoginButton.BackgroundColor = UIColor.FromRGB(111, 201,84);
+                    QuestionLabel.Text = ConstantsHelper.AlreadyHaveAccountQuestion;
+                    RegisterButton.SetTitle(ConstantsHelper.Login, UIControlState.Normal);
+                }
+                else
+                {
+                    TitleLabel.Text = ConstantsHelper.Login;
 
-                ConfirmPasswordLabel.Hidden = true;
-                ConfirmPasswordTextField.Hidden = true;
+                    ConfirmPasswordLabel.Hidden = true;
+                    ConfirmPasswordTextField.Hidden = true;
 
-                LoginButton.SetTitle(ConstantsHelper.Login, UIControlState.Normal);
-                RegisterButton.SetTitle(ConstantsHelper.DontHaveAccountQuestion, UIControlState.Normal);
-            }
+                    LoginButton.SetTitle(ConstantsHelper.Login, UIControlState.Normal);
+                    LoginButton.BackgroundColor = UIColor.FromRGB(17, 117, 240);
+                    QuestionLabel.Text = ConstantsHelper.DontHaveAccountQuestion;
+                    RegisterButton.SetTitle(ConstantsHelper.Register, UIControlState.Normal);
+                }
+            });
         }
     }
 }

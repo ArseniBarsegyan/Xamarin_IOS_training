@@ -85,6 +85,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Info.plist" />
+    <Compile Include="ViewComponents\Login\LoginViewPresenter.cs" />
     <Compile Include="ViewComponents\Maps\MapsViewController.cs" />
     <Compile Include="ViewComponents\NoteEdit\CameraDelegate.cs" />
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewDelegate.cs" />

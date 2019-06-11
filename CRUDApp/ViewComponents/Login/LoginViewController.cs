@@ -39,6 +39,12 @@ namespace CRUDApp.ViewComponents.Login
             _loginView.LoginButton.TouchUpInside += LoginButtonOnTouchUpInside;
         }
 
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            _loginView.StartAnimation();
+        }
+
         public override void ViewWillDisappear(bool animated)
         {
             base.ViewWillDisappear(animated);
