@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Text;
-using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
-using CRUDApp.Helpers;
-using CRUDApp.ViewComponents.Notes;
-using CRUDApp.ViewComponents.Root;
-using Foundation;
 using UIKit;
 
 namespace CRUDApp.ViewComponents.Pin
@@ -13,17 +7,15 @@ namespace CRUDApp.ViewComponents.Pin
     public class PinViewController : UIViewController
     {
         private PinView _pinView;
-        private static int _currentCount;
-        private readonly StringBuilder _pinBuilder;
-        private int _pin;
+        private PinViewPresenter _presenter;
 
         public PinViewController()
         {
-            _pinBuilder = new StringBuilder();
         }
 
         public override void ViewDidLoad()
         {
+            _presenter = new PinViewPresenter(this);
             base.ViewDidLoad();
             NavigationController.SetNavigationBarHidden(true, false);
             _pinView = new PinView();
@@ -69,16 +61,13 @@ namespace CRUDApp.ViewComponents.Pin
             _pinView.ButtonX.TouchUpInside -= DeletePinNumber;
         }
 
-        private async void Button_OnTouchUpInside(object sender, EventArgs e)
+        private void Button_OnTouchUpInside(object sender, EventArgs e)
         {
             if (sender is UIButton button)
             {
-                var text = button.TitleLabel.Text;
-                _currentCount++;
+                _presenter.CheckPin(button.TitleLabel.Text);
 
-                _pinBuilder.Append(text);
-
-                switch (_currentCount)
+                switch (_presenter.CurrentCount)
                 {
                     case 1:
                         UIView.Animate(0.3, () => { _pinView.Pin1.Layer.BackgroundColor = UIColor.White.CGColor; });
@@ -91,57 +80,30 @@ namespace CRUDApp.ViewComponents.Pin
                         break;
                     case 4:
                         UIView.Animate(0.3, () => { _pinView.Pin4.Layer.BackgroundColor = UIColor.White.CGColor; });
-                        int.TryParse(_pinBuilder.ToString(), out _pin);
-                        await Login();
+                        _presenter.Login();
                         ResetImagesAndCount();
                         break;
                 }
-
-                //if (_currentCount == 4)
-                //{
-                //    int.TryParse(_pinBuilder.ToString(), out _pin);
-                //    await Task.Delay(25);
-                //    ResetImagesAndCount();
-                //    await Login();
-                //}
             }
         }
 
         private void DeletePinNumber(object sender, EventArgs e)
         {
-            if (_pinBuilder.Length > 0)
+            switch (_presenter.PinLength)
             {
-                switch (_pinBuilder.Length)
-                {
-                    // Since we reset counter we will never get length 4
-                    case 3:
-                        UIView.Animate(0.3, () => { _pinView.Pin3.Layer.BackgroundColor = UIColor.Clear.CGColor; });
-                        break;
-                    case 2:
-                        UIView.Animate(0.3, () => { _pinView.Pin2.Layer.BackgroundColor = UIColor.Clear.CGColor; });
-                        break;
-                    case 1:
-                        UIView.Animate(0.3, () => { _pinView.Pin1.Layer.BackgroundColor = UIColor.Clear.CGColor; });
-                        break;
-                }
-                _pinBuilder.Length--;
+                // Since we reset counter we will never get length 4
+                case 3:
+                    UIView.Animate(0.3, () => { _pinView.Pin3.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+                    break;
+                case 2:
+                    UIView.Animate(0.3, () => { _pinView.Pin2.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+                    break;
+                case 1:
+                    UIView.Animate(0.3, () => { _pinView.Pin1.Layer.BackgroundColor = UIColor.Clear.CGColor; });
+                    break;
             }
-
-            if (_currentCount > 0)
-            {
-                _currentCount--;
-            }
-        }
-
-        private async Task Login()
-        {
-            NSUserDefaults preferences = NSUserDefaults.StandardUserDefaults;
-            var userPin = preferences.StringForKey(ConstantsHelper.UserPin);
-
-            if (_pinBuilder.ToString() == userPin)
-            {
-                NavigateToInitialSection();
-            }
+            _presenter.DecreasePinLength();
+            _presenter.DeleteLastPinNumber();
         }
 
         private void ResetImagesAndCount()
@@ -150,21 +112,7 @@ namespace CRUDApp.ViewComponents.Pin
             UIView.Animate(0.3, () => { _pinView.Pin2.Layer.BackgroundColor = UIColor.Clear.CGColor; });
             UIView.Animate(0.3, () => { _pinView.Pin3.Layer.BackgroundColor = UIColor.Clear.CGColor; });
             UIView.Animate(0.3, () => { _pinView.Pin4.Layer.BackgroundColor = UIColor.Clear.CGColor; });
-            _pinBuilder.Length = 0;
-            _currentCount = 0;
-        }
-
-        private void NavigateToInitialSection()
-        {
-            var window = UIApplication.SharedApplication.KeyWindow;
-            var mainController = new SplitViewController();
-
-            UIStoryboard helloWorldStoryboard = UIStoryboard.FromName(nameof(NotesController), null);
-            var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();
-
-            mainController.ShowDetailViewController(new UINavigationController(initialViewController), this);
-            window.RootViewController = mainController;
+            _presenter.ResetCount();
         }
     }
 }
-

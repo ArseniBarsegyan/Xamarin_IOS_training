@@ -1,6 +1,5 @@
 using System;
 using Cirrious.FluentLayouts.Touch;
-using CRUDApp.Helpers;
 using Foundation;
 using UIKit;
 
@@ -35,7 +34,6 @@ namespace CRUDApp.ViewComponents.Settings
 
             SaveButton = rootView?.saveButton;
             SaveButton.Hidden = true;
-            SaveButton.TouchUpInside += SaveButton_TouchUpInside;
 
             SubscribeOnEvents();
             AddSubview(rootView);
@@ -66,13 +64,6 @@ namespace CRUDApp.ViewComponents.Settings
         private void Pin_ValueChanged(object sender, EventArgs e)
         {
             SaveButton.Hidden = false;
-        }
-
-        private void SaveButton_TouchUpInside(object sender, EventArgs e)
-        {
-            NSUserDefaults.StandardUserDefaults.SetBool(UsePinSwitchCell.On, ConstantsHelper.UsePinKey);
-            NSUserDefaults.StandardUserDefaults.SetString(PinEntry.Text, ConstantsHelper.UserPin);
-            SaveButton.Hidden = true;
         }
     }
 }

@@ -43,6 +43,25 @@ namespace CRUDApp.ViewComponents.Settings
                 _settingsView.WithSameBottom(View));
         }
 
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            _settingsView.SaveButton.TouchUpInside += SaveButtonOnTouchUpInside;
+        }
+
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+            _settingsView.SaveButton.TouchUpInside -= SaveButtonOnTouchUpInside;
+        }
+
+        private void SaveButtonOnTouchUpInside(object sender, EventArgs e)
+        {
+            NSUserDefaults.StandardUserDefaults.SetBool(_settingsView.UsePinSwitchCell.On, ConstantsHelper.UsePinKey);
+            NSUserDefaults.StandardUserDefaults.SetString(_settingsView.PinEntry.Text, ConstantsHelper.UserPin);
+            _settingsView.SaveButton.Hidden = true;
+        }
+
         private void SetupSideMenu()
         {
             var sideMenuItems = MenuHelper.GetMenu();

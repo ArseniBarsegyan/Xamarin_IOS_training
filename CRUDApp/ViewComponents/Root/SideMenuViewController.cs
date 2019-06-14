@@ -2,13 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CRUDApp.Helpers;
-using CRUDApp.ViewComponents.Login;
-using CRUDApp.ViewComponents.Maps;
-using CRUDApp.ViewComponents.Notes;
-using CRUDApp.ViewComponents.Pin;
-using CRUDApp.ViewComponents.Settings;
-using CRUDApp.ViewComponents.ToDo;
-using Foundation;
 using UIKit;
 using Xamarin.SideMenu;
 
@@ -17,10 +10,12 @@ namespace CRUDApp.ViewComponents.Root
     public class SideMenuViewController : UITableViewController
     {
         private readonly List<MasterPageItem> _items;
+        private readonly SideMenuViewPresenter _presenter;
 
         public SideMenuViewController(List<MasterPageItem> items)
         {
             _items = items;
+            _presenter = new SideMenuViewPresenter(this);
         }
 
         public override void ViewDidLoad()
@@ -51,81 +46,21 @@ namespace CRUDApp.ViewComponents.Root
             switch (item.Index)
             {
                 case MenuViewIndex.NotesView:
-                    NavigateToNotesSection();
+                    _presenter.NavigateToNotesSection();
                     break;
                 case MenuViewIndex.ToDoView:
-                    NavigateToToDoSection();
+                    _presenter.NavigateToToDoSection();
                     break;
                 case MenuViewIndex.MapsView:
-                    NavigateToMapsSection();
+                    _presenter.NavigateToMapsSection();
                     break;
                 case MenuViewIndex.SettingsView:
-                    NavigateToSettingsSection();
+                    _presenter.NavigateToSettingsSection();
                     break;
                 case MenuViewIndex.Logout:
-                    Logout();
+                    _presenter.Logout();
                     break;
             }
-        }
-
-        private void NavigateToNotesSection()
-        {
-            var window = UIApplication.SharedApplication.KeyWindow;
-            var mainController = new SplitViewController();
-
-            UIStoryboard helloWorldStoryboard = UIStoryboard.FromName(nameof(NotesController), null);
-            var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();
-
-            mainController.ShowDetailViewController(new UINavigationController(initialViewController), this);
-            window.RootViewController = mainController;
-        }
-
-        private void NavigateToToDoSection()
-        {
-            var window = UIApplication.SharedApplication.KeyWindow;
-            var mainController = new SplitViewController();
-
-            var toDoController = new ToDoController();
-
-            mainController.ShowDetailViewController(new UINavigationController(toDoController), this);
-            window.RootViewController = mainController;
-        }
-
-        private void NavigateToMapsSection()
-        {
-            var window = UIApplication.SharedApplication.KeyWindow;
-            var mainController = new SplitViewController();
-
-            var mapsViewController = new MapsViewController();
-
-            mainController.ShowDetailViewController(new UINavigationController(mapsViewController), this);
-            window.RootViewController = mainController;
-        }
-
-        private void NavigateToSettingsSection()
-        {
-            var window = UIApplication.SharedApplication.KeyWindow;
-            var mainController = new SplitViewController();
-
-            var settingsViewController = new SettingsViewController();
-
-            mainController.ShowDetailViewController(new UINavigationController(settingsViewController), this);
-            window.RootViewController = mainController;
-        }
-
-        private void Logout()
-        {
-            NSUserDefaults preferences = NSUserDefaults.StandardUserDefaults;
-            var usePin = preferences.BoolForKey(ConstantsHelper.UsePinKey);
-
-            var window = UIApplication.SharedApplication.KeyWindow;
-            var mainController = new SplitViewController();
-
-            UIViewController rootViewController = usePin ? new PinViewController()
-                : (UIViewController)new LoginViewController();
-            mainController.ShowDetailViewController(new UINavigationController(rootViewController), this);
-            window.RootViewController = mainController;
-            Helpers.Settings.AppUser = string.Empty;
         }
     }
 
