@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using CRUDApp.Data.Entities;
 using CRUDApp.Data.Repositories;
 
-namespace CRUDApp.Helpers
+namespace CRUDApp.Authentication
 {
     /// <summary>
     /// Class for test purposes. Implements authentication logic of the app.

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
+using CRUDApp.Authentication;
 using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Notes;
