@@ -1,5 +1,6 @@
 using System;
 using Cirrious.FluentLayouts.Touch;
+using CRUDApp.Helpers;
 using Foundation;
 using UIKit;
 
@@ -22,6 +23,10 @@ namespace CRUDApp.ViewComponents.Settings
             var rootView = ObjCRuntime.Runtime.GetNSObject(arr.ValueAt(0)) as SettingsView;
 
             UsePinSwitchCell = rootView?.usePinSwitchCell;
+
+            NSUserDefaults preferences = NSUserDefaults.StandardUserDefaults;
+            UsePinSwitchCell.On = preferences.BoolForKey(ConstantsHelper.UsePinKey);
+            
             PinEntry = rootView?.pinEntry;
 
             PinEntry.KeyboardType = UIKeyboardType.NumberPad;
