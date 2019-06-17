@@ -62,20 +62,6 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Data\Entities\AchievementModel.cs" />
-    <Compile Include="Data\Entities\AchievementStep.cs" />
-    <Compile Include="Data\Entities\BirthdayModel.cs" />
-    <Compile Include="Data\Entities\GalleryItemModel.cs" />
-    <Compile Include="Data\Entities\Note.cs" />
-    <Compile Include="Data\Entities\ToDoModel.cs" />
-    <Compile Include="Data\Entities\UserModel.cs" />
-    <Compile Include="Data\Repositories\AchievementRepository.cs" />
-    <Compile Include="Data\Repositories\AchievementStepRepository.cs" />
-    <Compile Include="Data\Repositories\BirthdaysRepository.cs" />
-    <Compile Include="Data\Repositories\NoteRepository.cs" />
-    <Compile Include="Data\Repositories\ToDoRepository.cs" />
-    <Compile Include="Data\Repositories\UserRepository.cs" />
-    <Compile Include="Helpers\AuthenticationManager.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="ViewComponents\Login\LoginView.cs" />
     <Compile Include="ViewComponents\Login\LoginView.designer.cs">
@@ -99,8 +85,9 @@
       <DependentUpon>NotesController.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helpers\ConstantsHelper.cs" />
+    <Compile Include="ViewComponents\Notes\NotesViewPresenter.cs" />
     <Compile Include="ViewComponents\Pin\PinViewPresenter.cs" />
+    <Compile Include="ViewComponents\Root\SideMenuViewCell.cs" />
     <Compile Include="ViewComponents\Root\SideMenuViewPresenter.cs" />
     <Compile Include="ViewComponents\ToDo\ToDoDataSource.cs" />
     <Compile Include="ViewComponents\ToDo\Active\ToDoActiveViewController.cs" />
@@ -127,7 +114,6 @@
       <DependentUpon>PinView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Pin\PinViewController.cs" />
-    <Compile Include="ViewComponents\Root\SplitViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
@@ -242,6 +228,19 @@
     <BundleResource Include="Resources\todo_list%403x.png" />
     <BundleResource Include="Resources\login_background.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CRUDApp.Authentication\CRUDApp.Authentication.csproj">
+      <Project>{c11a44ad-2907-494a-9a41-b3729de884dc}</Project>
+      <Name>CRUDApp.Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CRUDApp.Data\CRUDApp.Data.csproj">
+      <Project>{660eab73-0024-43b9-bc8f-da6c78e6b28d}</Project>
+      <Name>CRUDApp.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CRUDApp.Helpers\CRUDApp.Helpers.csproj">
+      <Project>{56b88e6a-fc83-44a7-b933-af4cdcca5721}</Project>
+      <Name>CRUDApp.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
-using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
-using CRUDApp.ViewComponents.NoteEdit;
 using CRUDApp.ViewComponents.Root;
 using Foundation;
 using UIKit;
@@ -13,10 +10,10 @@ namespace CRUDApp.ViewComponents.Notes
 {
     public partial class NotesController : UITableViewController
     {
-        public NoteRepository NoteRepository { get; private set; }
-        private NotesDataSource _notesDataSource;
+        public NotesDataSource NotesDataSource { get; private set; }
         private UIRefreshControl _refreshControl;
         private SideMenuManager _sideMenuManager;
+        private NotesViewPresenter _presenter;
 
         public NotesController(IntPtr handle) : base(handle)
         {
@@ -25,11 +22,11 @@ namespace CRUDApp.ViewComponents.Notes
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
+            _presenter = new NotesViewPresenter(this);
             
             NavigationController.SetNavigationBarHidden(false, false);
             Title = NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.Notes, ConstantsHelper.Notes);
-
-            //NavigationItem.LeftBarButtonItem = EditButtonItem;
 
             _sideMenuManager = new SideMenuManager();
             NavigationItem.SetLeftBarButtonItem(
@@ -39,8 +36,7 @@ namespace CRUDApp.ViewComponents.Notes
                 false);
             SetupSideMenu();
 
-            NoteRepository = new NoteRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName));
-            _notesDataSource = new NotesDataSource(this);
+            NotesDataSource = new NotesDataSource(_presenter, this);
 
             _refreshControl = new UIRefreshControl();
             _refreshControl.ValueChanged += async (sender, args) =>
@@ -51,7 +47,7 @@ namespace CRUDApp.ViewComponents.Notes
             TableView.RefreshControl = _refreshControl;
             TableView.RegisterClassForCellReuse(typeof(NoteCell), nameof(NoteCell));
             TableView.SeparatorColor = UIColor.Clear;
-            //TableView.Source = new NotesDataSource(this, NoteRepository.GetAll().ToList());
+            TableView.Source = new NotesDataSource(_presenter, this);
 
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, NavigateToEditNoteController)
             {
@@ -77,16 +73,13 @@ namespace CRUDApp.ViewComponents.Notes
             _refreshControl.BeginRefreshing();
             await Task.Delay(200);
             _refreshControl.EndRefreshing();
-            TableView.Source = new NotesDataSource(this);
+            TableView.Source = new NotesDataSource(_presenter, this);
             TableView.ReloadData();
         }
 
         private void NavigateToEditNoteController(object sender, EventArgs e)
         {
-            var noteEditViewController = new NoteEditViewController();
-            noteEditViewController.SetDataSource(_notesDataSource);
-            noteEditViewController.SetRepository(NoteRepository);
-            NavigationController.PushViewController(noteEditViewController, true);
+            _presenter.NavigateToNoteEditViewController(true);
         }
 
         public override async void ViewWillAppear(bool animated)

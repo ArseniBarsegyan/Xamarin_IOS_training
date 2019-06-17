@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CRUDApp.Data.Entities;
-using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
-using CRUDApp.ViewComponents.NoteEdit;
 using Foundation;
 using UIKit;
 
@@ -13,16 +11,16 @@ namespace CRUDApp.ViewComponents.Notes
     public class NotesDataSource : UITableViewSource
     {
         private static readonly NSString CellIdentifier = new NSString(nameof(NoteCell));
-        private readonly NoteRepository _repository;
+        private readonly NotesViewPresenter _presenter;
         private readonly NotesController _controller;
 
-        public NotesDataSource(NotesController controller)
+        public NotesDataSource(NotesViewPresenter presenter, NotesController controller)
         {
+            _presenter = presenter;
             _controller = controller;
-            _repository = controller.NoteRepository;
         }
 
-        public IList<Note> Notes => _repository.GetAll().ToList();
+        public IList<Note> Notes => _presenter.Repository.GetAll().ToList();
 
         public override nint NumberOfSections(UITableView tableView)
         {
@@ -48,11 +46,7 @@ namespace CRUDApp.ViewComponents.Notes
 
             if (model != null)
             {
-                var noteEditViewController = new NoteEditViewController();
-                noteEditViewController.SetDataSource(this);
-                noteEditViewController.SetRepository(_repository);
-                noteEditViewController.SetDetailItem(model);
-                _controller.NavigationController.PushViewController(noteEditViewController, true);
+                _presenter.NavigateToNoteEditViewController(true, model);
             }
         }
 
@@ -67,7 +61,8 @@ namespace CRUDApp.ViewComponents.Notes
             {
                 var noteToDelete = Notes.ElementAt(indexPath.Row);
                 Notes.RemoveAt(indexPath.Row);
-                _controller.NoteRepository.DeleteNote(noteToDelete);
+                _presenter.Repository.DeleteNote(noteToDelete);
+
                 _controller.TableView.DeleteRows(new[] { indexPath }, UITableViewRowAnimation.Fade);
             }
             else if (editingStyle == UITableViewCellEditingStyle.Insert)

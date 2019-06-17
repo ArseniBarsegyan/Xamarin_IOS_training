@@ -1,12 +1,6 @@
 ﻿using System;
-using System.IO;
-using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
-using CRUDApp.Authentication;
-using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
-using CRUDApp.ViewComponents.Notes;
-using Foundation;
 using UIKit;
 
 namespace CRUDApp.ViewComponents.Login
@@ -14,11 +8,12 @@ namespace CRUDApp.ViewComponents.Login
     public class LoginViewController : UIViewController
     {
         private LoginView _loginView;
-        private AuthenticationManager _authenticationManager;
+        private LoginViewPresenter _presenter;
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            _presenter = new LoginViewPresenter(this);
             NavigationController.SetNavigationBarHidden(true, false);
 
             _loginView = new LoginView();
@@ -29,9 +24,6 @@ namespace CRUDApp.ViewComponents.Login
                 _loginView.WithSameLeft(View),
                 _loginView.WithSameTop(View),
                 _loginView.WithSameBottom(View));
-            
-            _authenticationManager = new AuthenticationManager(
-                    new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName)));
         }
 
         public override void ViewWillAppear(bool animated)
@@ -60,10 +52,7 @@ namespace CRUDApp.ViewComponents.Login
             //TODO: name and password regex
             if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
             {
-                var okAlertController = UIAlertController.Create(ConstantsHelper.ValidationError, ConstantsHelper.EnterNameAndPassword,
-                    UIAlertControllerStyle.Alert);
-                okAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, null));
-                PresentViewController(okAlertController, true, null);
+                ShowAlert(ConstantsHelper.ValidationError, ConstantsHelper.EnterNameAndPassword);
                 return;
             }
 
@@ -72,49 +61,30 @@ namespace CRUDApp.ViewComponents.Login
                 var confirmPassword = _loginView.ConfirmPasswordTextField.Text;
                 if (password != confirmPassword)
                 {
-                    var okAlertController = UIAlertController.Create(ConstantsHelper.PasswordError, ConstantsHelper.PasswordsDoesNotMatch,
-                        UIAlertControllerStyle.Alert);
-                    okAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, null));
-                    PresentViewController(okAlertController, true, null);
+                    ShowAlert(ConstantsHelper.PasswordError, ConstantsHelper.PasswordsDoesNotMatch);
                     return;
                 }
-                var authResult = await _authenticationManager.Register(userName, password);
+                var authResult = await _presenter.RegisterUser(userName, password);
                 if (authResult)
                 {
-                    await AuthenticateUser(userName, password);
+                    await _presenter.AuthenticateUser(userName, password);
                 }
                 else
                 {
-                    var okAlertController = UIAlertController.Create(ConstantsHelper.Error, ConstantsHelper.UserAlreadyExists,
-                        UIAlertControllerStyle.Alert);
-                    okAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, null));
-                    PresentViewController(okAlertController, true, null);
+                    ShowAlert(ConstantsHelper.Error, ConstantsHelper.UserAlreadyExists);
                 }
             }
             else
             {
-                await AuthenticateUser(userName, password);
+                await _presenter.AuthenticateUser(userName, password);
             }
         }
 
-        private async Task AuthenticateUser(string username, string password)
+        public void ShowAlert(string title, string message)
         {
-            bool result = await _authenticationManager.Authenticate(username, password);
-            if (result)
-            {
-                NSUserDefaults.StandardUserDefaults.SetString(username, ConstantsHelper.UserName);
-                //NavigationController.SetViewControllers(new UIViewController[] { new UISideMenuController() }, true);
-                UIStoryboard helloWorldStoryboard = UIStoryboard.FromName(nameof(NotesController), null);
-                var initialViewController = helloWorldStoryboard.InstantiateInitialViewController();
-                NavigationController.PushViewController(initialViewController, true);
-            }
-            else
-            {
-                var okAlertController = UIAlertController.Create(ConstantsHelper.Error, ConstantsHelper.NoUserOrPasswordIncorret,
-                    UIAlertControllerStyle.Alert);
-                okAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, null));
-                PresentViewController(okAlertController, true, null);
-            }
+            var okAlertController = UIAlertController.Create(title, message, UIAlertControllerStyle.Alert);
+            okAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, null));
+            PresentViewController(okAlertController, true, null);
         }
     }
 }
