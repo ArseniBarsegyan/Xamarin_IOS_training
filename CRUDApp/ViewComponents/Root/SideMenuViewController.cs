@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CRUDApp.Helpers;
 using UIKit;
-using Xamarin.SideMenu;
 
 namespace CRUDApp.ViewComponents.Root
 {
@@ -61,13 +60,6 @@ namespace CRUDApp.ViewComponents.Root
                     _presenter.Logout();
                     break;
             }
-        }
-    }
-
-    public class SideMenuViewCell : UITableViewVibrantCell
-    {
-        public SideMenuViewCell(IntPtr handle) : base(handle)
-        {
         }
     }
 }
