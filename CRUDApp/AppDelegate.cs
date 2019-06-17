@@ -1,7 +1,6 @@
 ﻿using CRUDApp.Helpers;
 using CRUDApp.ViewComponents.Login;
 using CRUDApp.ViewComponents.Pin;
-using CRUDApp.ViewComponents.Root;
 using Foundation;
 using UIKit;
 
@@ -25,15 +24,13 @@ namespace CRUDApp
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
-            var mainController = new SplitViewController();
 
             NSUserDefaults preferences = NSUserDefaults.StandardUserDefaults;
             var usePin = preferences.BoolForKey(ConstantsHelper.UsePinKey);
 
             UIViewController rootViewController = usePin ? new PinViewController() 
                 : (UIViewController)new LoginViewController();
-            mainController.ShowDetailViewController(new UINavigationController(rootViewController), this);
-            Window.RootViewController = mainController;
+            Window.RootViewController = new UINavigationController(rootViewController);
 
             Window.MakeKeyAndVisible();
             return true;

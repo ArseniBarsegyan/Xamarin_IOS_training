@@ -10,7 +10,6 @@ namespace CRUDApp.ViewComponents.Login
 {
     public partial class LoginView : UIView
     {
-        private NSLayoutConstraint[] _viewConstraints;
         private LoginView _rootView;
 
         public LoginView (IntPtr handle) : base (handle)
@@ -26,7 +25,6 @@ namespace CRUDApp.ViewComponents.Login
         {
             var arr = NSBundle.MainBundle.LoadNib(nameof(LoginView), this, null);
             var rootView = ObjCRuntime.Runtime.GetNSObject(arr.ValueAt(0)) as LoginView;
-            _viewConstraints = rootView.Constraints;
             _rootView = rootView;
             TitleLabel = rootView.titleLabel;
             LoginButton = rootView.loginButton;
