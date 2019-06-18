@@ -107,50 +107,62 @@ namespace CRUDApp.ViewComponents.NoteEdit
             collectionView.AlwaysBounceVertical = true;
             collectionView.Bounces = true;
             collectionView.RegisterClassForCell(typeof(GalleryViewCell), nameof(GalleryViewCell));
-            collectionView.Source = new GalleryCollectionViewSource(new List<GalleryItemModel>
+            var galleryItems = new List<GalleryItemModel>
             {
                 new GalleryItemModel
                 {
-                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                    ImagePath =
+                        "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 },
                 new GalleryItemModel
                 {
-                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                    ImagePath =
+                        "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 },
                 new GalleryItemModel
                 {
-                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                    ImagePath =
+                        "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 },
                 new GalleryItemModel
                 {
-                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                    ImagePath =
+                        "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 },
                 new GalleryItemModel
                 {
-                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                    ImagePath =
+                        "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 },
                 new GalleryItemModel
                 {
-                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                    ImagePath =
+                        "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 },
                 new GalleryItemModel
                 {
-                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                    ImagePath =
+                        "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 },
                 new GalleryItemModel
                 {
-                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                    ImagePath =
+                        "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 },
                 new GalleryItemModel
                 {
-                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                    ImagePath =
+                        "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 },
                 new GalleryItemModel
                 {
-                    ImagePath = "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
+                    ImagePath =
+                        "https://ak5.picdn.net/shutterstock/videos/3775625/thumb/1.jpg?i10c=img.resize(height:160)"
                 }
-            });
-            collectionView.Delegate = new GalleryCollectionViewDelegate(new UIEdgeInsets(5, 5, 5, 5));
+            };
+
+            collectionView.Source = new GalleryCollectionViewSource(galleryItems,this);
+            collectionView.Delegate = new GalleryCollectionViewDelegate(galleryItems, this, new UIEdgeInsets(5, 5, 5, 5));
             collectionView.ReloadData();
 
             View.AddConstraints(collectionView.Below(_galleryHintLabel, 30f),

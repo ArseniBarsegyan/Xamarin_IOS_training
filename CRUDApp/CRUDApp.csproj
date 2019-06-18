@@ -78,6 +78,8 @@
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewLayout.cs" />
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryCollectionViewSource.cs" />
     <Compile Include="ViewComponents\NoteEdit\NoteGallery\GalleryViewCell.cs" />
+    <Compile Include="ViewComponents\NoteEdit\NoteGallery\ImageViewController.cs" />
+    <Compile Include="ViewComponents\NoteEdit\NoteGallery\ZoomImage.cs" />
     <Compile Include="ViewComponents\Notes\NotesDataSource.cs" />
     <Compile Include="ViewComponents\Notes\NoteCell.cs" />
     <Compile Include="ViewComponents\Notes\NotesController.cs" />

@@ -9,11 +9,13 @@ namespace CRUDApp.ViewComponents.NoteEdit.NoteGallery
     public class GalleryCollectionViewSource : UICollectionViewSource
     {
         private List<GalleryItemModel> _galleryItems;
+        private UIViewController _controller;
         private static NSString GalleryCellId = new NSString(nameof(GalleryViewCell));
 
-        public GalleryCollectionViewSource(List<GalleryItemModel> galleryItems)
+        public GalleryCollectionViewSource(List<GalleryItemModel> galleryItems, UIViewController controller)
         {
             _galleryItems = galleryItems;
+            _controller = controller;
         }
 
         public override UICollectionViewCell GetCell(UICollectionView collectionView, NSIndexPath indexPath)

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using CoreGraphics;
+using CRUDApp.Data.Entities;
 using Foundation;
 using UIKit;
 
@@ -7,12 +9,23 @@ namespace CRUDApp.ViewComponents.NoteEdit.NoteGallery
 {
     public class GalleryCollectionViewDelegate : UICollectionViewDelegateFlowLayout
     {
-        private const float ItemsPerRow = 3;
         private readonly UIEdgeInsets _insets;
+        private List<GalleryItemModel> _galleryItems;
+        private UIViewController _controller;
 
-        public GalleryCollectionViewDelegate(UIEdgeInsets insets)
+        public GalleryCollectionViewDelegate(List<GalleryItemModel> galleryItems, UIViewController controller, UIEdgeInsets insets)
         {
+            _galleryItems = galleryItems;
             _insets = insets;
+            _controller = controller;
+        }
+
+        public override void ItemSelected(UICollectionView collectionView, NSIndexPath indexPath)
+        {
+            collectionView.DeselectItem(indexPath, true);
+            var galleryItem = _galleryItems[indexPath.Row];
+            var imageViewController = new ImageViewController(galleryItem);
+            _controller.NavigationController.PushViewController(imageViewController, true);
         }
 
         public override CGSize GetSizeForItem(UICollectionView collectionView, UICollectionViewLayout layout,
