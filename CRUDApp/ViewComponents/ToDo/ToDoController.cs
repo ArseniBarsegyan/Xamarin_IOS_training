@@ -14,9 +14,9 @@ namespace CRUDApp.ViewComponents.ToDo
 {
     public class ToDoController : UITabBarController
     {
-        private UIViewController _activeTab, _doneTab;
+        private ToDoBaseViewController _activeTab, _doneTab;
         private SideMenuManager _sideMenuManager;
-        private ToDoRepository _repository;
+        public ToDoRepository Repository { get; private set; }
 
         public ToDoController()
         {
@@ -44,10 +44,10 @@ namespace CRUDApp.ViewComponents.ToDo
             };
             NavigationItem.RightBarButtonItem = addButton;
 
-            _repository = new ToDoRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName));
+            Repository = new ToDoRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ConstantsHelper.DatabaseName));
 
-            _activeTab = new ToDoActiveViewController(_repository);
-            _doneTab = new ToDoDoneViewController(_repository);
+            _activeTab = new ToDoActiveViewController(Repository);
+            _doneTab = new ToDoDoneViewController(Repository);
 
             ViewControllers = new[] { _activeTab, _doneTab };
             SelectedIndex = 1;
@@ -57,8 +57,8 @@ namespace CRUDApp.ViewComponents.ToDo
         {
             base.ViewWillAppear(animated);
 
-            var activeCount = _repository.GetAll().Count(x => x.Status == "Active");
-            var doneCount = _repository.GetAll().Count(x => x.Status == "Done");
+            var activeCount = Repository.GetAll().Count(x => x.Status == "Active");
+            var doneCount = Repository.GetAll().Count(x => x.Status == "Done");
 
             if (activeCount > 0)
             {
@@ -86,7 +86,7 @@ namespace CRUDApp.ViewComponents.ToDo
         private void NavigateToEditToDoController(object sender, EventArgs e)
         {
             var toDoEditViewController = new ToDoEditViewController(0);
-            toDoEditViewController.SetRepository(_repository);
+            toDoEditViewController.SetRepository(Repository);
             NavigationController.PushViewController(toDoEditViewController, true);
         }
     }

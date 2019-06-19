@@ -91,11 +91,13 @@
     <Compile Include="ViewComponents\Pin\PinViewPresenter.cs" />
     <Compile Include="ViewComponents\Root\SideMenuViewCell.cs" />
     <Compile Include="ViewComponents\Root\SideMenuViewPresenter.cs" />
+    <Compile Include="ViewComponents\ToDo\ToDoBaseViewController.cs" />
     <Compile Include="ViewComponents\ToDo\ToDoDataSource.cs" />
     <Compile Include="ViewComponents\ToDo\Active\ToDoActiveViewController.cs" />
     <Compile Include="ViewComponents\ToDo\ToDoCell.cs" />
     <Compile Include="ViewComponents\ToDo\ToDoController.cs" />
     <Compile Include="ViewComponents\ToDo\Done\ToDoDoneViewController.cs" />
+    <Compile Include="ViewComponents\ToDo\ToDoEdit\StatusPickerViewModel.cs" />
     <Compile Include="ViewComponents\ToDo\ToDoEdit\ToDoEditViewController.cs" />
     <Compile Include="ViewModels\NoteViewModel.cs" />
     <Compile Include="Extensions\ModelsConverterExtensions.cs" />

@@ -35,6 +35,7 @@
         public const string MapsIcon = "maps.png";
         public const string Menu = "Menu";
         public const string NewNote = "New note";
+        public const string NewToDo = "New ToDo";
         public const string Note = "Note: ";
         public const string Notes = "Notes";
         public const string NotesListIcon = "notes_list.png";

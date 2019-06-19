@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using CRUDApp.Data.Repositories;
 using CRUDApp.Helpers;
@@ -8,31 +7,28 @@ using UIKit;
 
 namespace CRUDApp.ViewComponents.ToDo.Active
 {
-    public class ToDoActiveViewController : UITableViewController
+    public class ToDoActiveViewController : ToDoBaseViewController
     {
-        private readonly ToDoRepository _repository;
-        private ToDoDataSource _dataSource;
-        private UIRefreshControl _refreshControl;
-
         public ToDoActiveViewController(IntPtr handle) : base(handle)
         {
         }
 
-        public ToDoActiveViewController(ToDoRepository repository)
+        public ToDoActiveViewController(ToDoRepository repository) : base(repository)
         {
-            _repository = repository;
+            Repository = repository;
+            DataSource = new ToDoDataSource(this);
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            _refreshControl = new UIRefreshControl();
-            _refreshControl.ValueChanged += async (sender, args) =>
+            RefreshControl = new UIRefreshControl();
+            RefreshControl.ValueChanged += async (sender, args) =>
             {
                 await Refresh();
             };
-            TableView.RefreshControl = _refreshControl;
-            
+            TableView.RefreshControl = RefreshControl;
+
             Title = NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.Active, ConstantsHelper.Active);
             TableView.RegisterClassForCellReuse(typeof(ToDoCell), nameof(ToDoCell));
             TableView.SeparatorColor = UIColor.LightGray;
@@ -40,10 +36,11 @@ namespace CRUDApp.ViewComponents.ToDo.Active
 
         private async Task Refresh()
         {
-            _refreshControl.BeginRefreshing();
+            RefreshControl.BeginRefreshing();
             await Task.Delay(200);
-            _refreshControl.EndRefreshing();
-            TableView.Source = new ToDoDataSource(_repository.GetAll().Where(x => x.Status == "Active").ToList());
+            RefreshControl.EndRefreshing();
+            DataSource = new ToDoDataSource(this);
+            TableView.Source = DataSource;
             TableView.ReloadData();
         }
 

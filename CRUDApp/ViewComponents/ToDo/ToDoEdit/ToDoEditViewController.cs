@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
 using CRUDApp.Data.Entities;
@@ -12,17 +13,21 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
     public class ToDoEditViewController : UIViewController
     {
         private ToDoRepository _repository;
-        private int _toDoId;
+        private readonly int _toDoId;
 
         private NSDate _selectedDate;
+        private string _selectedStatus;
 
         private UILabel _dateLabel;
         private UITextField _currentDateField;
         private UILabel _timeLabel;
         private UITextField _currentTimeField;
+        private UILabel _statusLabel;
+        private UITextField _statusField;
         private UILabel _descriptionLabel;
         private UITextView _descriptionEditor;
 
+        private UITapGestureRecognizer _statusGestureRecognizer;
         private UITapGestureRecognizer _currentDateGestureRecognizer;
         private UITapGestureRecognizer _currentTimeGestureRecognizer;
 
@@ -38,7 +43,10 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            Title = NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.EditToDo, ConstantsHelper.EditToDo);
+            Title = _toDoId == 0 ? 
+                NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.NewToDo, ConstantsHelper.NewToDo)
+                : NSBundle.MainBundle.GetLocalizedString(ConstantsHelper.EditToDo, ConstantsHelper.EditToDo);
+            
             View.BackgroundColor = UIColor.White;
 
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Done, SaveChanges)
@@ -82,6 +90,20 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
             _currentTimeField.Font = UIFont.SystemFontOfSize(16);
             _currentTimeField.TranslatesAutoresizingMaskIntoConstraints = false;
 
+            _statusLabel = new UILabel();
+            _statusLabel.Text = "Status:";
+            _statusLabel.Font = UIFont.SystemFontOfSize(16);
+            _statusLabel.TranslatesAutoresizingMaskIntoConstraints = false;
+
+            _statusField = new UITextField();
+            _statusField.Layer.BorderColor = UIColor.LightGray.CGColor;
+            _statusField.Layer.BorderWidth = 0.5f;
+            _statusField.Layer.CornerRadius = 5f;
+            _statusField.UserInteractionEnabled = true;
+            _statusField.TextAlignment = UITextAlignment.Center;
+            _statusField.Text = "Active";
+            _statusField.TranslatesAutoresizingMaskIntoConstraints = false;
+
             _descriptionLabel = new UILabel();
             _descriptionLabel.Text = "Description:";
             _descriptionLabel.Font = UIFont.SystemFontOfSize(16);
@@ -92,14 +114,19 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
             _descriptionEditor.Font = UIFont.SystemFontOfSize(16);
             _descriptionEditor.TranslatesAutoresizingMaskIntoConstraints = false;
 
+            _statusGestureRecognizer = new UITapGestureRecognizer(async () => { await ShowStatusPopup(); })
+                { NumberOfTapsRequired = 1};
             _currentDateGestureRecognizer = new UITapGestureRecognizer(async () => { await ShowDatePopup(); })
                 { NumberOfTapsRequired = 1 };
-            _currentTimeGestureRecognizer = new UITapGestureRecognizer(async () => { await ShowTimePopup(); });
+            _currentTimeGestureRecognizer = new UITapGestureRecognizer(async () => { await ShowTimePopup(); })
+                { NumberOfTapsRequired = 1 };
 
             View.AddSubviews(_dateLabel, 
                 _currentDateField, 
                 _timeLabel, 
                 _currentTimeField,
+                _statusLabel,
+                _statusField,
                 _descriptionLabel, 
                 _descriptionEditor);
 
@@ -119,8 +146,16 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
                 _currentTimeField.ToRightOf(_timeLabel),
                 _currentTimeField.Width().EqualTo(200f),
                 _currentTimeField.Height().EqualTo(30f),
-                _descriptionLabel.Below(_timeLabel, 10f),
-                _descriptionLabel.WithSameLeft(_timeLabel),
+                _statusLabel.Below(_timeLabel, 10f),
+                _statusLabel.WithSameLeft(_timeLabel),
+                _statusLabel.Width().EqualTo(100f),
+                _statusLabel.Height().EqualTo(30f),
+                _statusField.WithSameCenterY(_statusLabel),
+                _statusField.ToRightOf(_statusLabel),
+                _statusField.Width().EqualTo(200f),
+                _statusField.Height().EqualTo(30f),
+                _descriptionLabel.Below(_statusLabel, 10f),
+                _descriptionLabel.WithSameLeft(_statusLabel),
                 _descriptionLabel.Width().EqualTo(100f),
                 _descriptionLabel.Height().EqualTo(30f),
                 _descriptionEditor.Below(_descriptionLabel, 10f),
@@ -134,6 +169,7 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
             base.ViewWillAppear(animated);
             _currentDateField.AddGestureRecognizer(_currentDateGestureRecognizer);
             _currentTimeField.AddGestureRecognizer(_currentTimeGestureRecognizer);
+            _statusField.AddGestureRecognizer(_statusGestureRecognizer);
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -141,6 +177,7 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
             base.ViewWillDisappear(animated);
             _currentDateField.RemoveGestureRecognizer(_currentDateGestureRecognizer);
             _currentTimeField.RemoveGestureRecognizer(_currentTimeGestureRecognizer);
+            _statusField.RemoveGestureRecognizer(_statusGestureRecognizer);
         }
 
         public void SetRepository(ToDoRepository repository)
@@ -157,7 +194,7 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
             var model = new ToDoModel
             {
                 Id = _toDoId,
-                Status = "Active",
+                Status = _selectedStatus,
                 WhenHappens = dateTime,
                 Description = _descriptionEditor.Text
             };
@@ -178,11 +215,11 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
             datePicker.MaximumDate = (NSDate)DateTime.Today.AddYears(1);
 
             var rootView = dateTimeAlertController.View;
+            rootView.AddSubview(datePicker);
             rootView.AddConstraints(datePicker.WithSameTop(rootView), 
                 datePicker.AtBottomOf(rootView, 100f), 
                 datePicker.WithSameLeft(rootView), 
                 datePicker.WithSameRight(rootView));
-            rootView.AddSubview(datePicker);
 
             dateTimeAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, action =>
             {
@@ -194,7 +231,7 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
                 _currentTimeField.Text = timeFormatter.StringFor(_selectedDate);
             }));
             dateTimeAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Cancel, UIAlertActionStyle.Cancel, null));
-            PresentViewController(dateTimeAlertController, true, null);
+            await PresentViewControllerAsync(dateTimeAlertController, true);
         }
 
         private async Task ShowTimePopup()
@@ -207,11 +244,11 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
             timePicker.TranslatesAutoresizingMaskIntoConstraints = false;
 
             var rootView = dateTimeAlertController.View;
+            rootView.AddSubview(timePicker);
             rootView.AddConstraints(timePicker.WithSameTop(rootView),
                 timePicker.AtBottomOf(rootView, 100f),
                 timePicker.WithSameLeft(rootView),
                 timePicker.WithSameRight(rootView));
-            rootView.AddSubview(timePicker);
 
             dateTimeAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default, action =>
             {
@@ -220,7 +257,33 @@ namespace CRUDApp.ViewComponents.ToDo.ToDoEdit
                 _currentTimeField.Text = timeFormatter.StringFor(_selectedDate);
             }));
             dateTimeAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Cancel, UIAlertActionStyle.Cancel, null));
-            PresentViewController(dateTimeAlertController, true, null);
+            await PresentViewControllerAsync(dateTimeAlertController, true);
+        }
+
+        private async Task ShowStatusPopup()
+        {
+            var statusAlertController = new UIAlertController();
+            var data = new List<string> { "Active", "Done" };
+            var rootView = statusAlertController.View;
+
+            var picker = new UIPickerView();
+            picker.Model = new StatusPickerViewModel(data);
+            picker.TranslatesAutoresizingMaskIntoConstraints = false;
+            rootView.AddSubview(picker);
+            rootView.AddConstraints(picker.WithSameTop(rootView),
+                picker.AtBottomOf(rootView, 100f),
+                picker.WithSameLeft(rootView),
+                picker.WithSameRight(rootView));
+
+            statusAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Ok, UIAlertActionStyle.Default,
+                action =>
+                {
+                    var pickerModel = picker.Model as StatusPickerViewModel;
+                    _selectedStatus = pickerModel?.SelectedValue;
+                    _statusField.Text = _selectedStatus;
+                }));
+            statusAlertController.AddAction(UIAlertAction.Create(ConstantsHelper.Cancel, UIAlertActionStyle.Cancel, null));
+            await PresentViewControllerAsync(statusAlertController, true);
         }
     }
 }
